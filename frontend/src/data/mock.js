@@ -154,7 +154,6 @@ export const projects = [
     title: "MNIST Digit Prediction",
     description: "Handwritten digit recognition system using CNN deployed on Amazon EC2 with Flask backend and interactive HTML canvas frontend.",
     tags: ["Python", "CNN", "Flask", "AWS EC2"],
-    liveUrl: "http://ec2-3-110-210-151.ap-south-1.compute.amazonaws.com:8080/",
     githubUrl: "https://github.com/Arnav-Kumar1/mnist_digit_prediction",
     image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80"
   },
