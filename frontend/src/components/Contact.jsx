@@ -101,7 +101,6 @@ const Contact = () => {
             <a
               href="/Arnav-Kumar-FlowCV-Resume-20251007.pdf"
               download="Arnav-Kumar-Resume.pdf"
-              onClick={handleResumeDownload}
               className="inline-flex items-center space-x-2 px-8 py-4 bg-black text-white rounded-sm hover:bg-gray-800 transition-colors"
             >
               <Download size={20} />
