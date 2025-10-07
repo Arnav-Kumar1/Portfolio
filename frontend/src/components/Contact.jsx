@@ -28,7 +28,7 @@ const Contact = () => {
 
         <div className="max-w-3xl mx-auto">
           {/* Contact Info Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <a
               href={`mailto:${contactEmail}`}
               className="flex items-start space-x-4 p-6 bg-gray-50 rounded-sm border border-gray-200 hover:border-black transition-all duration-300 group"
@@ -56,6 +56,29 @@ const Contact = () => {
                 <div className="text-xs text-gray-500 mt-2">Click to make a call</div>
               </div>
             </a>
+          </div>
+
+          {/* Copy Email Option for Desktop Users */}
+          <div className="mb-12 text-center">
+            <p className="text-sm text-gray-500 mb-3">
+              Email not opening? Copy my email address below:
+            </p>
+            <button
+              onClick={handleCopyEmail}
+              className="inline-flex items-center space-x-2 px-6 py-3 bg-gray-100 text-black rounded-sm hover:bg-gray-200 transition-colors border border-gray-300"
+            >
+              {emailCopied ? (
+                <>
+                  <Check size={18} className="text-green-600" />
+                  <span className="text-green-600">Email Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Copy size={18} />
+                  <span>{contactEmail}</span>
+                </>
+              )}
+            </button>
           </div>
 
           {/* Main Email CTA */}
