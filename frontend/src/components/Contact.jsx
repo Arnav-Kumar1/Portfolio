@@ -1,9 +1,18 @@
-import React from 'react';
-import { Mail, Phone, MapPin, Github, Linkedin, Download } from 'lucide-react';
+import React, { useState } from 'react';
+import { Mail, Phone, MapPin, Github, Linkedin, Download, Copy, Check } from 'lucide-react';
 import { personalInfo } from '../data/mock';
 
 const Contact = () => {
   const contactEmail = 'arnav9637@gmail.com';
+  const [emailCopied, setEmailCopied] = useState(false);
+
+  const handleCopyEmail = (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(contactEmail).then(() => {
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2000);
+    });
+  };
 
   return (
     <section id="contact" className="py-20 md:py-32 bg-white">
