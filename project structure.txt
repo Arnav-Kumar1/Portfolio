@@ -1,0 +1,15 @@
+portfolio/
+├── frontend/
+│   ├── src/
+│   │   ├── components/     ← Edit these for UI changes
+│   │   │   ├── Header.jsx
+│   │   │   ├── Hero.jsx
+│   │   │   ├── Projects.jsx
+│   │   │   └── ...
+│   │   ├── data/
+│   │   │   └── mock.js     ← Edit this for content changes
+│   │   ├── App.css         ← Edit for global styles
+│   │   └── index.css       ← Edit for Tailwind config
+│   ├── public/
+│   │   └── Arnav-Kumar-FlowCV-Resume-20251007.pdf  ← Replace with updated resume
+│   └── package.json
