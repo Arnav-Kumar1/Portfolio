@@ -1,34 +1,16 @@
-import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Download, ChevronDown } from 'lucide-react';
-import { personalInfo, resumes } from '../data/mock';
+import React from 'react';
+import { Mail, Phone, MapPin, Github, Linkedin, Download } from 'lucide-react';
+import { personalInfo } from '../data/mock';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-  const [showResumeDropdown, setShowResumeDropdown] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Mock submission
-    alert('Thank you for your message! This is a mock submission. The backend will handle actual form submission.');
-    setFormData({ name: '', email: '', subject: '', message: '' });
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleResumeDownload = (resume) => {
-    // Mock download
-    alert(`Downloading: ${resume.name}. This is a mock action. The backend will handle actual downloads.`);
-    setShowResumeDropdown(false);
+  const contactEmail = 'arnav9637@gmail.com';
+  
+  const handleResumeDownload = () => {
+    // This will be handled by the download link
+    const link = document.createElement('a');
+    link.href = '/Arnav-Kumar-FlowCV-Resume-20251007.pdf';
+    link.download = 'Arnav-Kumar-Resume.pdf';
+    link.click();
   };
 
   return (
