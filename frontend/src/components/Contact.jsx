@@ -16,6 +16,24 @@ const Contact = () => {
 
   const whatsappNumber = "917038606744"; // Phone number without + and spaces
   const whatsappLink = `https://wa.me/${whatsappNumber}`;
+  
+  const handleWhatsAppClick = (e) => {
+    e.preventDefault();
+    // Try multiple WhatsApp URL formats for better compatibility
+    const urls = [
+      `https://wa.me/${whatsappNumber}`,
+      `https://api.whatsapp.com/send?phone=${whatsappNumber}`,
+      `whatsapp://send?phone=${whatsappNumber}`
+    ];
+    
+    // Try opening with window.open first
+    const whatsappWindow = window.open(urls[0], '_blank', 'noopener,noreferrer');
+    
+    // Fallback if window.open is blocked
+    if (!whatsappWindow || whatsappWindow.closed || typeof whatsappWindow.closed === 'undefined') {
+      window.location.href = urls[2]; // Use whatsapp:// protocol as fallback
+    }
+  };
 
   return (
     <section id="contact" className="py-20 md:py-32 bg-white">
