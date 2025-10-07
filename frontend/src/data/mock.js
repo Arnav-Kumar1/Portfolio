@@ -4,7 +4,7 @@ export const personalInfo = {
   name: "Arnav Kumar",
   title: "Data Analyst & ML Engineer",
   location: "Mumbai, India",
-  email: "arnavu7038@gmail.com",
+  email: "arnav9637@gmail.com",
   phone: "+91 7038606744",
   github: "https://github.com/Arnav-Kumar1",
   linkedin: "https://www.linkedin.com/in/arnav-kumar1/",
