@@ -114,7 +114,7 @@ export const projects = [
     description: "International collaboration to develop an AI-powered application for malaria prediction and forecasting in Liberia, West Africa, using XGBoost models.",
     duration: "Jan 2024 - Apr 2024",
     tags: ["Python", "XGBoost", "Streamlit", "Docker", "ML"],
-    liveUrl: "#",
+    liveUrl: "https://malaria-prediction.streamlit.app/",
     githubUrl: "https://github.com/Arnav-Kumar1",
     image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
     featured: true,
