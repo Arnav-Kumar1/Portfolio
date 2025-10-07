@@ -106,9 +106,8 @@ const Contact = () => {
             </p>
             <a
               href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center space-x-3 px-8 py-4 bg-white text-black rounded-sm hover:bg-gray-100 transition-colors font-medium text-lg"
+              onClick={handleWhatsAppClick}
+              className="inline-flex items-center space-x-3 px-8 py-4 bg-white text-black rounded-sm hover:bg-gray-100 transition-colors font-medium text-lg cursor-pointer"
             >
               <MessageCircle size={24} />
               <span>Message on WhatsApp</span>
