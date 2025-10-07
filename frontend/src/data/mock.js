@@ -204,30 +204,3 @@ export const achievements = [
   "15% improvement in client retention through data-driven strategies",
   "12-15% expected reduction in malaria deaths in Liberia"
 ];
-
-export const resumes = [
-  {
-    id: 1,
-    name: "General Resume",
-    filename: "Arnav-Kumar-Resume.pdf",
-    description: "Comprehensive resume showcasing all experience and skills"
-  },
-  {
-    id: 2,
-    name: "KhataBook Tailored",
-    filename: "Arnav-Kumar-KhataBook-Resume.pdf",
-    description: "Resume tailored for ML/AI and fintech roles"
-  },
-  {
-    id: 3,
-    name: "Lynkit Tailored",
-    filename: "Arnav-Kumar-Lynkit-Resume.pdf",
-    description: "Resume focused on data analytics and leadership insights"
-  },
-  {
-    id: 4,
-    name: "FlowCV Format",
-    filename: "Arnav-Kumar-FlowCV-Resume-20251007.pdf",
-    description: "Modern format resume with ETL and process optimization focus"
-  }
-];
