@@ -25,179 +25,96 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Info */}
-          <div>
-            <h3 className="text-2xl font-bold text-black mb-8">Contact Information</h3>
-            
-            <div className="space-y-6 mb-8">
-              <a
-                href={`mailto:${personalInfo.email}`}
-                className="flex items-start space-x-4 text-gray-700 hover:text-black transition-colors group"
-              >
-                <div className="w-12 h-12 bg-gray-100 flex items-center justify-center rounded-sm group-hover:bg-black group-hover:text-white transition-colors">
-                  <Mail size={20} />
-                </div>
-                <div>
-                  <div className="font-medium text-black mb-1">Email</div>
-                  <div className="text-sm">{personalInfo.email}</div>
-                </div>
-              </a>
-
-              <a
-                href={`tel:${personalInfo.phone}`}
-                className="flex items-start space-x-4 text-gray-700 hover:text-black transition-colors group"
-              >
-                <div className="w-12 h-12 bg-gray-100 flex items-center justify-center rounded-sm group-hover:bg-black group-hover:text-white transition-colors">
-                  <Phone size={20} />
-                </div>
-                <div>
-                  <div className="font-medium text-black mb-1">Phone</div>
-                  <div className="text-sm">{personalInfo.phone}</div>
-                </div>
-              </a>
-
-              <div className="flex items-start space-x-4 text-gray-700">
-                <div className="w-12 h-12 bg-gray-100 flex items-center justify-center rounded-sm">
-                  <MapPin size={20} />
-                </div>
-                <div>
-                  <div className="font-medium text-black mb-1">Location</div>
-                  <div className="text-sm">{personalInfo.location}</div>
-                </div>
+        <div className="max-w-3xl mx-auto">
+          {/* Contact Info Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <a
+              href={`mailto:${contactEmail}`}
+              className="flex items-start space-x-4 p-6 bg-gray-50 rounded-sm border border-gray-200 hover:border-black transition-all duration-300 group"
+            >
+              <div className="w-12 h-12 bg-black text-white flex items-center justify-center rounded-sm group-hover:scale-110 transition-transform">
+                <Mail size={24} />
               </div>
-            </div>
-
-            {/* Social Links */}
-            <div className="mb-8">
-              <h4 className="font-medium text-black mb-4">Connect With Me</h4>
-              <div className="flex space-x-4">
-                <a
-                  href={personalInfo.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-12 h-12 bg-gray-100 flex items-center justify-center rounded-sm hover:bg-black hover:text-white transition-colors"
-                >
-                  <Github size={20} />
-                </a>
-                <a
-                  href={personalInfo.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-12 h-12 bg-gray-100 flex items-center justify-center rounded-sm hover:bg-black hover:text-white transition-colors"
-                >
-                  <Linkedin size={20} />
-                </a>
+              <div className="flex-1">
+                <div className="font-bold text-black mb-1">Email Me</div>
+                <div className="text-sm text-gray-600">{contactEmail}</div>
+                <div className="text-xs text-gray-500 mt-2">Click to send an email</div>
               </div>
-            </div>
+            </a>
 
-            {/* Resume Download */}
-            <div className="relative">
-              <h4 className="font-medium text-black mb-4">Download Resume</h4>
-              <button
-                onClick={() => setShowResumeDropdown(!showResumeDropdown)}
-                className="w-full flex items-center justify-between px-6 py-3 bg-black text-white rounded-sm hover:bg-gray-800 transition-colors"
-              >
-                <div className="flex items-center space-x-2">
-                  <Download size={20} />
-                  <span>Select Resume Version</span>
-                </div>
-                <ChevronDown size={20} className={`transition-transform ${showResumeDropdown ? 'rotate-180' : ''}`} />
-              </button>
-
-              {showResumeDropdown && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-sm shadow-lg z-10">
-                  {resumes.map((resume) => (
-                    <button
-                      key={resume.id}
-                      onClick={() => handleResumeDownload(resume)}
-                      className="w-full text-left px-6 py-4 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0"
-                    >
-                      <div className="font-medium text-black mb-1">{resume.name}</div>
-                      <div className="text-xs text-gray-600">{resume.description}</div>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            <a
+              href={`tel:${personalInfo.phone}`}
+              className="flex items-start space-x-4 p-6 bg-gray-50 rounded-sm border border-gray-200 hover:border-black transition-all duration-300 group"
+            >
+              <div className="w-12 h-12 bg-black text-white flex items-center justify-center rounded-sm group-hover:scale-110 transition-transform">
+                <Phone size={24} />
+              </div>
+              <div className="flex-1">
+                <div className="font-bold text-black mb-1">Call Me</div>
+                <div className="text-sm text-gray-600">{personalInfo.phone}</div>
+                <div className="text-xs text-gray-500 mt-2">Click to make a call</div>
+              </div>
+            </a>
           </div>
 
-          {/* Contact Form */}
-          <div>
-            <h3 className="text-2xl font-bold text-black mb-8">Send a Message</h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:border-black transition-colors"
-                  placeholder="Your name"
-                />
-              </div>
+          {/* Main Email CTA */}
+          <div className="bg-black text-white p-12 rounded-sm text-center mb-12">
+            <h3 className="text-2xl md:text-3xl font-bold mb-4">Ready to Connect?</h3>
+            <p className="text-gray-300 mb-8">
+              Click the button below to send me an email. I'll get back to you as soon as possible!
+            </p>
+            <a
+              href={`mailto:${contactEmail}?subject=Portfolio Inquiry`}
+              className="inline-flex items-center space-x-3 px-8 py-4 bg-white text-black rounded-sm hover:bg-gray-100 transition-colors font-medium text-lg"
+            >
+              <Mail size={24} />
+              <span>Send Email</span>
+            </a>
+          </div>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:border-black transition-colors"
-                  placeholder="your.email@example.com"
-                />
-              </div>
+          {/* Additional Info */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="text-center p-6 bg-gray-50 rounded-sm border border-gray-200">
+              <MapPin size={24} className="mx-auto mb-3 text-gray-600" />
+              <div className="font-medium text-black mb-1">Location</div>
+              <div className="text-sm text-gray-600">{personalInfo.location}</div>
+            </div>
 
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:border-black transition-colors"
-                  placeholder="What is this about?"
-                />
-              </div>
+            <a
+              href={personalInfo.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-center p-6 bg-gray-50 rounded-sm border border-gray-200 hover:border-black transition-all group"
+            >
+              <Linkedin size={24} className="mx-auto mb-3 text-gray-600 group-hover:text-black transition-colors" />
+              <div className="font-medium text-black mb-1">LinkedIn</div>
+              <div className="text-sm text-gray-600">Connect with me</div>
+            </a>
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows="6"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:border-black transition-colors resize-none"
-                  placeholder="Your message..."
-                ></textarea>
-              </div>
+            <a
+              href={personalInfo.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-center p-6 bg-gray-50 rounded-sm border border-gray-200 hover:border-black transition-all group"
+            >
+              <Github size={24} className="mx-auto mb-3 text-gray-600 group-hover:text-black transition-colors" />
+              <div className="font-medium text-black mb-1">GitHub</div>
+              <div className="text-sm text-gray-600">View my projects</div>
+            </a>
+          </div>
 
-              <button
-                type="submit"
-                className="w-full flex items-center justify-center space-x-2 px-6 py-4 bg-black text-white rounded-sm hover:bg-gray-800 transition-colors group"
-              >
-                <span>Send Message</span>
-                <Send size={20} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-            </form>
+          {/* Resume Download */}
+          <div className="mt-12 text-center">
+            <h4 className="text-lg font-bold text-black mb-4">Download My Resume</h4>
+            <a
+              href="/Arnav-Kumar-FlowCV-Resume-20251007.pdf"
+              download="Arnav-Kumar-Resume.pdf"
+              onClick={handleResumeDownload}
+              className="inline-flex items-center space-x-2 px-8 py-4 bg-black text-white rounded-sm hover:bg-gray-800 transition-colors"
+            >
+              <Download size={20} />
+              <span>Download Resume (PDF)</span>
+            </a>
           </div>
         </div>
       </div>
