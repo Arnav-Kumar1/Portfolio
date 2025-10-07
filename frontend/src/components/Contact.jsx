@@ -4,14 +4,6 @@ import { personalInfo } from '../data/mock';
 
 const Contact = () => {
   const contactEmail = 'arnav9637@gmail.com';
-  
-  const handleResumeDownload = () => {
-    // This will be handled by the download link
-    const link = document.createElement('a');
-    link.href = '/Arnav-Kumar-FlowCV-Resume-20251007.pdf';
-    link.download = 'Arnav-Kumar-Resume.pdf';
-    link.click();
-  };
 
   return (
     <section id="contact" className="py-20 md:py-32 bg-white">
