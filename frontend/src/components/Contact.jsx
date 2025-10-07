@@ -35,26 +35,30 @@ const Contact = () => {
             <div className="space-y-6">
               {/* Email */}
               <div className="flex items-center justify-between flex-wrap gap-4">
-                <div className="flex items-center space-x-3">
-                  <Mail size={24} className="text-gray-600" />
+                <a
+                  href={`mailto:${contactEmail}`}
+                  className="flex items-center space-x-3 group flex-1"
+                >
+                  <Mail size={24} className="text-gray-600 group-hover:text-black transition-colors" />
                   <div>
                     <div className="text-sm text-gray-500">Email</div>
-                    <div className="text-lg font-medium text-black">{contactEmail}</div>
+                    <div className="text-lg font-medium text-black group-hover:underline">{contactEmail}</div>
                   </div>
-                </div>
+                </a>
                 <button
                   onClick={handleCopyEmail}
-                  className="flex items-center space-x-2 px-4 py-2 bg-white border border-gray-300 rounded-sm hover:border-black transition-colors text-sm"
+                  className="flex items-center space-x-1 px-3 py-2 bg-white border border-gray-300 rounded-sm hover:border-black transition-colors text-sm flex-shrink-0"
+                  title="Copy email to clipboard"
                 >
                   {emailCopied ? (
                     <>
                       <Check size={16} className="text-green-600" />
-                      <span className="text-green-600">Copied!</span>
+                      <span className="text-green-600 hidden sm:inline">Copied!</span>
                     </>
                   ) : (
                     <>
                       <Copy size={16} />
-                      <span>Copy Email</span>
+                      <span className="hidden sm:inline">Copy</span>
                     </>
                   )}
                 </button>
@@ -63,13 +67,16 @@ const Contact = () => {
               <div className="border-t border-gray-200"></div>
 
               {/* Phone */}
-              <div className="flex items-center space-x-3">
-                <Phone size={24} className="text-gray-600" />
+              <a
+                href={`tel:${personalInfo.phone}`}
+                className="flex items-center space-x-3 group"
+              >
+                <Phone size={24} className="text-gray-600 group-hover:text-black transition-colors" />
                 <div>
                   <div className="text-sm text-gray-500">Phone</div>
-                  <div className="text-lg font-medium text-black">{personalInfo.phone}</div>
+                  <div className="text-lg font-medium text-black group-hover:underline">{personalInfo.phone}</div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
 
