@@ -10,7 +10,7 @@ export const personalInfo = {
   phone: "+91 7038606744",
   github: "https://github.com/Arnav-Kumar1",
   linkedin: "https://www.linkedin.com/in/arnav-kumar1/",
-  bio: "Engineer + growth + ops, all routed through one person. I run the operating layer of a one-principal art business based in Dubai from Mumbai — code the site, run the ads, manage vendors, move inventory, ship the right thing on the right day. Comfortable wearing every hat a seed-to-Series-A startup needs from its first or second non-founder hire. AI tools (Claude Code, LLM agents) used as a force multiplier, not a substitute for thinking.",
+  bio: "I run the operating layer of a one-principal art business based in Dubai from Mumbai — code the site, run the ads, manage vendors, move inventory, ship the right thing on the right day. Comfortable wearing every hat a seed-to-Series-A startup needs from its first or second non-founder hire.",
   tagline: "Engineer + growth + ops, all routed through one person.",
   availability: "Open to founding engineer / first-non-founder operator roles at Series A–B startups. Mumbai-based, open to remote and relocation."
 };

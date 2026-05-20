@@ -36,10 +36,10 @@ const NewAbout = () => {
             {personalInfo.bio}
           </p>
           <p className="text-base md:text-lg text-gray-600 leading-relaxed">
-            Take a small business end-to-end. Code the site. Run the ads. Manage the vendors. Move the inventory. Make sure the right thing ships on the right day. I use AI tools — Claude Code, LLM agents — as a force multiplier, not a substitute for thinking.
+            I&apos;m a generalist by training and by accident. IIT Madras BS Degree in Data Science, B.E. in Electronics &amp; Telecommunication from SKNCOE Pune. Four data roles between 2023 and 2025 — two ended in layoffs (Recro and Cointab, both during the 2024–25 sector downturn), one was an internship that closed on schedule, one was a department shutdown before conversion. In late 2025 I joined Leo Hydra Studio as the full operating team and have been running it since.
           </p>
           <p className="text-base md:text-lg text-gray-600 leading-relaxed">
-            Not the deepest specialist in any one lane. Probably the best generalist you&apos;ll meet for a seed-to-Series-A startup looking for the first or second non-founder hire.
+            AI tools — Claude Code, LLM agents — used as a force multiplier, not a substitute for thinking. Not the deepest specialist in any one lane. Probably the best generalist you&apos;ll meet for a seed-to-Series-A startup looking for the first or second non-founder hire.
           </p>
         </div>
 
