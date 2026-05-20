@@ -9,12 +9,10 @@ import NewSkills from "./components/NewSkills";
 import Education from "./components/Education";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import AnimatedBackground from "./components/AnimatedBackground";
 
 function App() {
   return (
     <div className="App relative">
-      <AnimatedBackground />
       <Header />
       <NewHero />
       <NewAbout />

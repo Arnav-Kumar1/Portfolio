@@ -1,77 +1,98 @@
-// Mock data for Arnav Kumar's Portfolio
+// Content for Arnav Kumar's Portfolio
+// Positioning: Generalist Founding Operator
+// Last revised: 2026-05-21
 
 export const personalInfo = {
   name: "Arnav Kumar",
-  title: "Data Analyst & ML Engineer",
+  title: "Generalist Founding Operator",
   location: "Mumbai, India",
   email: "arnav9637@gmail.com",
   phone: "+91 7038606744",
   github: "https://github.com/Arnav-Kumar1",
   linkedin: "https://www.linkedin.com/in/arnav-kumar1/",
-  bio: "Data Analyst with 1+ years of experience in fintech and SaaS analytics, skilled in Python, SQL, and BI tools. Proven ability to work directly with leadership teams, transforming raw datasets into strategic insights that drive growth, operational efficiency, and decision-making.",
-  tagline: "Transforming Data into Actionable Insights",
-  yearsOfExperience: "1+",
-  projectsCompleted: "10+",
-  companies: "4"
+  bio: "Engineer + growth + ops, all routed through one person. I run the operating layer of a one-principal art business based in Dubai from Mumbai — code the site, run the ads, manage vendors, move inventory, ship the right thing on the right day. Comfortable wearing every hat a seed-to-Series-A startup needs from its first or second non-founder hire. AI tools (Claude Code, LLM agents) used as a force multiplier, not a substitute for thinking.",
+  tagline: "Engineer + growth + ops, all routed through one person.",
+  availability: "Open to founding engineer / first-non-founder operator roles at Series A–B startups. Mumbai-based, open to remote and relocation."
 };
 
 export const experiences = [
   {
     id: 1,
-    company: "Recro",
-    role: "Data Operations Analyst",
-    location: "Bengaluru, India",
-    type: "Contract Role",
-    duration: "Nov 2024 - Jan 2025",
-    logo: "R",
+    company: "Leo Hydra Studio",
+    role: "Freelance Engineer + Operator",
+    location: "Remote (Mumbai ↔ Dubai)",
+    type: "Freelance",
+    duration: "Oct 2025 – Present",
+    logo: "LH",
     achievements: [
-      "Built automated SQL+Python pipelines for daily/monthly transaction data (3,000+), ensuring 100% reconciliation and error-free reporting",
-      "Automated data validation and error fixing using Python, improving report accuracy by 15%",
-      "Analyzed and resolved portfolio discrepancies during corporate actions with 100% accuracy",
-      "Partnered with business teams to track key product KPIs including transactions per user, retention anomalies, and portfolio performance"
+      "Solo operating team for a one-principal art business based in Dubai — artist makes the work; I do everything else from Mumbai.",
+      "Built the production e-commerce site (Next.js 14 · Supabase · USDT-on-Polygon checkout · bank-transfer flow · admin panel · chatbot).",
+      "Drove three security audit rounds and five new migrations (027–031): DB-backed rate limiter, admin brute-force lockout, atomic payment confirmation with row-lock race fix, CSP + security headers, CSRF Origin checks.",
+      "Server-side Meta Conversions API with browser-pixel deduplication via shared eventID (Purchase, Lead, Subscribe, AddPaymentInfo, InitiateCheckout, ViewContent, AddToCart, PageView). PII hashed per Meta spec.",
+      "Run Meta ad campaigns, manage limited-edition print production with printing houses, coordinate fulfillment to the Dubai warehouse, hire and direct video editors for Reels, sound design, and multi-platform posting (Behance / Tumblr / Instagram).",
+      "Use Claude Code as a creative production tool to scale Reels generation."
     ]
   },
   {
     id: 2,
-    company: "Cointab",
-    role: "Data Analyst",
-    location: "Mumbai, India",
-    type: "Full-time",
-    duration: "May 2024 - Aug 2024",
-    logo: "C",
+    company: "Recro",
+    role: "Data Operations Analyst",
+    location: "Bengaluru, India",
+    type: "Contract Role",
+    duration: "Nov 2024 – Jan 2025",
+    logo: "R",
     achievements: [
-      "Analyzed customer transaction flows to detect anomalies, improving fraud detection accuracy and reducing manual investigation time",
-      "Automated multi-stage financial reconciliation workflows using Python and SQL, improving accuracy and reducing manual effort by 100+ hours/month",
-      "Configured the in-house tool using Python and SQL to automate reconciliation logic for financial audits",
-      "Collaborated with marketing/sales to design BI reports on churn patterns, cohort behavior, and transaction volume trends"
+      "Built automated SQL + Python pipelines for ~3,000 daily / monthly financial transactions for a SaaS portfolio system, ensuring 100% reconciliation.",
+      "Automated data validation and error-fixing using Python, improving report accuracy by ~15%.",
+      "Resolved portfolio discrepancies during corporate-action events with 100% accuracy.",
+      "Partnered with business teams to track transactions per user, retention anomalies, and portfolio-performance KPIs.",
+      "Role concluded due to contract ramp-down."
     ]
   },
   {
     id: 3,
-    company: "Happymonk AI Labs",
-    role: "Data Science Intern",
-    location: "Remote, India",
-    type: "Internship",
-    duration: "May 2023 - Mar 2024",
-    logo: "H",
+    company: "Cointab",
+    role: "Data Analyst",
+    location: "Mumbai, India",
+    type: "Full-time",
+    duration: "May 2024 – Aug 2024",
+    logo: "C",
     achievements: [
-      "Built 98% accurate object detection models (YOLO/Faster R-CNN) by aggregating multi-source data",
-      "Led large-scale data annotation (100,000+ images) with rigorous QA checks to optimize model accuracy",
-      "Deployed real-time detection systems on 50+ concurrent video streams achieving <200ms latency with 95%+ inference accuracy"
+      "Built automated multi-stage financial-reconciliation workflows for client Gameskraft's fraud-detection pipeline, saving ~100 analyst-hours/month.",
+      "Configured in-house tooling using Python and SQL to automate reconciliation logic for financial audits.",
+      "Analyzed customer transaction flows to detect anomalies, improving fraud-detection accuracy and reducing manual investigation time.",
+      "Designed BI reports with marketing and sales on churn cohorts and transaction-volume trends.",
+      "Role ended in a company-wide layoff (Aug 2024)."
     ]
   },
   {
     id: 4,
+    company: "Happymonk AI Labs",
+    role: "Data Science Intern",
+    location: "Remote, India",
+    type: "Internship",
+    duration: "May 2023 – Mar 2024",
+    logo: "H",
+    achievements: [
+      "Built CNN-based object-detection models (YOLO, Faster R-CNN) reaching 98% inference accuracy by aggregating multi-source data.",
+      "Led large-scale image annotation (100,000+ images) with rigorous QA pipelines to optimize model accuracy.",
+      "Deployed real-time detection systems on 50+ concurrent video streams achieving <200 ms latency with 95%+ inference accuracy.",
+      "The data-science department was shut down before conversion to full-time."
+    ]
+  },
+  {
+    id: 5,
     company: "Healthcare Technology Innovation Center",
     role: "Research Intern",
     location: "Remote, India",
     type: "Internship",
-    duration: "Jun 2023 - Sep 2023",
+    duration: "Jun 2023 – Sep 2023",
     logo: "HTIC",
     achievements: [
-      "Contributed to ML/AI-based techniques for vascular health assessment using ARTSENS, an innovative image-free ultrasound system",
-      "Developed Python scripts for automating ultrasound data screening and generating motion mode images",
-      "Applied signal processing and machine learning skills to design and evaluate models for carotid artery wall dynamics"
+      "Contributed to ML/AI-based techniques for vascular health assessment using ARTSENS, an image-free ultrasound system.",
+      "Developed Python scripts to automate ultrasound data screening and generate motion-mode images.",
+      "Designed and evaluated ML models for carotid-artery wall dynamics.",
+      "Four-month internship, completed on schedule."
     ]
   }
 ];
@@ -79,108 +100,106 @@ export const experiences = [
 export const projects = [
   {
     id: 1,
-    title: "SmartDoc AI - Document Intelligence Platform",
-    description: "A full-stack generative AI platform utilizing Retrieval Augmented Generation (RAG) for intelligent Q&A and document summarization with secure authentication and real-time analytics.",
-    duration: "Mar 2025 - May 2025",
+    title: "Leo Hydra Studio — Live commerce + chatbot for a one-principal art business",
+    description: "Built and run the full operating layer for a one-principal art business — artist in Dubai, me in Mumbai. Production e-commerce site with USDT-on-Polygon checkout, server-side Meta CAPI tracking, admin panel, and security-audited migration history. End-to-end ownership: code, payments, growth, ops, content production.",
+    duration: "Oct 2025 – Present",
+    tags: ["Next.js 14", "Supabase", "ethers.js", "Polygon USDT", "Meta CAPI", "FastAPI", "Vercel", "GitHub Actions"],
+    liveUrl: "https://leohydra.com",
+    image: "https://images.unsplash.com/photo-1545987796-200677ee1011?w=800&q=80",
+    featured: true,
+    achievements: [
+      "Atomic payment confirmation with SELECT FOR UPDATE row-lock + status-guarded UPDATEs to close races between confirm / cancel / auto-expire (mig 031).",
+      "Postgres-backed distributed rate limiter (mig 029); admin login brute-force lockout — 5/hr per IP + 30/15min global (mig 030).",
+      "Server-side Meta Conversions API with browser-pixel dedup via shared eventID; PII hashed per Meta spec.",
+      "Three security audit rounds, ~11 security commits, five new migrations (027–031). CSRF Origin checks on admin POSTs, PII redaction on order-detail, customer-input length caps + control-char stripping, CSP + security headers.",
+      "Run Meta ad campaigns, manage limited-edition print production with printing houses, coordinate Dubai-warehouse fulfillment, direct video editors for Reels, sound design + posting."
+    ]
+  },
+  {
+    id: 2,
+    title: "SmartDoc AI — Document Intelligence Platform",
+    description: "End-to-end RAG platform for document summarization and Q&A. Secure FastAPI backend with JWT auth for user / document / API-key management. User + admin dashboards via Streamlit with real-time usage analytics. Containerized with Docker Compose.",
+    duration: "Mar 2025 – May 2025",
     tags: ["Python", "FastAPI", "RAG", "LangChain", "Streamlit", "Docker", "JWT"],
     liveUrl: "https://smartdoc-ai-user.streamlit.app/",
     githubUrl: "https://github.com/Arnav-Kumar1",
     image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80",
     featured: true,
     achievements: [
-      "Engineered secure FastAPI backend with JWT authentication for robust user, document, and API key management",
-      "Delivered intuitive user/admin dashboards with real-time analytics via Streamlit",
-      "Containerized application with Docker Compose for scalable deployment"
-    ]
-  },
-  {
-    id: 2,
-    title: "Boosting Gym Membership Engagement",
-    description: "Comprehensive data analysis project performing cohort analysis and churn prediction on 100K+ customer records, identifying retention drivers and implementing data-driven strategies.",
-    duration: "Jul 2022 - Oct 2022",
-    tags: ["Python", "SQL", "Power BI", "Churn Prediction", "Cohort Analysis"],
-    githubUrl: "https://github.com/Arnav-Kumar1/The-Track-Fitness-Club",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80",
-    featured: true,
-    achievements: [
-      "Improved client retention by 15% through targeted promotions",
-      "Reduced overcrowding by 15% with data-driven scheduling strategies",
-      "Presented insights via Power BI dashboards supporting business decision-making"
+      "Engineered secure FastAPI backend with JWT authentication for robust user, document, and API-key management.",
+      "Delivered intuitive user and admin dashboards with real-time analytics via Streamlit.",
+      "Containerized the full application with Docker Compose for scalable deployment."
     ]
   },
   {
     id: 3,
-    title: "AI App for Forecasting Malaria",
-    description: "International collaboration to develop an AI-powered application for malaria prediction and forecasting in Liberia, West Africa, using XGBoost models.",
-    duration: "Jan 2024 - Apr 2024",
+    title: "AI for Malaria Forecasting — Omdena × Liberia",
+    description: "Open-source ML collaboration with Omdena's international chapter, modeling malaria incidence forecasting for Liberia, West Africa. Built and tuned XGBoost models; deployed via Streamlit; containerized with Docker. International collaboration experience + work outside the for-profit lane.",
+    duration: "Jan 2024 – Apr 2024",
     tags: ["Python", "XGBoost", "Streamlit", "Docker", "ML"],
     liveUrl: "https://malaria-prediction.streamlit.app/",
     githubUrl: "https://github.com/Arnav-Kumar1",
     image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
     featured: true,
     achievements: [
-      "Collaborated internationally as ML Engineer with Omdena",
-      "Built and optimized XGBoost models for malaria prediction",
-      "Contributing to an expected 12-15% reduction in deaths in Liberia",
-      "Deployed app via Streamlit and containerized with Docker"
+      "Collaborated internationally as ML Engineer with Omdena's Liberia chapter.",
+      "Built and tuned XGBoost models for malaria-incidence prediction.",
+      "Deployed via Streamlit, containerized with Docker for scalable distribution."
     ]
-  },
-  {
-    id: 4,
-    title: "Live Attendance Monitoring System",
-    description: "Real-time facial recognition system for tracking attendance, integrating with Firebase NoSQL cloud database for face matching and verification.",
-    tags: ["Python", "Computer Vision", "Firebase", "Face Recognition"],
-    githubUrl: "https://github.com/Arnav-Kumar1/Live-Attendence-Monitoring-System",
-    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80"
-  },
-  {
-    id: 5,
-    title: "Stock Price Prediction",
-    description: "Time series prediction using LSTM neural networks for stock market analysis and forecasting.",
-    tags: ["Python", "LSTM", "TensorFlow", "Time Series"],
-    githubUrl: "https://github.com/Arnav-Kumar1/stock-price-prediction",
-    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80"
-  },
-  {
-    id: 6,
-    title: "Marketing Strategy - Personalized Offer",
-    description: "Machine learning model to predict driver behavior and offer acceptance during trips, utilizing Random Forest classification.",
-    tags: ["Python", "Random Forest", "Scikit-learn", "ML"],
-    githubUrl: "https://github.com/Arnav-Kumar1/Marketing-Strategy---Personalised-Offer",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
-  },
-  {
-    id: 7,
-    title: "MNIST Digit Prediction",
-    description: "Handwritten digit recognition system using CNN deployed on Amazon EC2 with Flask backend and interactive HTML canvas frontend.",
-    tags: ["Python", "CNN", "Flask", "AWS EC2"],
-    githubUrl: "https://github.com/Arnav-Kumar1/mnist_digit_prediction",
-    image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80"
-  },
-  {
-    id: 8,
-    title: "Titanic Survival Prediction",
-    description: "Binary classification model using Random Forest to predict passenger survival on the Titanic dataset.",
-    tags: ["Python", "Random Forest", "Scikit-learn"],
-    githubUrl: "https://github.com/Arnav-Kumar1/titanic_survival",
-    image: "https://images.unsplash.com/photo-1551033406-611cf9a28f67?w=800&q=80"
   }
 ];
 
 export const skills = {
-  languages: ["Python", "SQL (PostgreSQL)", "MongoDB"],
-  frameworks: ["Pandas", "NumPy", "Scikit-learn", "TensorFlow", "PyTorch", "Statsmodels", "Matplotlib", "Seaborn"],
-  tools: ["Power BI", "Tableau", "Excel", "Git", "Docker", "Airflow"],
-  ml: ["Neural Networks", "Random Forest", "XGBoost", "LSTM", "CNN", "YOLO", "Transfer Learning"],
-  specializations: ["Data Cleaning", "ETL Pipelines", "Predictive Modeling", "Data Visualization", "Statistical Analysis", "Feature Engineering"]
+  languages: ["TypeScript", "JavaScript", "Python", "SQL", "HTML / CSS"],
+  frameworks: [
+    "Next.js 14 (App Router)",
+    "React",
+    "Tailwind CSS",
+    "FastAPI",
+    "Node.js",
+    "Pandas",
+    "NumPy",
+    "scikit-learn",
+    "PyTorch",
+    "TensorFlow",
+    "XGBoost"
+  ],
+  tools: [
+    "Vercel",
+    "Supabase (Postgres + RLS + service-role)",
+    "Docker",
+    "GitHub Actions",
+    "Polygon RPC",
+    "ethers.js",
+    "Power BI",
+    "Tableau",
+    "Git"
+  ],
+  ml: [
+    "RAG / LangChain-style pipelines",
+    "LLM-native workflow design",
+    "CNN architectures (YOLO, Faster R-CNN)",
+    "Object detection & annotation",
+    "Random Forest",
+    "XGBoost"
+  ],
+  specializations: [
+    "Founding-engineer scope (full-stack + growth + ops)",
+    "Meta Pixel + Conversions API (server-side, dedup-aware)",
+    "Meta ad campaign operations",
+    "Web3 payments (USDT on Polygon, on-chain verification)",
+    "Production e-commerce engineering",
+    "Adversarial review with AI as sparring partner (Claude Code)",
+    "Vendor & supply-chain management"
+  ]
 };
 
 export const education = [
   {
     id: 1,
-    degree: "Diploma in Data Science",
+    degree: "Diploma in Data Science (BS Foundation, IIT Madras Online Degree)",
     institution: "Indian Institute of Technology (IIT), Madras",
-    duration: "2021 - 2022",
+    duration: "2021 – 2022",
     cgpa: "8.2",
     logo: "IIT"
   },
@@ -188,18 +207,17 @@ export const education = [
     id: 2,
     degree: "B.E. in Electronics & Telecommunication",
     institution: "Smt. Kashibai Navale College of Engineering, Pune",
-    duration: "2016 - 2020",
+    duration: "2016 – 2020",
     cgpa: "7.0",
     logo: "SKNCOE"
   }
 ];
 
 export const achievements = [
-  "100% reconciliation accuracy for 3,000+ daily financial transactions",
-  "15% improvement in report accuracy through automation",
-  "100+ analyst hours saved per month with automated workflows",
-  "98% accuracy in object detection models",
-  "95%+ inference accuracy with <200ms latency on real-time systems",
-  "15% improvement in client retention through data-driven strategies",
-  "12-15% expected reduction in malaria deaths in Liberia"
+  "Solo operator of a one-principal art business: Mumbai-side engineering + growth + ops, Dubai-side artist + warehouse.",
+  "Built a production e-commerce site with crypto + bank checkout, on-chain payment verification, and admin panel.",
+  "Drove three security audit rounds + five new migrations hardening the LeoHydra payment infrastructure.",
+  "Shipped server-side Meta Conversions API with browser-pixel deduplication via shared eventID.",
+  "Reduced manual analyst effort by 100+ hours/month at Cointab via Python + SQL reconciliation workflows.",
+  "98% inference accuracy on real-time object detection across 50+ concurrent video streams at Happymonk."
 ];
