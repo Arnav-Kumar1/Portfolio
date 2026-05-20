@@ -1,71 +1,45 @@
 import React from 'react';
-import { Code2, Database, Wrench, Brain, Target } from 'lucide-react';
 import { skills } from '../data/mock';
 
 const NewSkills = () => {
-  const skillCategories = [
-    {
-      icon: Code2,
-      title: 'Languages',
-      items: skills.languages,
-    },
-    {
-      icon: Database,
-      title: 'Frameworks',
-      items: skills.frameworks,
-    },
-    {
-      icon: Wrench,
-      title: 'Tools & Infrastructure',
-      items: skills.tools,
-    },
-    {
-      icon: Brain,
-      title: 'ML / AI',
-      items: skills.ml,
-    },
-    {
-      icon: Target,
-      title: 'Specializations',
-      items: skills.specializations,
-    },
+  const skillGroups = [
+    { title: 'Languages', items: skills.languages },
+    { title: 'Frameworks', items: skills.frameworks },
+    { title: 'Tools & infrastructure', items: skills.tools },
+    { title: 'ML / AI', items: skills.ml },
+    { title: 'Specializations', items: skills.specializations },
   ];
 
   return (
-    <section id="skills" className="py-24 md:py-32 bg-white relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">Skills</h2>
-          <div className="w-20 h-1 bg-black mx-auto"></div>
+    <section id="skills" className="py-24 md:py-32 bg-white border-t border-gray-100">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Eyebrow + heading */}
+        <div className="mb-16">
+          <p className="text-xs uppercase tracking-[0.2em] text-gray-500 mb-3">04 · Skills</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-black tracking-tight">
+            What I work with.
+          </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {skillCategories.map((category, index) => {
-            const Icon = category.icon;
-            return (
-              <div
-                key={index}
-                className="group bg-white border border-gray-200 rounded-md p-8 hover:border-black transition-all duration-300 animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.08}s` }}
-              >
-                <div className="flex items-center space-x-3 mb-6">
-                  <Icon size={22} className="text-black" />
-                  <h3 className="text-xl font-bold text-black">{category.title}</h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {category.items.map((item, i) => (
-                    <span
-                      key={i}
-                      className="px-3 py-1.5 bg-gray-50 text-gray-700 text-sm font-medium rounded border border-gray-100 hover:bg-black hover:text-white hover:border-black transition-all duration-200"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
+        <div className="space-y-10">
+          {skillGroups.map((group) => (
+            <div
+              key={group.title}
+              className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-3 md:gap-12 border-t border-gray-200 pt-8 first:pt-0 first:border-t-0"
+            >
+              <p className="text-sm font-semibold text-black md:pt-0.5">{group.title}</p>
+              <div className="flex flex-wrap gap-2">
+                {group.items.map((item) => (
+                  <span
+                    key={item}
+                    className="px-2.5 py-1 bg-gray-50 text-gray-700 text-sm font-medium border border-gray-200 rounded"
+                  >
+                    {item}
+                  </span>
+                ))}
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </div>
     </section>
