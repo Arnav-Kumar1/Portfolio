@@ -1,0 +1,9 @@
+# pnpm 10 blocks build scripts from running by default for supply-chain safety.
+# This file explicitly allow-lists which dependencies are permitted to run
+# their postinstall scripts. All four below are well-known packages with
+# legitimate build steps.
+allowBuilds:
+  contentlayer: true
+  esbuild: true
+  protobufjs: true
+  rome: true
