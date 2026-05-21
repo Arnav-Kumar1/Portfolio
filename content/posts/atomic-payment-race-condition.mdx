@@ -1,0 +1,164 @@
+---
+title: "Atomic payment confirmation: closing a race condition in production"
+description: "How a four-way write contention against a single orders row stranded a customer's USDT on-chain — and the SELECT FOR UPDATE pattern that fixed it. From the LeoHydra repo, migration 031."
+date: "2026-05-17"
+published: true
+---
+
+When I launched the Leo Hydra Studio commerce site in late 2025, I had one small persistent fear: **USDT lands on-chain, and on-chain is immutable.** If our application logic isn't airtight around payment confirmation, money can get stranded — paid but un-credited, or canceled but already paid. The wallet has the funds; the database thinks the order is dead; the customer is upset; and there's no automatic path to reconcile.
+
+Six months and three security audit rounds later, that fear materialized exactly once. It produced one of the more interesting race conditions I've debugged in a while. This post is how we found it and how we fixed it — migration `031_confirm_payment_atomic_lock_and_buffer.sql` in the repo, if you're tracking along.
+
+## The setup
+
+LeoHydra accepts two checkout paths:
+
+1. **Bank transfer** — customer initiates, admin manually confirms in the admin panel.
+2. **USDT-on-Polygon** — customer sends USDT to a hot wallet. A Vercel Cron scanner walks `Transfer` events on the receiving wallet every ~2 minutes, matches them against initiated `payments` rows by amount (using a [unique micro-offset discriminator](https://leohydra.com) so two cart-identical orders can't collide), and calls `confirm_payment_atomic(...)` when there's a match.
+
+When `confirm_payment_atomic` is invoked, it does three writes:
+
+1. `UPDATE payments SET status = 'confirmed' WHERE id = $1 AND status = 'initiated'`
+2. `INSERT INTO crypto_payments (...) VALUES (...)`
+3. `UPDATE orders SET status = 'paid' WHERE id = $2 AND status = 'pending_payment'`
+
+Each write has a status guard. If either row has already moved on, the function refuses to act on it. That's idempotent by design — good safety.
+
+But there's a problem.
+
+## The race
+
+There are three *other* paths that update the same `orders` row, and **none of them touch `payments` first**:
+
+1. `/api/orders/[id]/status` — the customer-facing status poll. Has an auto-expire branch: if the order is past its deadline, it flips `status` to `expired`.
+2. `/api/admin/orders/[id]/cancel` — admin cancels a pending bank order.
+3. `expire_orders_and_payments()` — pg_cron runs this every minute on the database side. Cascades stale `pending_payment` orders to `expired`.
+
+`confirm_payment_atomic`'s status guard on `payments` doesn't protect against these writers, because they never read or update `payments`. They just take the `orders` row and run.
+
+Here's the timing that produced the stranded transfer:
+
+```
+T = 0      A user sends USDT on Polygon.
+T = 1 s    The customer-facing status poll fires (third tab? phone reload?).
+           Poll sees expires_at + buffer < now() and triggers auto-expire.
+           Executes:
+             UPDATE orders SET status='expired'
+              WHERE id=$1 AND status='pending_payment'
+           UPDATE succeeds. orders.status = 'expired'.
+
+T = 2 s    Polygon block containing the user's transfer is mined.
+
+T = 8 s    The Cron scanner runs. It sees the new Transfer event in
+           the block, matches it to an initiated payment row, calls
+           confirm_payment_atomic().
+              Step 1: UPDATE payments WHERE status='initiated'
+                      → 1 row updated   ✓
+              Step 2: INSERT INTO crypto_payments
+                      → success         ✓
+              Step 3: UPDATE orders WHERE status='pending_payment'
+                      → 0 rows updated  ✗
+              RAISES EXCEPTION. Whole transaction rolls back.
+
+Net result:
+  • The crypto_payments row is gone (rollback).
+  • The payment is back to 'initiated' for a future retry.
+  • The on-chain transfer? Still happened. The USDT is in our hot wallet.
+  • The order? Still 'expired'.
+  • The customer's funds are stranded. Reconciliation has to be manual.
+```
+
+The window is small — maybe a few hundred milliseconds in most cases — but on the open internet, "small race window" still means "fires occasionally, especially when something else is slow." When it fires, it strands money. That is the worst possible failure mode for a payment system.
+
+## The fix
+
+The standard SQL move for this shape of problem: **take a pessimistic row lock on the order before doing any work**, and structure the lock so all the conflicting writers serialize through it.
+
+```sql
+CREATE OR REPLACE FUNCTION confirm_payment_atomic(...)
+RETURNS void
+LANGUAGE plpgsql SECURITY DEFINER
+AS $$
+DECLARE
+  v_order_id UUID;
+BEGIN
+  -- 0) Resolve the order from the payment, then SELECT … FOR UPDATE.
+  -- This takes a row-level pessimistic lock on the orders row that's
+  -- held until the transaction commits or rolls back. Any other writer
+  -- against the same row blocks here.
+  SELECT order_id INTO v_order_id FROM public.payments WHERE id = p_payment_id;
+  IF v_order_id IS NULL THEN
+    RAISE EXCEPTION 'Payment not found';
+  END IF;
+  PERFORM 1 FROM public.orders WHERE id = v_order_id FOR UPDATE;
+
+  -- 1) Update payment (status-guarded, idempotent)
+  UPDATE public.payments
+  SET status = 'confirmed', confirmed_at = now()
+  WHERE id = p_payment_id AND status = 'initiated';
+
+  -- 2) Insert crypto_payments row
+  INSERT INTO public.crypto_payments (...) VALUES (...);
+
+  -- 3) Update order (also status-guarded; we hold the lock, no contenders)
+  UPDATE public.orders
+  SET status = 'paid', paid_at = now()
+  WHERE id = v_order_id AND status = 'pending_payment';
+
+  ...
+END;
+$$;
+```
+
+The new line is `PERFORM 1 FROM public.orders WHERE id = v_order_id FOR UPDATE;`. After it runs:
+
+- Any other transaction trying to `UPDATE orders` for this id — auto-expire, admin cancel, cron expire — **blocks** at its own write until our transaction commits.
+- On commit, those queued writers wake up. Their `WHERE status = 'pending_payment'` clauses re-evaluate against the post-commit state, find `'paid'`, and no-op.
+- The on-chain payment is credited. The `crypto_payments` row is recorded. The order is marked paid. Atomically.
+
+If somehow we acquired the lock but the order was *already* in a terminal state before we arrived (e.g. an admin canceled it 200 ms before our function fired), Step 3's status-guarded `UPDATE` matches zero rows. The function raises, the whole transaction rolls back, the on-chain transfer sits in the hot wallet for manual reconciliation. That's the right outcome — we don't pretend a stranded transfer didn't happen; we surface it for human triage rather than silently swallow it.
+
+## Aligning the deadline buffer
+
+There was one more wrinkle. `lib/verify-payment.ts` has a 60-second grace window — a named constant `EXPIRY_BLOCK_TIMESTAMP_BUFFER_MS = 60_000` — to absorb Polygon block-time variance and modest clock drift. A transfer whose block timestamp lands within that buffer should still be accepted.
+
+But `expire_orders_and_payments()` was checking strictly: `expires_at < now()`. So the cron could flip an order to `expired` during the 60-second buffer, breaking the same race in reverse: a tx that verify-payment would have accepted gets pre-empted by an over-eager cron, and we're back to stranded funds.
+
+Fix: align the buffer everywhere.
+
+```sql
+CREATE OR REPLACE FUNCTION expire_orders_and_payments()
+RETURNS void LANGUAGE plpgsql AS $$
+BEGIN
+  UPDATE public.payments
+  SET status = 'expired'
+  WHERE status = 'initiated'
+    AND order_id IN (
+      SELECT id FROM public.orders
+       WHERE status = 'pending_payment'
+         AND expires_at + interval '60 seconds' < now()
+    );
+
+  UPDATE public.orders
+  SET status = 'expired'
+  WHERE status = 'pending_payment'
+    AND expires_at + interval '60 seconds' < now();
+END;
+$$;
+```
+
+Now all three deadline-enforcement sites agree on when an order is dead: verify-payment, the status-route auto-expire, and the cron. No more disagreement. The same constant governs all three: 60 seconds of grace.
+
+## The takeaway
+
+The race here wasn't subtle in retrospect — four writers, one row, no coordination — of course there's a race. But it's the kind of race that's invisible during normal testing because you'd never hit the millisecond-level timing manually. You need either chaos engineering, a stranded transfer in production, or someone deliberately drawing all the writers on paper to find it.
+
+Three lessons I'm carrying forward:
+
+1. **Idempotent status guards aren't enough on their own.** If multiple transactions write to the same row, you need a lock at the entry of the critical section. Status guards are a great second line of defense, but they don't serialize against writers that don't read the row before writing.
+
+2. **All deadline checks must agree.** If verify-payment has a 60-second grace, every cron, trigger, and route that enforces the same deadline needs the same grace. Otherwise you have an off-by-one — or off-by-60-seconds — bug waiting.
+
+3. **Audit any place where you have multiple writers to the same row.** I found this by drawing the writers on a napkin: confirm-payment, status-route auto-expire, admin cancel, cron expire. Four writers, one row, no coordination. The napkin was the bug.
+
+The whole fix is migration 031 in the LeoHydra codebase. Six lines of net new code, twenty lines of comment explaining why. The cheapest fixes are the ones that look obvious in retrospect.
