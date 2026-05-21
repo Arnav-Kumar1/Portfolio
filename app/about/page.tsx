@@ -6,15 +6,15 @@ const experiences = [
 		id: 1,
 		company: "Leo Hydra Studio",
 		role: "Freelance Engineer + Operator",
-		location: "Remote (Mumbai ↔ Dubai)",
+		location: "Remote (Mumbai / Dubai)",
 		type: "Freelance",
-		duration: "Oct 2025 – Present",
+		duration: "Oct 2025 to Present",
 		achievements: [
-			"Sole operating team for a one-principal art business based in Dubai — artist makes the work; I do everything else from Mumbai.",
+			"Sole operating team for a one-principal art business based in Dubai. Artist makes the work; I do everything else from Mumbai.",
 			"Built and run the production e-commerce platform at leohydra.com: Next.js 14, Supabase Postgres, USDT-on-Polygon checkout with on-chain payment verification, bank transfer with admin manual confirm, ~12 tables, ~30 migrations, ~22 API routes, ~50 React components.",
 			"Server-side Meta Pixel + Conversions API across every conversion surface (checkout / forms / newsletter / product pages / PageView), dedup-aware via shared eventID. Transactional email pipeline (Resend, 6 lifecycle kinds, audit-logged with admin resend UI).",
-			"Three documented security audit rounds + 5 new migrations (027–031): DB-backed rate limiter, admin brute-force lockout, CSRF Origin checks, PII redaction, HMAC-secret isolation, CSP + security headers.",
-			"AI-native engineering workflow — Claude Code as sparring partner for threat modeling, adversarial review, and code generation. AI handles the typing; design, threat model, rollout sequencing are mine.",
+			"Three documented security audit rounds + 5 new migrations (027 to 031): DB-backed rate limiter, admin brute-force lockout, CSRF Origin checks, PII redaction, HMAC-secret isolation, CSP + security headers.",
+			"AI-native engineering workflow. Claude Code as sparring partner for threat modeling, adversarial review, and code generation. AI handles the typing; design, threat model, rollout sequencing are mine.",
 			"Operations: run Meta ad campaigns, manage limited-edition print production with printing houses, coordinate Dubai-warehouse fulfillment, hire and direct video editors, sound design + multi-platform posting.",
 		],
 	},
@@ -24,7 +24,7 @@ const experiences = [
 		role: "Data Operations Analyst",
 		location: "Bengaluru, India",
 		type: "Contract",
-		duration: "Nov 2024 – Jan 2025",
+		duration: "Nov 2024 to Jan 2025",
 		achievements: [
 			"Built automated SQL + Python pipelines for ~3,000 daily/monthly financial transactions for a SaaS portfolio system, ensuring 100% reconciliation.",
 			"Automated data validation and error-fixing in Python; raised report accuracy ~15%.",
@@ -39,7 +39,7 @@ const experiences = [
 		role: "Data Analyst",
 		location: "Mumbai, India",
 		type: "Full-time",
-		duration: "May 2024 – Aug 2024",
+		duration: "May 2024 to Aug 2024",
 		achievements: [
 			"Built automated multi-stage financial-reconciliation workflows for client Gameskraft's fraud-detection pipeline; saved ~100 analyst-hours/month.",
 			"Configured in-house tooling using Python and SQL to automate reconciliation logic for financial audits.",
@@ -54,7 +54,7 @@ const experiences = [
 		role: "Data Science Intern",
 		location: "Remote, India",
 		type: "Internship",
-		duration: "May 2023 – Mar 2024",
+		duration: "May 2023 to Mar 2024",
 		achievements: [
 			"Built CNN-based object-detection models (YOLO, Faster R-CNN) reaching 98% inference accuracy by aggregating multi-source data.",
 			"Led large-scale image annotation (100,000+ images) with rigorous QA pipelines.",
@@ -68,7 +68,7 @@ const experiences = [
 		role: "Research Intern",
 		location: "Remote, India",
 		type: "Internship",
-		duration: "Jun 2023 – Sep 2023",
+		duration: "Jun 2023 to Sep 2023",
 		achievements: [
 			"Contributed to ML/AI techniques for vascular health assessment using ARTSENS (image-free ultrasound system).",
 			"Developed Python scripts to automate ultrasound data screening and generate motion-mode images.",
@@ -143,14 +143,14 @@ const education = [
 		id: 1,
 		degree: "Diploma in Data Science (BS Foundation, IIT Madras Online Degree)",
 		institution: "Indian Institute of Technology (IIT), Madras",
-		duration: "2021 – 2022",
+		duration: "2021 to 2022",
 		cgpa: "8.2",
 	},
 	{
 		id: 2,
 		degree: "B.E. in Electronics & Telecommunication",
 		institution: "Smt. Kashibai Navale College of Engineering, Pune",
-		duration: "2016 – 2020",
+		duration: "2016 to 2020",
 		cgpa: "7.0",
 	},
 ];
@@ -174,27 +174,27 @@ export default function AboutPage() {
 					<div className="mt-8 space-y-6 text-zinc-300 leading-relaxed">
 						<p>
 							I run the operating layer of a one-principal art business based in
-							Dubai from Mumbai — code the site, run the ads, manage vendors,
-							move inventory, ship the right thing on the right day. Comfortable
-							wearing every hat a seed-to-Series-A startup needs from its first
-							or second non-founder hire.
+							Dubai from Mumbai. Code the site, run the ads, manage vendors,
+							move inventory, ship the right thing on the right day.
+							Comfortable wearing every hat a seed-to-Series-A startup needs
+							from its first or second non-founder hire.
 						</p>
 						<p>
 							I&apos;m a generalist by training and by accident. IIT Madras BS
-							Degree in Data Science, B.E. in Electronics &amp; Telecommunication
-							from SKNCOE Pune. Four data roles between 2023 and 2025 — two
-							ended in layoffs (Recro and Cointab, both during the 2024–25
-							sector downturn), one was an internship that closed on schedule,
-							one was a department shutdown before conversion. In late 2025 I
-							joined Leo Hydra Studio as the full operating team and have been
-							running it since.
+							Degree in Data Science, B.E. in Electronics &amp;
+							Telecommunication from SKNCOE Pune. Four data roles between 2023
+							and 2025. Two ended in layoffs (Recro and Cointab, both during the
+							2024 to 2025 sector downturn), one was an internship that closed
+							on schedule, one was a department shutdown before conversion. In
+							late 2025 I joined Leo Hydra Studio as the full operating team and
+							have been running it since.
 						</p>
 						<p>
-							AI tools — Claude Code, LLM agents — used as a force multiplier,
-							not a substitute for thinking. Three documented security audit
-							rounds on the LeoHydra codebase ran through this workflow: AI as
-							sparring partner for threat modeling and adversarial review;
-							design choices, threat model, and rollout sequencing are mine.
+							AI tools (Claude Code, LLM agents) used as a force multiplier, not
+							a substitute for thinking. Three documented security audit rounds
+							on the LeoHydra codebase ran through this workflow: AI as sparring
+							partner for threat modeling and adversarial review; design
+							choices, threat model, and rollout sequencing are mine.
 						</p>
 						<p>
 							Not the deepest specialist in any one lane. Probably the best

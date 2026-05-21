@@ -1,6 +1,6 @@
-# Arnav Kumar — Portfolio (v2)
+# Arnav Kumar Portfolio (v2)
 
-Personal portfolio site for Arnav Kumar — *Generalist Founding Operator*.
+Personal portfolio site for Arnav Kumar, *Generalist Founding Operator*.
 
 **Live:** [portfolio-arnav-kumar.vercel.app](https://portfolio-arnav-kumar.vercel.app)
 
@@ -8,8 +8,8 @@ Personal portfolio site for Arnav Kumar — *Generalist Founding Operator*.
 
 - [Next.js 14](https://nextjs.org/) (App Router)
 - [Tailwind CSS](https://tailwindcss.com/)
-- [Contentlayer](https://www.contentlayer.dev/) — MDX-based content for project case studies
-- [next/og](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image) — dynamic OG image + favicon generation
+- [Contentlayer](https://www.contentlayer.dev/) for MDX-based project case studies
+- [next/og](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image) for dynamic OG image + favicon generation
 - Deployed on [Vercel](https://vercel.com/)
 
 ## Structure

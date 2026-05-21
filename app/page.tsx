@@ -45,7 +45,7 @@ export default function Home() {
           >
             leohydra.com
           </Link>{" "}
-          end-to-end — code, commerce, growth, and ops for a one-principal art business based in Dubai.
+          end-to-end. Code, commerce, growth, and ops for a one-principal art business based in Dubai.
         </h2>
       </div>
     </div>

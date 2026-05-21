@@ -32,7 +32,7 @@ export default async function WritingPage() {
 
 				<div className="space-y-8">
 					{posts.length === 0 ? (
-						<p className="text-zinc-500 italic">No posts yet — more soon.</p>
+						<p className="text-zinc-500 italic">No posts yet. More soon.</p>
 					) : (
 						posts.map((post) => (
 							<Card key={post.slug}>

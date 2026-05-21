@@ -1,7 +1,7 @@
 import { ImageResponse } from "@vercel/og";
 
 export const runtime = "edge";
-export const alt = "Arnav Kumar — Generalist Founding Operator";
+export const alt = "Arnav Kumar, Generalist Founding Operator";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
