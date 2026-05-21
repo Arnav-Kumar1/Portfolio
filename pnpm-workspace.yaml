@@ -7,3 +7,4 @@ allowBuilds:
   esbuild: true
   protobufjs: true
   rome: true
+  sharp: true
