@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title: "Arnav Kumar — Generalist Founding Operator",
     description:
       "Engineer + growth + ops in one. Currently running a one-principal art business from Mumbai while the founder is in Dubai. Open to founding-engineer / first-non-founder roles at Series A–B startups.",
-    url: "https://arnav.kumar",
+    url: "https://portfolio-arnav-kumar.vercel.app",
     siteName: "Arnav Kumar",
     locale: "en-US",
     type: "website",
