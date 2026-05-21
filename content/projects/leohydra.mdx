@@ -8,7 +8,7 @@ published: true
 
 I built the entire site from zero. No template, no inherited codebase, no rebuild of someone else's work. Sole operating team for a one-principal art business based in Dubai. Artist makes the work; I designed, coded, and ship everything else from Mumbai. Live at [leohydra.com](https://leohydra.com).
 
-![Leo Hydra Studio homepage: "LEO HYDRA DUBAI · ORIGINAL WORKS · LIMITED EDITIONS"](/screenshots/leohydra-home.png)
+![Leo Hydra Studio homepage: large-format original on a luxurious interior wall, with the LEO HYDRA DUBAI · ORIGINAL WORKS · LIMITED EDITIONS positioning](/screenshots/leohydra-home.png)
 
 ## What I built
 
@@ -20,9 +20,7 @@ A production-grade Next.js 14 e-commerce platform that I architected and wrote f
 - **Transactional email pipeline:** Resend-backed sends across six lifecycle email kinds (order confirmation, bank instructions, bank reference submitted, bank confirmed, order recovery, studio notifications). Every send writes a row to an append-only `order_email_events` audit table. Admin "Resend" UI is synced with the API route mapping so what's offered and what's sent stay in sync.
 - **Meta Pixel + Conversions API** across every conversion surface (checkout, inquiry / contact / project-request forms, newsletter, product pages, site-wide PageView), all dedup-aware via a shared `eventID`, PII hashed SHA-256 per Meta spec. Browser PageView uses `navigator.sendBeacon` with a `fetch` `keepalive` fallback.
 
-![Limited Edition Prints listing — the products customers reach from the homepage shop nav, with edition + year metadata](/screenshots/leohydra-prints.png)
-
-![A specific print detail page (Chromatic): paper specs (Hahnemühle Photo Rag 310gsm), edition info (50 worldwide), $199 USD pricing, real-time stock counter ("50 of 50 remaining"), and the Add-to-Selection CTA. Every line of this UI was hand-built.](/screenshots/leohydra-product-chromatic.png)
+![Limited-edition print product page (Peblinge Lake), preorder state: edition info, $199 USD, "Edition of 50 · In production · Preorder open", PREORDER CTA. Every state (preorder / available / fully collected) is its own variant of this same product UI.](/screenshots/leohydra-print-detail.png)
 
 ## Engineering scale
 
@@ -31,7 +29,7 @@ A production-grade Next.js 14 e-commerce platform that I architected and wrote f
 - ~22 API routes; ~26 frontend pages; ~50 React components
 - Three documented security audit rounds, ~11 security commits, five new migrations (027 to 031) hardening rate limiting, brute-force lockout, CSRF Origin checks, PII redaction, three isolated HMAC secrets, CSP + security headers in `next.config.js`
 
-![Original Artworks page — separate flow for inquiring about unique pieces vs. ordering prints](/screenshots/leohydra-originals.png)
+![Original-artwork detail page (The Turn): acrylic-on-canvas spec, "AVAILABLE" status, certificate / signature / worldwide-delivery features, "Price: Available on inquiry", INQUIRE TO ACQUIRE CTA. A separate commerce model from the prints — unique pieces priced on inquiry, not point-of-sale.](/screenshots/leohydra-original-detail.png)
 
 ## AI-native engineering workflow
 
@@ -41,6 +39,6 @@ The system was built and audited *through* Claude Code as a sparring partner for
 
 Run Meta ad campaigns end-to-end. Manage limited-edition print production with printing houses. Coordinate fulfillment from the Dubai warehouse. Hire and direct video editors. Sound design and multi-platform posting (Behance / Tumblr / Instagram). Use Claude Code as a creative production tool to scale Reels generation.
 
-![Studio Correspondence: contact form with inquiry-type tabs (Acquisition, Commission, Catalogue, General Correspondence)](/screenshots/leohydra-contact.png)
+![The cart / "Review your selection" page mid-checkout — three prints in cart (Chromatic, The G, Fairytales) at $199 each, $597 subtotal, PROCEED TO CHECKOUT button, plus trust-badge column (Authentic & Signed / Secure Packaging / Worldwide Shipping). The dual-rail checkout described above is what this button leads into.](/screenshots/leohydra-cart.png)
 
 Live at [leohydra.com](https://leohydra.com).
