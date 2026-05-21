@@ -105,7 +105,7 @@ module.exports = {
 				title: {
 					"0%": {
 						"line-height": "0%",
-						"letter-spacing": "0.25em",
+						"letter-spacing": "0.4em",
 						opacity: "0",
 					},
 					"25%": {
@@ -118,6 +118,7 @@ module.exports = {
 
 					"100%": {
 						"line-height": "100%",
+						"letter-spacing": "normal",
 						opacity: "100%",
 					},
 				},
