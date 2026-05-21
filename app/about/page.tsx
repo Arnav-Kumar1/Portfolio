@@ -161,7 +161,7 @@ export default function AboutPage() {
 			<Navigation />
 			<div className="px-6 pt-20 mx-auto space-y-12 max-w-4xl lg:px-8 md:space-y-16 md:pt-24 lg:pt-32">
 				{/* About */}
-				<section>
+				<section className="animate-fade-up">
 					<div className="max-w-2xl mx-auto lg:mx-0">
 						<h2 className="text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl">
 							About
@@ -207,7 +207,7 @@ export default function AboutPage() {
 				</section>
 
 				{/* Experience */}
-				<section>
+				<section className="animate-fade-up" style={{ animationDelay: "0.1s" }}>
 					<div className="max-w-2xl mx-auto lg:mx-0">
 						<h2 className="text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl">
 							Experience
@@ -218,10 +218,11 @@ export default function AboutPage() {
 					</div>
 					<div className="w-full h-px bg-zinc-800 mt-8" />
 					<div className="mt-8 space-y-12">
-						{experiences.map((exp) => (
+						{experiences.map((exp, i) => (
 							<article
 								key={exp.id}
-								className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-4 md:gap-12 pb-12 border-b border-zinc-800 last:border-b-0 last:pb-0"
+								className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-4 md:gap-12 pb-12 border-b border-zinc-800 last:border-b-0 last:pb-0 animate-fade-up"
+								style={{ animationDelay: `${0.15 + i * 0.06}s` }}
 							>
 								<div className="text-sm text-zinc-500 space-y-1">
 									<p>{exp.duration}</p>
@@ -255,7 +256,7 @@ export default function AboutPage() {
 				</section>
 
 				{/* Skills */}
-				<section>
+				<section className="animate-fade-up" style={{ animationDelay: "0.2s" }}>
 					<div className="max-w-2xl mx-auto lg:mx-0">
 						<h2 className="text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl">
 							Skills
@@ -287,7 +288,7 @@ export default function AboutPage() {
 				</section>
 
 				{/* Education */}
-				<section>
+				<section className="animate-fade-up" style={{ animationDelay: "0.25s" }}>
 					<div className="max-w-2xl mx-auto lg:mx-0">
 						<h2 className="text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl">
 							Education

@@ -25,7 +25,7 @@ export default async function PostPage({ params }: Props) {
 			<Navigation />
 			<header className="relative isolate overflow-hidden bg-gradient-to-tl from-black via-zinc-900 to-black pt-24 pb-16 md:pt-32 md:pb-24">
 				<div className="container mx-auto px-6 lg:px-8">
-					<div className="mx-auto max-w-3xl">
+					<div className="mx-auto max-w-3xl animate-fade-up">
 						{post.date && (
 							<time
 								dateTime={new Date(post.date).toISOString()}
@@ -46,7 +46,10 @@ export default async function PostPage({ params }: Props) {
 				</div>
 			</header>
 
-			<article className="px-4 py-12 mx-auto prose prose-zinc prose-quoteless">
+			<article
+				className="px-4 py-12 mx-auto prose prose-zinc prose-quoteless animate-fade-up"
+				style={{ animationDelay: "0.15s" }}
+			>
 				<Mdx code={post.body.code} />
 			</article>
 		</div>
