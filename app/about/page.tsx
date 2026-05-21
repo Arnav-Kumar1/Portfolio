@@ -10,8 +10,8 @@ const experiences = [
 		type: "Freelance",
 		duration: "Oct 2025 to Present",
 		achievements: [
-			"Sole operating team for a one-principal art business based in Dubai. Artist makes the work; I do everything else from Mumbai.",
-			"Built and run the production e-commerce platform at leohydra.com: Next.js 14, Supabase Postgres, USDT-on-Polygon checkout with on-chain payment verification, bank transfer with admin manual confirm, ~12 tables, ~30 migrations, ~22 API routes, ~50 React components.",
+			"Sole operating team for a one-principal art business based in Dubai. Artist makes the work; I hand-coded the platform and run everything else from Mumbai. No template, no inherited codebase.",
+			"Architected and wrote the production e-commerce platform at leohydra.com from scratch. Stack: Next.js 14, Supabase Postgres, USDT-on-Polygon checkout with on-chain payment verification, bank transfer with admin manual confirm, ~12 tables, ~30 migrations, ~22 API routes, ~50 React components.",
 			"Server-side Meta Pixel + Conversions API across every conversion surface (checkout / forms / newsletter / product pages / PageView), dedup-aware via shared eventID. Transactional email pipeline (Resend, 6 lifecycle kinds, audit-logged with admin resend UI).",
 			"Three documented security audit rounds + 5 new migrations (027 to 031): DB-backed rate limiter, admin brute-force lockout, CSRF Origin checks, PII redaction, HMAC-secret isolation, CSP + security headers.",
 			"AI-native engineering workflow. Claude Code as sparring partner for threat modeling, adversarial review, and code generation. AI handles the typing; design, threat model, rollout sequencing are mine.",
@@ -173,11 +173,13 @@ export default function AboutPage() {
 					<div className="w-full h-px bg-zinc-800 mt-8" />
 					<div className="mt-8 space-y-6 text-zinc-300 leading-relaxed">
 						<p>
-							I run the operating layer of a one-principal art business based in
-							Dubai from Mumbai. Code the site, run the ads, manage vendors,
-							move inventory, ship the right thing on the right day.
-							Comfortable wearing every hat a seed-to-Series-A startup needs
-							from its first or second non-founder hire.
+							I built a production e-commerce platform from scratch and run
+							the entire operating layer of a one-principal art business based
+							in Dubai, from Mumbai. Every line of the codebase is mine. I also
+							run the ads, manage the vendors, move inventory, and ship the
+							right thing on the right day. Comfortable wearing every hat a
+							seed-to-Series-A startup needs from its first or second
+							non-founder hire.
 						</p>
 						<p>
 							I&apos;m a generalist by training and by accident. IIT Madras BS

@@ -1,16 +1,16 @@
 ---
 title: Leo Hydra Studio
-description: Production e-commerce platform I built and run end-to-end for a one-principal art business. Dual-rail crypto + bank checkout, server-side Meta CAPI, transactional email pipeline, security-audited migration history. ~12 Postgres tables, ~30 migrations, ~22 API routes, ~50 React components.
+description: Production e-commerce platform I hand-coded from scratch and run end-to-end for a one-principal art business. Every line of code is mine. Dual-rail crypto + bank checkout, server-side Meta CAPI, transactional email pipeline, security-audited migration history. ~12 Postgres tables, ~30 migrations, ~22 API routes, ~50 React components.
 date: "2025-10-01"
 url: https://leohydra.com
 published: true
 ---
 
-Sole operating team for a one-principal art business based in Dubai. Artist makes the work; I do everything else from Mumbai. Live at [leohydra.com](https://leohydra.com).
+I built the entire site from zero. No template, no inherited codebase, no rebuild of someone else's work. Sole operating team for a one-principal art business based in Dubai. Artist makes the work; I designed, coded, and ship everything else from Mumbai. Live at [leohydra.com](https://leohydra.com).
 
 ## What I built
 
-A production-grade Next.js 14 e-commerce platform with:
+A production-grade Next.js 14 e-commerce platform that I architected and wrote from scratch:
 
 - **Dual-rail checkout:** USDT-on-Polygon (verified on-chain via `ethers` plus a Vercel Cron scanner walking USDT Transfer events every ~2 minutes) and bank transfer (admin manual confirm, UTR uniqueness enforced at the DB via partial unique index).
 - **Micro-offset payment discriminator:** every crypto order gets a unique 1 to 999 µUSDT offset added to its expected amount, enforced by a partial unique index on `payments(expected_amount_micro) WHERE status='initiated'`. Two pending orders with identical cart totals can never collide on-chain. Reserved and released by status-change triggers.

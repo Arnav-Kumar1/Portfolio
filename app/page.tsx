@@ -37,7 +37,7 @@ export default function Home() {
       <div className="hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
       <div className="my-16 text-center animate-fade-in">
         <h2 className="text-sm text-zinc-500 ">
-          I&apos;m running{" "}
+          I built{" "}
           <Link
             target="_blank"
             href="https://leohydra.com"
@@ -45,7 +45,7 @@ export default function Home() {
           >
             leohydra.com
           </Link>{" "}
-          end-to-end. Code, commerce, growth, and ops for a one-principal art business based in Dubai.
+          from scratch and run it end-to-end. Every line of code, plus commerce, growth, and ops for a one-principal art business based in Dubai.
         </h2>
       </div>
     </div>
