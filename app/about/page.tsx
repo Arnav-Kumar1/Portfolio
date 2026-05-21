@@ -141,7 +141,7 @@ const skillGroups = [
 const education = [
 	{
 		id: 1,
-		degree: "Diploma in Data Science (BS Foundation, IIT Madras Online Degree)",
+		degree: "Diploma in Data Science (Foundational + Diploma levels of the IIT Madras Online Degree program)",
 		institution: "Indian Institute of Technology (IIT), Madras",
 		duration: "2021 to 2022",
 		cgpa: "8.2",
@@ -182,14 +182,16 @@ export default function AboutPage() {
 							non-founder hire.
 						</p>
 						<p>
-							I&apos;m a generalist by training and by accident. IIT Madras BS
-							Degree in Data Science, B.E. in Electronics &amp;
-							Telecommunication from SKNCOE Pune. Four data roles between 2023
-							and 2025. Two ended in layoffs (Recro and Cointab, both during the
-							2024 to 2025 sector downturn), one was an internship that closed
-							on schedule, one was a department shutdown before conversion. In
-							late 2025 I joined Leo Hydra Studio as the full operating team and
-							have been running it since.
+							I&apos;m a generalist by training and by accident. IIT Madras
+							Online Diploma in Data Science (Foundational + Diploma levels of
+							their multi-stage Online Degree program; I exited after the
+							Diploma rather than continuing to BSc/BS), B.E. in Electronics
+							&amp; Telecommunication from SKNCOE Pune. Four data roles between
+							2023 and 2025. Two ended in layoffs (Recro and Cointab, both
+							during the 2024 to 2025 sector downturn), one was an internship
+							that closed on schedule, one was a department shutdown before
+							conversion. In late 2025 I joined Leo Hydra Studio as the full
+							operating team and have been running it since.
 						</p>
 						<p>
 							AI tools (Claude Code, LLM agents) used as a force multiplier, not
