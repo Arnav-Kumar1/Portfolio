@@ -1,0 +1,64 @@
+---
+title: "AI as a sparring partner: how I run security audits with Claude Code"
+description: "Most 'I use AI for coding' discourse misses the most useful thing AI does in engineering. It's not faster syntax — it's adversarial review. A practical workflow from three audit rounds on the Leo Hydra Studio codebase."
+date: "2026-05-19"
+published: true
+---
+
+Most "I use AI for coding" discourse misses the most useful thing AI does in engineering work. It's not "type my React component faster." It's **adversarial review**.
+
+When I built the Leo Hydra Studio commerce site, I ran three full security audits across two months. Each one happened in collaboration with Claude Code — not as a code generator, but as a sparring partner. This is the workflow.
+
+## The setup
+
+The system has real money flowing through it: USDT on Polygon, bank transfers, customer PII, an admin panel, server-side analytics tracking. Each of those is a separate threat surface. The audit was about going through each surface and asking: what could a sophisticated attacker do here? What's the worst plausible outcome? What mitigations close the gap?
+
+I run this kind of work better than I would have a year ago — but not because I became a security specialist. I'm not. The advantage is having an adversarial reviewer available 24/7 who will follow any thread without getting tired, won't get defensive about my code, and can recall security patterns from across thousands of codebases.
+
+That reviewer is Claude Code. Here's how the workflow goes.
+
+## The method
+
+For each subsystem, I open a fresh session with the codebase loaded. The first prompt is some version of:
+
+> "I want to threat-model the admin login endpoint. Walk me through every realistic attack vector — credential stuffing, brute force, timing oracles, IP rotation, session fixation, replay, anything. For each one, classify severity (info / low / medium / high / critical) and tell me whether the current code defends against it. Be ruthlessly adversarial. I want to know what we're missing, not what we're doing right."
+
+Then I read the response carefully.
+
+The output is usually a numbered list of 8–15 attack vectors. Some I already know about, some I forgot, occasionally one is novel-to-me. For each one I ask follow-ups: *"Walk me through how that exploit would play out in production with our current code. What's the actual attack sequence?"*
+
+This part is where the AI earns its keep. It traces the code, builds the attack scenario, and stress-tests my mental model. If my code defends against the attack, the AI confirms it and moves on. If not, it shows me exactly where the gap is.
+
+## Concrete example — brute-force lockout
+
+The original LeoHydra admin login had a per-IP rate limit: 10 attempts per minute. When I asked Claude Code to threat-model the endpoint, the first thing it surfaced was:
+
+> "Your per-IP rate limit is defeated by IP rotation. Residential proxy services like Bright Data give attackers thousands of fresh IPs. An attacker spending $50 can issue tens of thousands of login attempts per hour from unique IPs without ever tripping your 10/min limit. The rate limit only prevents brute force from a single attacker on a single connection."
+
+Known weakness, well-articulated. I asked: how do we close it?
+
+The follow-up suggested a *failure-counter* pattern: count **wrong-password attempts** specifically, not just request volume. Add a per-IP counter on a longer window (5 fails / hour), plus a global counter as second-line defense against truly distributed attacks (30 fails / 15 minutes).
+
+Then the critical detail: **don't clear the global counter on a successful login.** A lucky correct guess during a distributed brute-force campaign shouldn't reset the credit limit — otherwise the moment the attacker gets *one* correct guess, the budget refreshes, and the system would lock out everyone except the attacker. That's not a defense; it's an inversion of one.
+
+That last bullet — *don't clear the global counter on success* — was the subtle design decision that made the lockout actually work against distributed campaigns. I would not have arrived at it on my own that night. I might have, on day three of agonizing over the design. With Claude Code, it surfaced in the first ten minutes of the conversation.
+
+That migration shipped as `030_admin_login_brute_force_lockout.sql` in the repo. The actual SQL is short — two RPCs, two atomic upserts — but the design decision behind "global counter never cleared on success" is the load-bearing nuance.
+
+## Why this works
+
+The thing AI is genuinely good at, applied to security work, is **recalling patterns across an enormous corpus**. Bright Data residential proxies. Timing oracles. Replay attacks. Enumeration oracles. Padding-oracle attacks. CSRF subdomain edge cases. This stuff has been written about in security blogs and CVE writeups and academic papers for thirty years — Claude has read all of it and can surface the relevant patterns when I describe a system.
+
+What it's *not* good at — and what I do — is choosing **which patterns matter for this specific system**. The art is filtering: which attack scenarios are realistic given the threat model of a small art-business commerce site? Which mitigations make sense given the engineering budget? Which trade-offs am I willing to make?
+
+I do that part. The AI surfaces patterns; I select which to act on. That division of labor is the whole point.
+
+## What this doesn't replace
+
+A junior engineer with Claude Code does not become a senior engineer. They become a faster junior engineer who can occasionally bluff into senior-looking work. The selection problem — knowing which AI suggestions matter for *this* codebase, what's a real threat vs. theoretical, when to accept risk vs. mitigate — requires real judgment that the AI can't provide.
+
+What it *does* do is collapse the time between *"I should think about this"* and *"I have a structured list of every angle on this."* That collapse is significant. I went from "I'll get to a proper security audit eventually" to "I ran three rounds in two months and they produced five concrete migrations" because the friction dropped to near zero.
+
+The output is documented in `docs/2026-05-14_payment-flow-launch-audit.md` in the LeoHydra repo. Migrations 027–031 are the concrete mitigations. The audit doc itself reads like a senior-engineer artifact — because the conversations that produced it were, in fact, structured like a senior-engineer review session. The fact that one of the participants was an LLM doesn't change the structure or the rigor.
+
+The 2026 engineering question isn't *whether to use AI*. It's **what kind of work you assign to AI versus to yourself**. For me that division has settled into: AI surfaces patterns at scale; I choose what matters and own the decisions. Anything that fits that shape — security review, design trade-offs, code review of unfamiliar parts of the codebase, root-causing weird bugs — gets the workflow. Anything that requires institutional context, taste, or judgment I can't yet articulate stays mine.
