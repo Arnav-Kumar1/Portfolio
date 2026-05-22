@@ -174,8 +174,8 @@ export default function AboutPage() {
 					<div className="w-full h-px bg-zinc-800 mt-8" />
 					<div className="mt-8 space-y-6 text-zinc-300 leading-relaxed">
 						<p>
-							I ship full-stack production systems end-to-end. The current one
-							is{" "}
+							I build full-stack production systems and run them. The current
+							one is{" "}
 							<a
 								href="https://leohydra.com"
 								target="_blank"
@@ -184,29 +184,30 @@ export default function AboutPage() {
 							>
 								leohydra.com
 							</a>
-							{" "}— a Dubai art studio I run from Mumbai. 20 to 30 orders per
-							day. Every limited-edition print drop sells out within 7 days of
-							going live. The entire codebase is mine: the e-commerce stack,
-							the on-chain payment verifier, the admin panel, the transactional
-							email pipeline, the Meta Pixel + CAPI dedup, and the
-							security-audit migrations. I also run the ads, manage the
-							printers, and ship the parcels.
+							, a Dubai art studio I run from Mumbai. We do 20 to 30 orders a
+							day, and every limited edition print drop sells out inside a week
+							of going live. The whole codebase is mine. So is the on-chain
+							payment verifier, the admin panel, the transactional email
+							pipeline, the Meta Pixel and CAPI dedup, and the security audit
+							migrations. I run the ads too, manage the printers, and ship the
+							parcels.
 						</p>
 						<p>
 							B.E. in Electronics &amp; Telecommunication from Smt. Kashibai
-							Navale College of Engineering, Pune (full-time campus degree,
-							2016 to 2020). IIT Madras Online Diploma in Data Science (2021 to
-							2022). Five roles between 2023 and now: a Canopy (Singapore) data
-							ops contract via Recro, a Cointab data-analyst role, two
-							internships, and the current Leo Hydra Studio engagement.
-							Engineering and ops on the LeoHydra stack since late 2025.
+							Navale College of Engineering, Pune. That was the full time
+							campus degree, 2016 to 2020. After that I picked up the IIT
+							Madras Online Diploma in Data Science, 2021 to 2022. Five roles
+							between 2023 and now: a Canopy Singapore data ops contract
+							staffed via Recro, a Cointab data analyst job, two internships,
+							and the current Leo Hydra engagement. I&apos;ve been engineering
+							and running ops on the LeoHydra stack since late 2025.
 						</p>
 						<p>
-							Strongest at: production e-commerce engineering, growth
-							instrumentation (server-side Pixel + CAPI, dedup-aware), security
-							hardening, and running operations solo. Comfortable being the
-							second or third engineer at a startup with no infrastructure
-							team.
+							I&apos;m strongest at production e-commerce engineering, growth
+							instrumentation (server side Pixel and CAPI, dedup aware),
+							security hardening, and running ops alone. I&apos;m comfortable
+							being the second or third engineer at a startup that has no
+							infrastructure team yet.
 						</p>
 					</div>
 				</section>

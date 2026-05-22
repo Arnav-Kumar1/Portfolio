@@ -18,8 +18,8 @@ I built the entire site from zero. No template, no inherited codebase, no rebuil
 
 <StatBand
   stats={[
-    { value: "20–30", label: "Orders per day", hint: "limited-edition prints + originals" },
-    { value: "7d", label: "Sell-out window", hint: "every drop, post-launch" },
+    { value: "30", label: "Orders per day", hint: "20 to 30 across prints and originals" },
+    { value: "7d", label: "Sell out window", hint: "every drop, post launch" },
     { value: "100%", label: "Drops cleared", hint: "no SKU has expired unsold" },
     { value: "1", label: "Engineer / operator", hint: "no team, no agency" },
   ]}
@@ -27,7 +27,7 @@ I built the entire site from zero. No template, no inherited codebase, no rebuil
 
 <Reveal>
 
-A real business at a real cadence. Every limited-edition drop sells out within 7 days of going live. Originals (priced on inquiry) move through the same operator, the same calendar, the same fulfilment pipeline.
+It's a real business at a real cadence. Every drop sells out inside a week of going live. Originals are priced on inquiry but they move through the same operator, the same calendar, the same warehouse. One pipeline, two SKUs.
 
 </Reveal>
 
@@ -55,9 +55,9 @@ What it actually looks like when someone buys a print. A real $199 Chromatic pri
 
 <Reveal>
 
-The race-locked confirmation, the micro-offset discriminator, the cron scanner — these patterns look heavy for a single-operator studio. They're not. They exist for the same reason real e-commerce shops use them: every drop launch is a 7-day rush window where concurrent purchases are realistic, on-chain payments settle through a public mempool where the order of events is not under your control, and a payment confirmation bug at any volume above zero is an unrecoverable customer-trust event.
+The race locked confirmation, the micro offset discriminator, the cron scanner. These look heavy for a single operator studio. They're not. They exist for the same reason real e-commerce shops use them. Every drop launch is a 7 day rush window where concurrent purchases are realistic. On-chain payments settle through a public mempool, and the order of events is not under your control. A payment confirmation bug at any volume above zero is an unrecoverable customer trust event.
 
-The engineering is sized for the worst-case minute of any given launch day, not the average minute. At low traffic these patterns cost nothing. At launch traffic they're the difference between "shipped clean" and "manually reconciling for a week".
+The engineering is sized for the worst case minute of any given launch day, not the average minute. At low traffic these patterns cost nothing. At launch traffic they're the difference between "shipped clean" and "manually reconciling for a week".
 
 </Reveal>
 
@@ -68,7 +68,7 @@ The engineering is sized for the worst-case minute of any given launch day, not 
     { value: "12", label: "Postgres tables", hint: "orders hub + 4 standalone" },
     { value: "30", label: "Forward-only migrations", hint: "drift-checked vs pg_dump" },
     { value: "22", label: "API routes", hint: "26 pages · 50 components" },
-    { value: "11", label: "Security commits", hint: "3 audit rounds, mig. 027–031" },
+    { value: "11", label: "Security commits", hint: "3 audit rounds, migrations 027 to 031" },
   ]}
 />
 
@@ -80,13 +80,13 @@ The full breakdown: ~12 Postgres tables (`orders`, `order_items`, `payments`, `b
 
 <LeoHydraSchema />
 
-The actual database schema, interactive. Drag tables around, pinch or scroll to zoom, click the minimap to jump, hit "Reset layout" to restore. The seven FK relationships between `orders`, `order_items`, `payments`, `crypto_payments`, `bank_transfer_payments`, `order_email_events`, `order_scan_throttle`, and `products` are drawn as animated edges. The four standalone tables (`leads`, `newsletter_subscribers`, `rate_limit_buckets`, `payment_micro_reserved`) sit independently — they belong to inquiry, marketing, infrastructure, and crypto-discriminator subsystems respectively, none of which require referential ties to the order graph.
+The actual database schema, interactive. Drag tables around, pinch or scroll to zoom, click the minimap to jump, hit "Reset layout" to restore. The seven FK relationships between `orders`, `order_items`, `payments`, `crypto_payments`, `bank_transfer_payments`, `order_email_events`, `order_scan_throttle`, and `products` are drawn as animated edges. The four standalone tables (`leads`, `newsletter_subscribers`, `rate_limit_buckets`, `payment_micro_reserved`) sit independently. They belong to inquiry, marketing, infrastructure, and crypto discriminator subsystems respectively. None of them need referential ties to the order graph.
 
 ## A separate commerce model for originals
 
 <Reveal>
 
-![Original-artwork detail page (The Turn): acrylic-on-canvas spec, "AVAILABLE" status, certificate / signature / worldwide-delivery features, "Price: Available on inquiry", INQUIRE TO ACQUIRE CTA. A separate commerce model from the prints — unique pieces priced on inquiry, not point-of-sale.](/screenshots/leohydra-original-detail.webp)
+![Original-artwork detail page (The Turn): acrylic-on-canvas spec, "AVAILABLE" status, certificate / signature / worldwide-delivery features, "Price: Available on inquiry", INQUIRE TO ACQUIRE CTA. A separate commerce model from the prints, unique pieces priced on inquiry, not point of sale.](/screenshots/leohydra-original-detail.webp)
 
 Originals don't run through the checkout above. Unique pieces are priced on inquiry, captured into the `leads` table, and routed to the studio manually. Two commerce models, one codebase.
 
@@ -101,7 +101,7 @@ Originals don't run through the checkout above. Unique pieces are priced on inqu
 */}
 
 <Testimonial
-  quote="Arnav handles everything technical at Leo Hydra — site, payments, emails, the admin panel, the whole damn thing. We've been live and selling since launch and I haven't touched a line of code. I make the work; he ships it."
+  quote="Arnav handles everything technical at Leo Hydra. Site, payments, emails, admin panel, the whole damn thing. We've been live and selling since launch and I haven't touched a line of code. I make the work, he ships it."
   author="Lev"
   role="Principal artist · Leo Hydra Studio"
   location="Dubai"

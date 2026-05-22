@@ -35,13 +35,13 @@ type TableData = {
 // ----------------------------------------------------------------------------
 // Layout strategy:
 //
-// Order subsystem (LEFT + CENTER): `orders` is the hub — 5 FKs converge into
+// Order subsystem (LEFT + CENTER): `orders` is the hub. 5 FKs converge into
 // it. Tables that point into orders are arranged in radial bands around it
 // so the FK edges fan visibly. Two-step dependencies (products via
 // order_items, crypto_payments via payments) sit one tier further out.
 //
 // Standalone cluster (RIGHT, separated by visible gap): leads, newsletter,
-// rate_limit_buckets, payment_micro_reserved — no FKs into the order graph.
+// rate_limit_buckets, payment_micro_reserved. No FKs into the order graph.
 // Visual separation makes "these are independent subsystems" readable at a
 // glance.
 // ----------------------------------------------------------------------------

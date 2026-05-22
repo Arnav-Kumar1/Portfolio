@@ -16,7 +16,7 @@ const STEPS: Step[] = [
 		num: "01",
 		title: "Product",
 		caption:
-			"Reader lands on the print page. $199, edition of 50, 29 remaining. Every state — preorder, available, fully collected — is its own variant of this same UI.",
+			"Reader lands on the print page. $199, edition of 50, 29 remaining. Every state (preorder, available, fully collected) is its own variant of this same UI.",
 		image: "/screenshots/leohydra-print-detail.webp",
 	},
 	{
@@ -37,7 +37,7 @@ const STEPS: Step[] = [
 		num: "04",
 		title: "Pay · USDT",
 		caption:
-			"Send 199.000001 USDT. The trailing .000001 is the micro-offset discriminator — a unique 1 to 999 µUSDT slot reserved at order creation so two pending orders with identical totals can never collide on-chain.",
+			"Send 199.000001 USDT. The trailing .000001 is the micro offset discriminator: a unique 1 to 999 µUSDT slot reserved at order creation, so two pending orders with identical totals can never collide on chain.",
 		image: "/screenshots/leohydra-checkout-usdt.webp",
 	},
 	{
@@ -58,14 +58,14 @@ const STEPS: Step[] = [
 		num: "07",
 		title: "Meta CAPI",
 		caption:
-			"Every conversion event (PageView, AddToCart, InitiateCheckout, AddPaymentInfo, Purchase) fires twice — browser pixel plus server Conversions API — with the same event_id. Meta deduplicates server-side.",
+			"Every conversion event (PageView, AddToCart, InitiateCheckout, AddPaymentInfo, Purchase) fires twice. Browser pixel plus server Conversions API, with the same event_id. Meta deduplicates server side.",
 		image: "/screenshots/leohydra-meta-dedup.webp",
 	},
 	{
 		num: "08",
 		title: "On-chain",
 		caption:
-			"Polygonscan confirms the exact 199.000001 USDT transfer to the studio wallet. Public, immutable, auditable — the discriminator amount is visible in the trailing decimals.",
+			"Polygonscan confirms the exact 199.000001 USDT transfer to the studio wallet. Public, immutable, auditable. The discriminator amount is visible right in the trailing decimals.",
 		image: "/screenshots/leohydra-polygonscan.webp",
 	},
 	{
@@ -99,7 +99,7 @@ export default function OrderLifecycleStory() {
 	}, []);
 
 	const step = STEPS[active];
-	// Only auto-play when in view AND not paused — saves cycles when off-screen.
+	// Only auto-play when in view AND not paused. Saves cycles when off-screen.
 	const playing = !paused && inView;
 
 	return (
@@ -136,7 +136,7 @@ export default function OrderLifecycleStory() {
 					</button>
 				</div>
 
-				{/* interactive area — pause boundary lives here */}
+				{/* interactive area, pause boundary lives here */}
 				<div
 					onPointerEnter={() => setPaused(true)}
 					onPointerLeave={() => setPaused(false)}
@@ -196,7 +196,7 @@ export default function OrderLifecycleStory() {
 					{/* RIGHT: image + caption */}
 					<div className="min-w-0">
 						<div className="relative overflow-hidden rounded-xl border border-zinc-800/70 bg-zinc-100 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.7)]">
-							{/* progress bar — pure CSS, the only timer */}
+							{/* progress bar, pure CSS, the only timer */}
 							<div
 								key={cycleKey}
 								onAnimationEnd={handleProgressEnd}
@@ -231,7 +231,7 @@ export default function OrderLifecycleStory() {
 							</div>
 						</div>
 
-						{/* caption — separate block */}
+						{/* caption, separate block */}
 						<div className="mt-5 min-h-[80px]">
 							<AnimatePresence mode="wait">
 								<motion.div
@@ -306,7 +306,7 @@ export default function OrderLifecycleStory() {
 	);
 }
 
-// Cheap in-view hook — pause autoplay when component is off-screen
+// Cheap in-view hook: pause autoplay when component is off-screen.
 function useInView(ref: React.RefObject<HTMLElement>) {
 	const [inView, setInView] = useState(true);
 	useEffect(() => {
