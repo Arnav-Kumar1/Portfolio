@@ -31,10 +31,59 @@ type TableData = {
 	columns: Column[];
 };
 
+// ----------------------------------------------------------------------------
+// Layout strategy:
+//
+// Order subsystem (LEFT + CENTER): `orders` is the hub — 5 FKs converge into
+// it. Tables that point into orders are arranged in radial bands around it
+// so the FK edges fan visibly. Two-step dependencies (products via
+// order_items, crypto_payments via payments) sit one tier further out.
+//
+// Standalone cluster (RIGHT, separated by visible gap): leads, newsletter,
+// rate_limit_buckets, payment_micro_reserved — no FKs into the order graph.
+// Visual separation makes "these are independent subsystems" readable at a
+// glance.
+// ----------------------------------------------------------------------------
+
 const tables: Array<{ id: string; position: { x: number; y: number }; data: TableData }> = [
+	// --- Order subsystem, organized around the orders hub ---
+	{
+		id: "products",
+		position: { x: 0, y: 0 },
+		data: {
+			name: "products",
+			columns: [
+				{ name: "id", type: "uuid", pk: true },
+				{ name: "slug", type: "text" },
+				{ name: "title", type: "text" },
+				{ name: "price_usd", type: "numeric" },
+				{ name: "price_micro", type: "int8" },
+				{ name: "active", type: "bool" },
+				{ name: "created_at", type: "timestamptz" },
+				{ name: "stock_quantity", type: "int4" },
+				{ name: "edition_total", type: "int4" },
+				{ name: "allow_preorder", type: "bool" },
+			],
+		},
+	},
+	{
+		id: "order_items",
+		position: { x: 420, y: 60 },
+		data: {
+			name: "order_items",
+			columns: [
+				{ name: "id", type: "uuid", pk: true },
+				{ name: "order_id", type: "uuid", fk: true },
+				{ name: "product_id", type: "uuid", fk: true },
+				{ name: "quantity", type: "int4" },
+				{ name: "unit_price_micro", type: "int8" },
+				{ name: "line_total_micro", type: "int8" },
+			],
+		},
+	},
 	{
 		id: "orders",
-		position: { x: 1000, y: 200 },
+		position: { x: 880, y: 80 },
 		data: {
 			name: "orders",
 			columns: [
@@ -61,42 +110,25 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 		},
 	},
 	{
-		id: "order_items",
-		position: { x: 500, y: 0 },
+		id: "crypto_payments",
+		position: { x: 0, y: 460 },
 		data: {
-			name: "order_items",
+			name: "crypto_payments",
 			columns: [
-				{ name: "id", type: "uuid", pk: true },
-				{ name: "order_id", type: "uuid", fk: true },
-				{ name: "product_id", type: "uuid", fk: true },
-				{ name: "quantity", type: "int4" },
-				{ name: "unit_price_micro", type: "int8" },
-				{ name: "line_total_micro", type: "int8" },
-			],
-		},
-	},
-	{
-		id: "products",
-		position: { x: 850, y: -40 },
-		data: {
-			name: "products",
-			columns: [
-				{ name: "id", type: "uuid", pk: true },
-				{ name: "slug", type: "text" },
-				{ name: "title", type: "text" },
-				{ name: "price_usd", type: "numeric" },
-				{ name: "price_micro", type: "int8" },
-				{ name: "active", type: "bool" },
+				{ name: "payment_id", type: "uuid", pk: true, fk: true },
+				{ name: "tx_hash", type: "text" },
+				{ name: "sender_address", type: "text" },
+				{ name: "received_amount_micro", type: "int8" },
+				{ name: "block_number", type: "int8" },
+				{ name: "block_timestamp", type: "timestamptz" },
+				{ name: "raw_event_json", type: "jsonb" },
 				{ name: "created_at", type: "timestamptz" },
-				{ name: "stock_quantity", type: "int4" },
-				{ name: "edition_total", type: "int4" },
-				{ name: "allow_preorder", type: "bool" },
 			],
 		},
 	},
 	{
 		id: "payments",
-		position: { x: 530, y: 360 },
+		position: { x: 420, y: 440 },
 		data: {
 			name: "payments",
 			columns: [
@@ -113,25 +145,8 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 		},
 	},
 	{
-		id: "crypto_payments",
-		position: { x: 250, y: 540 },
-		data: {
-			name: "crypto_payments",
-			columns: [
-				{ name: "payment_id", type: "uuid", pk: true, fk: true },
-				{ name: "tx_hash", type: "text" },
-				{ name: "sender_address", type: "text" },
-				{ name: "received_amount_micro", type: "int8" },
-				{ name: "block_number", type: "int8" },
-				{ name: "block_timestamp", type: "timestamptz" },
-				{ name: "raw_event_json", type: "jsonb" },
-				{ name: "created_at", type: "timestamptz" },
-			],
-		},
-	},
-	{
 		id: "bank_transfer_payments",
-		position: { x: 700, y: 720 },
+		position: { x: 880, y: 740 },
 		data: {
 			name: "bank_transfer_payments",
 			columns: [
@@ -146,7 +161,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "order_email_events",
-		position: { x: 170, y: 760 },
+		position: { x: 0, y: 820 },
 		data: {
 			name: "order_email_events",
 			columns: [
@@ -163,7 +178,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "order_scan_throttle",
-		position: { x: 1000, y: 720 },
+		position: { x: 420, y: 820 },
 		data: {
 			name: "order_scan_throttle",
 			columns: [
@@ -172,9 +187,11 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 			],
 		},
 	},
+
+	// --- Standalone cluster (no FK into order graph) ---
 	{
 		id: "leads",
-		position: { x: 200, y: 200 },
+		position: { x: 1340, y: 0 },
 		data: {
 			name: "leads",
 			columns: [
@@ -194,7 +211,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "newsletter_subscribers",
-		position: { x: -100, y: 280 },
+		position: { x: 1340, y: 460 },
 		data: {
 			name: "newsletter_subscribers",
 			columns: [
@@ -207,7 +224,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "rate_limit_buckets",
-		position: { x: -100, y: -20 },
+		position: { x: 1340, y: 680 },
 		data: {
 			name: "rate_limit_buckets",
 			columns: [
@@ -219,7 +236,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "payment_micro_reserved",
-		position: { x: -100, y: 480 },
+		position: { x: 1340, y: 840 },
 		data: {
 			name: "payment_micro_reserved",
 			columns: [
