@@ -333,6 +333,23 @@ export default function LeoHydraSchema() {
 	const [isFullscreen, setIsFullscreen] = useState(false);
 	const [justReset, setJustReset] = useState(false);
 
+	// Mobile gets a non-interactive preview by default. Touch users must tap
+	// "Explore schema" to enable pan/zoom. Without this the canvas hijacks
+	// every vertical swipe and the page becomes impossible to scroll past.
+	const [isTouch, setIsTouch] = useState(false);
+	const [touchUnlocked, setTouchUnlocked] = useState(false);
+
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		const mq = window.matchMedia("(pointer: coarse)");
+		setIsTouch(mq.matches);
+		const handler = (e: MediaQueryListEvent) => setIsTouch(e.matches);
+		mq.addEventListener("change", handler);
+		return () => mq.removeEventListener("change", handler);
+	}, []);
+
+	const frozen = isTouch && !touchUnlocked && !isFullscreen;
+
 	const toggleFullscreen = useCallback(() => {
 		if (!containerRef.current) return;
 		if (!document.fullscreenElement) {
@@ -370,7 +387,7 @@ export default function LeoHydraSchema() {
 				"not-prose relative border border-zinc-800 rounded-md bg-zinc-950 overflow-hidden " +
 				(isFullscreen
 					? "fixed inset-0 z-50 w-screen h-screen rounded-none border-0 my-0"
-					: "my-10 w-screen h-[800px]")
+					: "my-10 w-screen h-[440px] sm:h-[640px] md:h-[800px]")
 			}
 			style={
 				isFullscreen
@@ -380,6 +397,10 @@ export default function LeoHydraSchema() {
 							// to use the full viewport width on wide monitors.
 							marginLeft: "calc(50% - 50vw)",
 							marginRight: "calc(50% - 50vw)",
+							// When frozen on touch devices, allow vertical page scroll
+							// to pass through the canvas; the user isn't interacting with
+							// React Flow yet so swipe-down shouldn't pan an invisible viewport.
+							touchAction: frozen ? "pan-y" : undefined,
 						}
 			}
 		>
@@ -457,6 +478,14 @@ export default function LeoHydraSchema() {
 				minZoom={0.2}
 				maxZoom={2}
 				proOptions={{ hideAttribution: true }}
+				panOnDrag={!frozen}
+				nodesDraggable={!frozen}
+				nodesConnectable={false}
+				zoomOnPinch={!frozen}
+				zoomOnScroll={!frozen}
+				zoomOnDoubleClick={!frozen}
+				panOnScroll={false}
+				preventScrolling={!frozen}
 				defaultEdgeOptions={{
 					type: "smoothstep",
 				}}
@@ -473,6 +502,41 @@ export default function LeoHydraSchema() {
 					zoomable
 				/>
 			</ReactFlow>
+
+			{/* Mobile-only: tap-to-explore overlay. While shown, the canvas is frozen
+			    and touch-action:pan-y lets vertical scroll pass through to the page. */}
+			{frozen && (
+				<button
+					type="button"
+					onClick={() => setTouchUnlocked(true)}
+					className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-3 bg-zinc-950/55 backdrop-blur-[2px] text-center"
+					aria-label="Enable schema interaction"
+				>
+					<span className="inline-flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-900/95 px-4 py-2 text-xs font-medium text-zinc-100 shadow-lg">
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+							<path d="M9 11V6a3 3 0 0 1 6 0v8" />
+							<path d="M9 11V8.5a1.5 1.5 0 0 0-3 0V14a8 8 0 0 0 8 8 8 8 0 0 0 8-8v-5a1.5 1.5 0 0 0-3 0" />
+							<path d="M12 11V6.5a1.5 1.5 0 0 1 3 0V14" />
+							<path d="M18 11V8.5a1.5 1.5 0 0 1 3 0V14" />
+						</svg>
+						Tap to explore
+					</span>
+					<span className="px-4 text-[0.7rem] text-zinc-300">
+						Scroll the page freely. Tap when you want to pan and zoom the tables.
+					</span>
+				</button>
+			)}
+
+			{/* Mobile: Done button to release the canvas back to scroll-through state */}
+			{isTouch && touchUnlocked && !isFullscreen && (
+				<button
+					type="button"
+					onClick={() => setTouchUnlocked(false)}
+					className="absolute bottom-4 left-1/2 z-30 -translate-x-1/2 rounded-full border border-zinc-700 bg-zinc-900/95 px-4 py-2 text-xs font-medium text-zinc-100 shadow-lg backdrop-blur"
+				>
+					Done · resume scrolling
+				</button>
+			)}
 		</div>
 	);
 }
