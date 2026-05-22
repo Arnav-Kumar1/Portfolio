@@ -21,7 +21,7 @@ export default async function PostPage({ params }: Props) {
 	}
 
 	return (
-		<div className="min-h-screen bg-zinc-950 text-zinc-100">
+		<div className="min-h-screen overflow-x-clip bg-zinc-950 text-zinc-100">
 			<Header project={project} />
 
 			<article className="prose prose-invert prose-zinc prose-quoteless mx-auto max-w-3xl px-6 py-20 prose-headings:font-display prose-headings:tracking-tight prose-h2:text-4xl prose-h2:mt-20 prose-h2:mb-6 prose-h2:font-semibold prose-h2:text-white prose-h3:text-2xl prose-h3:mt-12 prose-p:text-zinc-300 prose-p:leading-relaxed prose-strong:text-white prose-strong:font-semibold prose-li:text-zinc-300 prose-li:marker:text-indigo-400/60 prose-a:text-indigo-300 prose-a:no-underline hover:prose-a:text-indigo-200 prose-code:text-indigo-200 prose-code:bg-zinc-800/60 prose-code:rounded prose-code:px-1.5 prose-code:py-0.5 prose-code:text-[0.85em] prose-code:before:content-none prose-code:after:content-none prose-img:rounded-xl prose-img:border prose-img:border-zinc-800 lg:max-w-4xl">
