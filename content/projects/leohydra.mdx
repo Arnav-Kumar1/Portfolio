@@ -8,9 +8,15 @@ published: true
 
 I built the entire site from zero. No template, no inherited codebase, no rebuild of someone else's work. Sole operating team for a one-principal art business based in Dubai. Artist makes the work; I designed, coded, and ship everything else from Mumbai. Live at [leohydra.com](https://leohydra.com).
 
+<Reveal>
+
 ![Leo Hydra Studio homepage: large-format original on a luxurious interior wall, with the LEO HYDRA DUBAI · ORIGINAL WORKS · LIMITED EDITIONS positioning](/screenshots/leohydra-home.png)
 
+</Reveal>
+
 ## What I built
+
+<Reveal>
 
 A production-grade Next.js 14 e-commerce platform that I architected and wrote from scratch:
 
@@ -20,29 +26,53 @@ A production-grade Next.js 14 e-commerce platform that I architected and wrote f
 - **Transactional email pipeline:** Resend-backed sends across six lifecycle email kinds (order confirmation, bank instructions, bank reference submitted, bank confirmed, order recovery, studio notifications). Every send writes a row to an append-only `order_email_events` audit table. Admin "Resend" UI is synced with the API route mapping so what's offered and what's sent stay in sync.
 - **Meta Pixel + Conversions API** across every conversion surface (checkout, inquiry / contact / project-request forms, newsletter, product pages, site-wide PageView), all dedup-aware via a shared `eventID`, PII hashed SHA-256 per Meta spec. Browser PageView uses `navigator.sendBeacon` with a `fetch` `keepalive` fallback.
 
-![Limited-edition print product page (Peblinge Lake), preorder state: edition info, $199 USD, "Edition of 50 · In production · Preorder open", PREORDER CTA. Every state (preorder / available / fully collected) is its own variant of this same product UI.](/screenshots/leohydra-print-detail.png)
+</Reveal>
+
+## One order, end to end
+
+What it actually looks like when someone buys a print. A real $199 Chromatic print order, paid in USDT on Polygon, walked across every system I built. Auto-plays; hover to pause; click any step to jump.
+
+<OrderLifecycleStory />
 
 ## Engineering scale
+
+<Reveal>
 
 - ~12 Postgres tables (`orders`, `order_items`, `payments`, `bank_transfer_payments`, `crypto_payments`, `products`, `leads`, `newsletter`, `order_email_events`, `payment_micro_reserved`, `order_scan_throttle`, `rate_limit_buckets`)
 - ~30 forward-only migrations applied via Supabase SQL editor, with verified live-DB drift checks against nightly `pg_dump` backups
 - ~22 API routes; ~26 frontend pages; ~50 React components
 - Three documented security audit rounds, ~11 security commits, five new migrations (027 to 031) hardening rate limiting, brute-force lockout, CSRF Origin checks, PII redaction, three isolated HMAC secrets, CSP + security headers in `next.config.js`
 
+</Reveal>
+
 <LeoHydraSchema />
 
 The actual database schema, interactive. Drag tables around, pinch or scroll to zoom, click the minimap to jump. The seven FK relationships between `orders`, `order_items`, `payments`, `crypto_payments`, `bank_transfer_payments`, `order_email_events`, `order_scan_throttle`, and `products` are drawn as animated edges. The four standalone tables (`leads`, `newsletter_subscribers`, `rate_limit_buckets`, `payment_micro_reserved`) sit independently — they belong to inquiry, marketing, infrastructure, and crypto-discriminator subsystems respectively, none of which require referential ties to the order graph.
 
+## A separate commerce model for originals
+
+<Reveal>
+
 ![Original-artwork detail page (The Turn): acrylic-on-canvas spec, "AVAILABLE" status, certificate / signature / worldwide-delivery features, "Price: Available on inquiry", INQUIRE TO ACQUIRE CTA. A separate commerce model from the prints — unique pieces priced on inquiry, not point-of-sale.](/screenshots/leohydra-original-detail.png)
+
+Originals don't run through the checkout above. Unique pieces are priced on inquiry, captured into the `leads` table, and routed to the studio manually. Two commerce models, one codebase.
+
+</Reveal>
 
 ## AI-native engineering workflow
 
+<Reveal>
+
 The system was built and audited *through* Claude Code as a sparring partner for threat modeling, adversarial review, and code generation. Three audit rounds and ~11 security commits resulted from this workflow. AI handles the typing; design choices, threat model, and rollout sequencing are mine.
+
+</Reveal>
 
 ## The non-code half
 
+<Reveal>
+
 Run Meta ad campaigns end-to-end. Manage limited-edition print production with printing houses. Coordinate fulfillment from the Dubai warehouse. Hire and direct video editors. Sound design and multi-platform posting (Behance / Tumblr / Instagram). Use Claude Code as a creative production tool to scale Reels generation.
 
-![The cart / "Review your selection" page mid-checkout — three prints in cart (Chromatic, The G, Fairytales) at $199 each, $597 subtotal, PROCEED TO CHECKOUT button, plus trust-badge column (Authentic & Signed / Secure Packaging / Worldwide Shipping). The dual-rail checkout described above is what this button leads into.](/screenshots/leohydra-cart.png)
+</Reveal>
 
 Live at [leohydra.com](https://leohydra.com).

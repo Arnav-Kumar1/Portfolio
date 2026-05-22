@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import LeoHydraSchema from "./leohydra-schema";
+import OrderLifecycleStory from "./order-lifecycle-story";
+import Reveal from "./reveal";
 
 function clsx(...args: any) {
 	return args.filter(Boolean).join(" ");
@@ -163,6 +165,8 @@ const components = {
 	),
 	Image,
 	LeoHydraSchema,
+	OrderLifecycleStory,
+	Reveal,
 };
 
 interface MdxProps {
