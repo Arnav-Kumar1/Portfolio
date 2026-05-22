@@ -1,3 +1,29 @@
+/* auto-numbered section headers — count h2s within the article */
+article {
+  counter-reset: section;
+}
+article h2 {
+  position: relative;
+  counter-increment: section;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+article h2::before {
+  content: "0" counter(section);
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: rgba(165, 180, 252, 0.7); /* indigo-300/70 */
+  margin-bottom: 0.85rem;
+}
+
+/* tighten prose borders on horizontal rules */
+article hr {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
 [data-rehype-pretty-code-fragment] code {
     @apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0 text-sm text-black;
     counter-reset: line;

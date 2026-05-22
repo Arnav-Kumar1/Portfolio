@@ -6,6 +6,7 @@ import { useMDXComponent } from "next-contentlayer/hooks";
 import LeoHydraSchema from "./leohydra-schema";
 import OrderLifecycleStory from "./order-lifecycle-story";
 import Reveal from "./reveal";
+import StatBand from "./stat-band";
 
 function clsx(...args: any) {
 	return args.filter(Boolean).join(" ");
@@ -167,6 +168,7 @@ const components = {
 	LeoHydraSchema,
 	OrderLifecycleStory,
 	Reveal,
+	StatBand,
 };
 
 interface MdxProps {
