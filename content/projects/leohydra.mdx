@@ -29,6 +29,10 @@ A production-grade Next.js 14 e-commerce platform that I architected and wrote f
 - ~22 API routes; ~26 frontend pages; ~50 React components
 - Three documented security audit rounds, ~11 security commits, five new migrations (027 to 031) hardening rate limiting, brute-force lockout, CSRF Origin checks, PII redaction, three isolated HMAC secrets, CSP + security headers in `next.config.js`
 
+<LeoHydraSchema />
+
+The actual database schema, interactive. Drag tables around, pinch or scroll to zoom, click the minimap to jump. The seven FK relationships between `orders`, `order_items`, `payments`, `crypto_payments`, `bank_transfer_payments`, `order_email_events`, `order_scan_throttle`, and `products` are drawn as animated edges. The four standalone tables (`leads`, `newsletter_subscribers`, `rate_limit_buckets`, `payment_micro_reserved`) sit independently — they belong to inquiry, marketing, infrastructure, and crypto-discriminator subsystems respectively, none of which require referential ties to the order graph.
+
 ![Original-artwork detail page (The Turn): acrylic-on-canvas spec, "AVAILABLE" status, certificate / signature / worldwide-delivery features, "Price: Available on inquiry", INQUIRE TO ACQUIRE CTA. A separate commerce model from the prints — unique pieces priced on inquiry, not point-of-sale.](/screenshots/leohydra-original-detail.png)
 
 ## AI-native engineering workflow
