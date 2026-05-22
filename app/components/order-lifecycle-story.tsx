@@ -198,7 +198,7 @@ export default function OrderLifecycleStory() {
                   transition={{ duration: AUTO_MS / 1000, ease: "linear" }}
                 />
               )}
-              <div className="relative aspect-[16/9.5] w-full">
+              <div className="relative aspect-[16/9] w-full bg-zinc-100">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={step.image}
@@ -212,8 +212,9 @@ export default function OrderLifecycleStory() {
                       src={step.image}
                       alt={step.title}
                       fill
-                      sizes="(min-width: 1024px) 1040px, 100vw"
-                      className="object-cover object-top"
+                      quality={95}
+                      sizes="(min-width: 1280px) 1040px, (min-width: 768px) 80vw, 100vw"
+                      className="object-contain"
                       priority={active === 0}
                     />
                   </motion.div>
