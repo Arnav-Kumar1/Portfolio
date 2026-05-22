@@ -17,63 +17,63 @@ const STEPS: Step[] = [
     title: "Product",
     caption:
       "Reader lands on the print page. $199, edition of 50, 29 remaining. Every state — preorder, available, fully collected — is its own variant of this same UI.",
-    image: "/screenshots/leohydra-print-detail.png",
+    image: "/screenshots/leohydra-print-detail.webp",
   },
   {
     num: "02",
     title: "Cart",
     caption:
       "Single-item review. No upsells, no quantity-of-the-month banners. Trust badges live in the right column. The CTA leads into a real dual-rail checkout.",
-    image: "/screenshots/leohydra-cart.png",
+    image: "/screenshots/leohydra-cart.webp",
   },
   {
     num: "03",
     title: "Checkout · rail",
     caption:
       "Two real rails: USDT-on-Polygon and international bank wire. Credit-card placeholder is intentionally inert. Shipping address captured first; rail picked second.",
-    image: "/screenshots/leohydra-checkout-rail.png",
+    image: "/screenshots/leohydra-checkout-rail.webp",
   },
   {
     num: "04",
     title: "Pay · USDT",
     caption:
       "Send 199.000001 USDT. The trailing .000001 is the micro-offset discriminator — a unique 1 to 999 µUSDT slot reserved at order creation so two pending orders with identical totals can never collide on-chain.",
-    image: "/screenshots/leohydra-checkout-usdt.png",
+    image: "/screenshots/leohydra-checkout-usdt.webp",
   },
   {
     num: "05",
     title: "Confirmed",
     caption:
       "Order confirmation. Transactional email is already on its way via Resend; the studio gets a parallel internal alert. Both writes hit the append-only order_email_events audit table.",
-    image: "/screenshots/leohydra-order-confirmed.png",
+    image: "/screenshots/leohydra-order-confirmed.webp",
   },
   {
     num: "06",
     title: "Admin",
     caption:
       "My custom admin: hero amount, lifecycle stepper (Placed → Paid → Fulfilled), email-log audit table with provider IDs, resend buttons, and atomic confirm/cancel actions.",
-    image: "/screenshots/leohydra-admin-order.png",
+    image: "/screenshots/leohydra-admin-order.webp",
   },
   {
     num: "07",
     title: "Meta CAPI",
     caption:
       "Every conversion event (PageView, AddToCart, InitiateCheckout, AddPaymentInfo, Purchase) fires twice — browser pixel plus server Conversions API — with the same event_id. Meta deduplicates server-side.",
-    image: "/screenshots/leohydra-meta-dedup.png",
+    image: "/screenshots/leohydra-meta-dedup.webp",
   },
   {
     num: "08",
     title: "On-chain",
     caption:
       "Polygonscan confirms the exact 199.000001 USDT transfer to the studio wallet. Public, immutable, auditable — the discriminator amount is visible in the trailing decimals.",
-    image: "/screenshots/leohydra-polygonscan.png",
+    image: "/screenshots/leohydra-polygonscan.webp",
   },
   {
     num: "09",
     title: "Scanner match",
     caption:
       "The Vercel-cron-driven scanner walks USDT Transfer events every ~2 minutes, matches the on-chain amount to a pending order by exact micro-amount, and triggers atomic confirmation plus email side-effects. End of lifecycle.",
-    image: "/screenshots/leohydra-vercel-log.png",
+    image: "/screenshots/leohydra-vercel-log.webp",
   },
 ];
 
@@ -212,7 +212,7 @@ export default function OrderLifecycleStory() {
                       src={step.image}
                       alt={step.title}
                       fill
-                      quality={95}
+                      unoptimized
                       sizes="(min-width: 1280px) 1040px, (min-width: 768px) 80vw, 100vw"
                       className="object-contain"
                       priority={active === 0}
