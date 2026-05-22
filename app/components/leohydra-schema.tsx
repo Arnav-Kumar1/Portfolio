@@ -8,6 +8,8 @@ import {
 	MiniMap,
 	Handle,
 	Position,
+	useNodesState,
+	useEdgesState,
 	type Node,
 	type Edge,
 } from "@xyflow/react";
@@ -293,19 +295,24 @@ const nodeTypes = { table: TableNode };
 // Schema diagram component.
 // ============================================================================
 
+const initialNodes: Node[] = tables.map((t) => ({
+	id: t.id,
+	type: "table",
+	position: t.position,
+	data: t.data,
+}));
+
 export default function LeoHydraSchema() {
-	const nodes: Node[] = tables.map((t) => ({
-		id: t.id,
-		type: "table",
-		position: t.position,
-		data: t.data,
-	}));
+	const [nodes, , onNodesChange] = useNodesState(initialNodes);
+	const [edgesState, , onEdgesChange] = useEdgesState(edges);
 
 	return (
 		<div className="my-10 w-full h-[600px] border border-zinc-800 rounded-md bg-zinc-950 overflow-hidden not-prose">
 			<ReactFlow
 				nodes={nodes}
-				edges={edges}
+				edges={edgesState}
+				onNodesChange={onNodesChange}
+				onEdgesChange={onEdgesChange}
 				nodeTypes={nodeTypes}
 				fitView
 				fitViewOptions={{ padding: 0.15 }}
