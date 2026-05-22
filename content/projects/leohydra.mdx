@@ -1,16 +1,33 @@
 ---
 title: Leo Hydra Studio
-description: Production e-commerce platform I hand-coded from scratch and run end-to-end for a one-principal art business. Every line of code is mine. Dual-rail crypto + bank checkout, server-side Meta CAPI, transactional email pipeline, security-audited migration history. ~12 Postgres tables, ~30 migrations, ~22 API routes, ~50 React components.
+description: Production e-commerce platform I hand-coded from scratch and run end-to-end for a Dubai art studio. 20 to 30 orders per day, every limited-edition drop sells out within 7 days of going live, every line of code is mine. Dual-rail crypto + bank checkout, server-side Meta CAPI, transactional email pipeline, security-audited migration history. ~12 Postgres tables, ~30 migrations, ~22 API routes, ~50 React components.
 date: "2025-10-01"
 url: https://leohydra.com
 published: true
 ---
 
-I built the entire site from zero. No template, no inherited codebase, no rebuild of someone else's work. Sole operating team for a one-principal art business based in Dubai. Artist makes the work; I designed, coded, and ship everything else from Mumbai. Live at [leohydra.com](https://leohydra.com).
+I built the entire site from zero. No template, no inherited codebase, no rebuild of someone else's work. Sole operating team for an art studio based in Dubai. Artist makes the work; I designed, coded, and ship everything else from Mumbai. Live at [leohydra.com](https://leohydra.com).
 
 <Reveal>
 
 ![Leo Hydra Studio homepage: large-format original on a luxurious interior wall, with the LEO HYDRA DUBAI · ORIGINAL WORKS · LIMITED EDITIONS positioning](/screenshots/leohydra-home.webp)
+
+</Reveal>
+
+## Scale today
+
+<StatBand
+  stats={[
+    { value: "20–30", label: "Orders per day", hint: "limited-edition prints + originals" },
+    { value: "7d", label: "Sell-out window", hint: "every drop, post-launch" },
+    { value: "100%", label: "Drops cleared", hint: "no SKU has expired unsold" },
+    { value: "1", label: "Engineer / operator", hint: "no team, no agency" },
+  ]}
+/>
+
+<Reveal>
+
+A real business at a real cadence. Every limited-edition drop sells out within 7 days of going live. Originals (priced on inquiry) move through the same operator, the same calendar, the same fulfilment pipeline.
 
 </Reveal>
 
@@ -34,6 +51,16 @@ What it actually looks like when someone buys a print. A real $199 Chromatic pri
 
 <OrderLifecycleStory />
 
+## Why this depth
+
+<Reveal>
+
+The race-locked confirmation, the micro-offset discriminator, the cron scanner — these patterns look heavy for a single-operator studio. They're not. They exist for the same reason real e-commerce shops use them: every drop launch is a 7-day rush window where concurrent purchases are realistic, on-chain payments settle through a public mempool where the order of events is not under your control, and a payment confirmation bug at any volume above zero is an unrecoverable customer-trust event.
+
+The engineering is sized for the worst-case minute of any given launch day, not the average minute. At low traffic these patterns cost nothing. At launch traffic they're the difference between "shipped clean" and "manually reconciling for a week".
+
+</Reveal>
+
 ## Engineering scale
 
 <StatBand
@@ -47,13 +74,13 @@ What it actually looks like when someone buys a print. A real $199 Chromatic pri
 
 <Reveal>
 
-The full breakdown: ~12 Postgres tables (`orders`, `order_items`, `payments`, `bank_transfer_payments`, `crypto_payments`, `products`, `leads`, `newsletter`, `order_email_events`, `payment_micro_reserved`, `order_scan_throttle`, `rate_limit_buckets`). ~30 forward-only migrations applied via Supabase SQL editor, with verified live-DB drift checks against nightly `pg_dump` backups. Three documented security audit rounds harden rate limiting, brute-force lockout, CSRF Origin checks, PII redaction, three isolated HMAC secrets, and CSP + security headers in `next.config.js`.
+The full breakdown: ~12 Postgres tables (`orders`, `order_items`, `payments`, `bank_transfer_payments`, `crypto_payments`, `products`, `leads`, `newsletter`, `order_email_events`, `payment_micro_reserved`, `order_scan_throttle`, `rate_limit_buckets`). ~30 forward-only migrations applied via Supabase SQL editor, with verified live-DB drift checks against nightly `pg_dump` backups. Three documented security audit rounds harden rate limiting, brute-force lockout, CSRF Origin checks, PII redaction, and three isolated HMAC secrets + CSP and security headers in `next.config.js`.
 
 </Reveal>
 
 <LeoHydraSchema />
 
-The actual database schema, interactive. Drag tables around, pinch or scroll to zoom, click the minimap to jump. The seven FK relationships between `orders`, `order_items`, `payments`, `crypto_payments`, `bank_transfer_payments`, `order_email_events`, `order_scan_throttle`, and `products` are drawn as animated edges. The four standalone tables (`leads`, `newsletter_subscribers`, `rate_limit_buckets`, `payment_micro_reserved`) sit independently — they belong to inquiry, marketing, infrastructure, and crypto-discriminator subsystems respectively, none of which require referential ties to the order graph.
+The actual database schema, interactive. Drag tables around, pinch or scroll to zoom, click the minimap to jump, hit "Reset layout" to restore. The seven FK relationships between `orders`, `order_items`, `payments`, `crypto_payments`, `bank_transfer_payments`, `order_email_events`, `order_scan_throttle`, and `products` are drawn as animated edges. The four standalone tables (`leads`, `newsletter_subscribers`, `rate_limit_buckets`, `payment_micro_reserved`) sit independently — they belong to inquiry, marketing, infrastructure, and crypto-discriminator subsystems respectively, none of which require referential ties to the order graph.
 
 ## A separate commerce model for originals
 
@@ -65,19 +92,26 @@ Originals don't run through the checkout above. Unique pieces are priced on inqu
 
 </Reveal>
 
-## AI-native engineering workflow
+{/*
+  TODO: replace the placeholder testimonial below with Lev's actual quote.
+  Strategy if he doesn't have LinkedIn:
+    - get a short paragraph via WhatsApp / email
+    - attribute with full name + role + city + Instagram handle (link verifies)
+    - keep it about deliverables and reliability, not personal praise
+*/}
 
-<Reveal>
-
-The system was built and audited *through* Claude Code as a sparring partner for threat modeling, adversarial review, and code generation. Three audit rounds and ~11 security commits resulted from this workflow. AI handles the typing; design choices, threat model, and rollout sequencing are mine.
-
-</Reveal>
+<Testimonial
+  quote="Awaiting Lev's quote — placeholder text. Drop in his sentence here once you have it. Aim for 1–2 sentences max, focused on what shipped and how the business has run since."
+  author="Lev Petryk"
+  role="Principal artist · Leo Hydra Studio"
+  location="Dubai"
+/>
 
 ## The non-code half
 
 <Reveal>
 
-Run Meta ad campaigns end-to-end. Manage limited-edition print production with printing houses. Coordinate fulfillment from the Dubai warehouse. Hire and direct video editors. Sound design and multi-platform posting (Behance / Tumblr / Instagram). Use Claude Code as a creative production tool to scale Reels generation.
+Run Meta ad campaigns end-to-end. Manage limited-edition print production with printing houses. Coordinate fulfillment from the Dubai warehouse. Hire and direct video editors. Sound design and multi-platform posting (Behance / Tumblr / Instagram). Scale Reels generation with modern creative tooling.
 
 </Reveal>
 

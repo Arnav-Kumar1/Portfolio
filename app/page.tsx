@@ -35,17 +35,17 @@ export default function Home() {
       </h1>
 
       <div className="w-screen h-0.5 md:h-px animate-glow animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-100/70 md:via-zinc-300/50 to-zinc-300/0" />
-      <div className="my-16 text-center animate-fade-in">
-        <h2 className="text-sm text-zinc-500 ">
-          I built{" "}
+      <div className="my-16 text-center animate-fade-in max-w-2xl px-6">
+        <h2 className="text-sm text-zinc-500 leading-relaxed">
+          Full-stack engineer. I ship production systems end-to-end. Currently shipping{" "}
           <Link
             target="_blank"
             href="https://leohydra.com"
             className="underline duration-500 hover:text-zinc-300"
           >
             leohydra.com
-          </Link>{" "}
-          from scratch and run it end-to-end. Every line of code, plus commerce, growth, and ops for a one-principal art business based in Dubai.
+          </Link>
+          {" "}— 20 to 30 orders a day, every limited-edition drop sells out within 7 days of going live.
         </h2>
       </div>
     </div>

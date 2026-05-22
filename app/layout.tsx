@@ -6,15 +6,15 @@ import { Analytics } from "./components/analytics";
 
 export const metadata: Metadata = {
   title: {
-    default: "Arnav Kumar, Generalist Founding Operator",
+    default: "Arnav Kumar — Full-stack engineer",
     template: "%s | Arnav Kumar",
   },
   description:
-    "Engineer + growth + ops in one. Currently running a one-principal art business from Mumbai while the founder is in Dubai. Open to founding-engineer / first-non-founder roles at Series A or B startups.",
+    "I ship full-stack production systems end-to-end. Currently shipping leohydra.com — a Dubai art-studio commerce platform at 20–30 orders/day, every limited-edition drop sells out within 7 days of going live. Open to senior IC and early-team engineering roles.",
   openGraph: {
-    title: "Arnav Kumar, Generalist Founding Operator",
+    title: "Arnav Kumar — Full-stack engineer",
     description:
-      "Engineer + growth + ops in one. Currently running a one-principal art business from Mumbai while the founder is in Dubai. Open to founding-engineer / first-non-founder roles at Series A or B startups.",
+      "I ship full-stack production systems end-to-end. Currently shipping leohydra.com — a Dubai art-studio commerce platform at 20–30 orders/day, every limited-edition drop sells out within 7 days of going live. Open to senior IC and early-team engineering roles.",
     url: "https://portfolio-arnav-kumar.vercel.app",
     siteName: "Arnav Kumar",
     locale: "en-US",

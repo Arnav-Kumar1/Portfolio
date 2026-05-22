@@ -10,23 +10,24 @@ const experiences = [
 		type: "Freelance",
 		duration: "Oct 2025 to Present",
 		achievements: [
-			"Sole operating team for a one-principal art business based in Dubai. Artist makes the work; I hand-coded the platform and run everything else from Mumbai. No template, no inherited codebase.",
+			"Sole operating team for a one-principal art business based in Dubai. Hand-coded the platform from scratch and run everything else from Mumbai. No template, no inherited codebase.",
+			"Current scale: 20 to 30 orders per day. Every limited-edition print drop sells out within 7 days of going live. Repeat-buyer rate among collectors who own at least one print.",
 			"Architected and wrote the production e-commerce platform at leohydra.com from scratch. Stack: Next.js 14, Supabase Postgres, USDT-on-Polygon checkout with on-chain payment verification, bank transfer with admin manual confirm, ~12 tables, ~30 migrations, ~22 API routes, ~50 React components.",
 			"Server-side Meta Pixel + Conversions API across every conversion surface (checkout / forms / newsletter / product pages / PageView), dedup-aware via shared eventID. Transactional email pipeline (Resend, 6 lifecycle kinds, audit-logged with admin resend UI).",
 			"Three documented security audit rounds + 5 new migrations (027 to 031): DB-backed rate limiter, admin brute-force lockout, CSRF Origin checks, PII redaction, HMAC-secret isolation, CSP + security headers.",
-			"AI-native engineering workflow. Claude Code as sparring partner for threat modeling, adversarial review, and code generation. AI handles the typing; design, threat model, rollout sequencing are mine.",
 			"Operations: run Meta ad campaigns, manage limited-edition print production with printing houses, coordinate Dubai-warehouse fulfillment, hire and direct video editors, sound design + multi-platform posting.",
 		],
 	},
 	{
 		id: 2,
-		company: "Recro",
+		company: "Canopy",
 		role: "Data Operations Analyst",
-		location: "Bengaluru, India",
-		type: "Contract",
+		location: "Singapore (remote, via Recro)",
+		type: "Full-time contractor",
 		duration: "Nov 2024 to Jan 2025",
 		achievements: [
-			"Built automated SQL + Python pipelines for ~3,000 daily/monthly financial transactions for a SaaS portfolio system, ensuring 100% reconciliation.",
+			"Full-time on Canopy's data ops team (private-wealth SaaS, Singapore), staffed through Recro India as the legal employer.",
+			"Built automated SQL + Python pipelines for ~3,000 daily/monthly financial transactions across the portfolio system, ensuring 100% reconciliation.",
 			"Automated data validation and error-fixing in Python; raised report accuracy ~15%.",
 			"Resolved portfolio discrepancies during corporate-action events with 100% accuracy.",
 			"Partnered with business teams on transactions-per-user, retention anomalies, and portfolio-performance KPIs.",
@@ -127,12 +128,12 @@ const skillGroups = [
 	{
 		title: "Specializations",
 		items: [
-			"Founding-engineer scope (full-stack + growth + ops)",
+			"Production e-commerce engineering",
 			"Meta Pixel + CAPI (server-side, dedup-aware)",
 			"Meta ad campaign operations",
 			"Web3 payments (USDT on Polygon)",
-			"Production e-commerce engineering",
-			"Adversarial review with AI as sparring partner",
+			"Security hardening (rate limiting, brute-force lockout, CSRF, CSP, HMAC isolation)",
+			"Solo engineering ownership end-to-end",
 			"Vendor & supply-chain management",
 		],
 	},
@@ -167,43 +168,45 @@ export default function AboutPage() {
 							About
 						</h2>
 						<p className="mt-4 text-zinc-400">
-							Engineer + growth + ops, all routed through one person.
+							Full-stack engineer. Ships and runs production systems alone.
 						</p>
 					</div>
 					<div className="w-full h-px bg-zinc-800 mt-8" />
 					<div className="mt-8 space-y-6 text-zinc-300 leading-relaxed">
 						<p>
-							I built a production e-commerce platform from scratch and run
-							the entire operating layer of a one-principal art business based
-							in Dubai, from Mumbai. Every line of the codebase is mine. I also
-							run the ads, manage the vendors, move inventory, and ship the
-							right thing on the right day. Comfortable wearing every hat a
-							seed-to-Series-A startup needs from its first or second
-							non-founder hire.
+							I ship full-stack production systems end-to-end. The current one
+							is{" "}
+							<a
+								href="https://leohydra.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-zinc-100 underline underline-offset-4 decoration-zinc-600 hover:decoration-zinc-300"
+							>
+								leohydra.com
+							</a>
+							{" "}— a Dubai art studio I run from Mumbai. 20 to 30 orders per
+							day. Every limited-edition print drop sells out within 7 days of
+							going live. The entire codebase is mine: the e-commerce stack,
+							the on-chain payment verifier, the admin panel, the transactional
+							email pipeline, the Meta Pixel + CAPI dedup, and the
+							security-audit migrations. I also run the ads, manage the
+							printers, and ship the parcels.
 						</p>
 						<p>
-							I&apos;m a generalist by training and by accident. IIT Madras
-							Online Diploma in Data Science (Foundational + Diploma levels of
-							their multi-stage Online Degree program; I exited after the
-							Diploma rather than continuing to BSc/BS), B.E. in Electronics
-							&amp; Telecommunication from SKNCOE Pune. Four data roles between
-							2023 and 2025. Two ended in layoffs (Recro and Cointab, both
-							during the 2024 to 2025 sector downturn), one was an internship
-							that closed on schedule, one was a department shutdown before
-							conversion. In late 2025 I joined Leo Hydra Studio as the full
-							operating team and have been running it since.
+							B.E. in Electronics &amp; Telecommunication from Smt. Kashibai
+							Navale College of Engineering, Pune (full-time campus degree,
+							2016 to 2020). IIT Madras Online Diploma in Data Science (2021 to
+							2022). Five roles between 2023 and now: a Canopy (Singapore) data
+							ops contract via Recro, a Cointab data-analyst role, two
+							internships, and the current Leo Hydra Studio engagement.
+							Engineering and ops on the LeoHydra stack since late 2025.
 						</p>
 						<p>
-							AI tools (Claude Code, LLM agents) used as a force multiplier, not
-							a substitute for thinking. Three documented security audit rounds
-							on the LeoHydra codebase ran through this workflow: AI as sparring
-							partner for threat modeling and adversarial review; design
-							choices, threat model, and rollout sequencing are mine.
-						</p>
-						<p>
-							Not the deepest specialist in any one lane. Probably the best
-							generalist you&apos;ll meet for a seed-to-Series-A startup looking
-							for the first or second non-founder hire.
+							Strongest at: production e-commerce engineering, growth
+							instrumentation (server-side Pixel + CAPI, dedup-aware), security
+							hardening, and running operations solo. Comfortable being the
+							second or third engineer at a startup with no infrastructure
+							team.
 						</p>
 					</div>
 				</section>

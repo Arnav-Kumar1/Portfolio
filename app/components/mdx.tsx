@@ -7,6 +7,7 @@ import LeoHydraSchema from "./leohydra-schema";
 import OrderLifecycleStory from "./order-lifecycle-story";
 import Reveal from "./reveal";
 import StatBand from "./stat-band";
+import Testimonial from "./testimonial";
 
 function clsx(...args: any) {
 	return args.filter(Boolean).join(" ");
@@ -169,6 +170,7 @@ const components = {
 	OrderLifecycleStory,
 	Reveal,
 	StatBand,
+	Testimonial,
 };
 
 interface MdxProps {
