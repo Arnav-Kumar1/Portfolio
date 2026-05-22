@@ -47,6 +47,8 @@ type TableData = {
 
 const tables: Array<{ id: string; position: { x: number; y: number }; data: TableData }> = [
 	// --- Order subsystem, organized around the orders hub ---
+	// Positions chosen so the bounding box is ~2400 × 1000, aspect ratio ~2.4:1
+	// to match the container's wide aspect on a desktop monitor (1920 × 800).
 	{
 		id: "products",
 		position: { x: 0, y: 0 },
@@ -68,7 +70,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "order_items",
-		position: { x: 420, y: 60 },
+		position: { x: 580, y: 80 },
 		data: {
 			name: "order_items",
 			columns: [
@@ -83,7 +85,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "orders",
-		position: { x: 880, y: 80 },
+		position: { x: 1200, y: 0 },
 		data: {
 			name: "orders",
 			columns: [
@@ -111,7 +113,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "crypto_payments",
-		position: { x: 0, y: 460 },
+		position: { x: 0, y: 480 },
 		data: {
 			name: "crypto_payments",
 			columns: [
@@ -128,7 +130,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "payments",
-		position: { x: 420, y: 440 },
+		position: { x: 580, y: 460 },
 		data: {
 			name: "payments",
 			columns: [
@@ -146,7 +148,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "bank_transfer_payments",
-		position: { x: 880, y: 740 },
+		position: { x: 1200, y: 620 },
 		data: {
 			name: "bank_transfer_payments",
 			columns: [
@@ -161,7 +163,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "order_email_events",
-		position: { x: 0, y: 820 },
+		position: { x: 0, y: 880 },
 		data: {
 			name: "order_email_events",
 			columns: [
@@ -178,7 +180,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "order_scan_throttle",
-		position: { x: 420, y: 820 },
+		position: { x: 580, y: 900 },
 		data: {
 			name: "order_scan_throttle",
 			columns: [
@@ -189,9 +191,12 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 
 	// --- Standalone cluster (no FK into order graph) ---
+	// Placed far right with a deliberate ~900px gap from the order subsystem
+	// (orders ends near x=1420; leads starts at x=2200). The gap is the
+	// strongest visual cue that these tables are independent.
 	{
 		id: "leads",
-		position: { x: 1340, y: 0 },
+		position: { x: 2200, y: 0 },
 		data: {
 			name: "leads",
 			columns: [
@@ -211,7 +216,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "newsletter_subscribers",
-		position: { x: 1340, y: 460 },
+		position: { x: 2200, y: 500 },
 		data: {
 			name: "newsletter_subscribers",
 			columns: [
@@ -224,7 +229,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "rate_limit_buckets",
-		position: { x: 1340, y: 680 },
+		position: { x: 2200, y: 720 },
 		data: {
 			name: "rate_limit_buckets",
 			columns: [
@@ -236,7 +241,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "payment_micro_reserved",
-		position: { x: 1340, y: 840 },
+		position: { x: 2200, y: 880 },
 		data: {
 			name: "payment_micro_reserved",
 			columns: [
@@ -349,7 +354,7 @@ export default function LeoHydraSchema() {
 				"not-prose relative border border-zinc-800 rounded-md bg-zinc-950 overflow-hidden " +
 				(isFullscreen
 					? "fixed inset-0 z-50 w-screen h-screen rounded-none border-0 my-0"
-					: "my-10 w-screen h-[640px]")
+					: "my-10 w-screen h-[800px]")
 			}
 			style={
 				isFullscreen
