@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
 	ReactFlow,
 	Background,
@@ -291,10 +291,6 @@ function TableNode({ data }: { data: TableData }) {
 
 const nodeTypes = { table: TableNode };
 
-// ============================================================================
-// Schema diagram component.
-// ============================================================================
-
 const initialNodes: Node[] = tables.map((t) => ({
 	id: t.id,
 	type: "table",
@@ -302,12 +298,82 @@ const initialNodes: Node[] = tables.map((t) => ({
 	data: t.data,
 }));
 
+// ============================================================================
+// Schema diagram component.
+// ============================================================================
+
 export default function LeoHydraSchema() {
 	const [nodes, , onNodesChange] = useNodesState(initialNodes);
 	const [edgesState, , onEdgesChange] = useEdgesState(edges);
+	const containerRef = useRef<HTMLDivElement>(null);
+	const [isFullscreen, setIsFullscreen] = useState(false);
+
+	const toggleFullscreen = useCallback(() => {
+		if (!containerRef.current) return;
+		if (!document.fullscreenElement) {
+			containerRef.current.requestFullscreen?.().catch(() => {
+				// Some browsers (e.g. iOS Safari) reject; ignore silently.
+			});
+		} else {
+			document.exitFullscreen?.().catch(() => {});
+		}
+	}, []);
+
+	useEffect(() => {
+		const handler = () => setIsFullscreen(!!document.fullscreenElement);
+		document.addEventListener("fullscreenchange", handler);
+		return () => document.removeEventListener("fullscreenchange", handler);
+	}, []);
 
 	return (
-		<div className="my-10 w-full h-[600px] border border-zinc-800 rounded-md bg-zinc-950 overflow-hidden not-prose">
+		<div
+			ref={containerRef}
+			className={
+				"not-prose relative border border-zinc-800 rounded-md bg-zinc-950 overflow-hidden " +
+				(isFullscreen
+					? "fixed inset-0 z-50 w-screen h-screen rounded-none border-0 my-0"
+					: "my-10 w-screen h-[640px]")
+			}
+			style={
+				isFullscreen
+					? undefined
+					: {
+							// Break out of the .prose container's max-w-prose constraint
+							// to use the full viewport width on wide monitors.
+							marginLeft: "calc(50% - 50vw)",
+							marginRight: "calc(50% - 50vw)",
+						}
+			}
+		>
+			<button
+				type="button"
+				onClick={toggleFullscreen}
+				className="absolute top-4 right-4 z-20 bg-zinc-900/90 backdrop-blur border border-zinc-700 hover:bg-zinc-800 hover:border-zinc-500 text-zinc-300 hover:text-zinc-100 rounded-md px-3 py-1.5 text-xs flex items-center gap-1.5 transition-colors shadow-lg"
+				aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+			>
+				{isFullscreen ? (
+					<>
+						<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+							<path d="M8 3v4a1 1 0 0 1-1 1H3" />
+							<path d="M21 8h-4a1 1 0 0 1-1-1V3" />
+							<path d="M3 16h4a1 1 0 0 1 1 1v4" />
+							<path d="M16 21v-4a1 1 0 0 1 1-1h4" />
+						</svg>
+						Exit fullscreen
+					</>
+				) : (
+					<>
+						<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+							<path d="M3 7V3h4" />
+							<path d="M21 7V3h-4" />
+							<path d="M3 17v4h4" />
+							<path d="M21 17v4h-4" />
+						</svg>
+						Fullscreen
+					</>
+				)}
+			</button>
+
 			<ReactFlow
 				nodes={nodes}
 				edges={edgesState}
@@ -330,13 +396,11 @@ export default function LeoHydraSchema() {
 					nodeColor="#3f3f46"
 					nodeStrokeColor="#52525b"
 					maskColor="rgba(0, 0, 0, 0.7)"
+					style={{ width: 110, height: 70 }}
 					pannable
 					zoomable
 				/>
 			</ReactFlow>
-			<p className="px-4 py-2 text-xs text-zinc-500 bg-zinc-900 border-t border-zinc-800">
-				Interactive: drag tables to rearrange · scroll or pinch to zoom · drag canvas to pan · ◆ primary key · ◇ foreign key
-			</p>
 		</div>
 	);
 }
