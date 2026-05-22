@@ -12,6 +12,7 @@ import {
 	useEdgesState,
 	type Node,
 	type Edge,
+	type ReactFlowInstance,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 
@@ -325,10 +326,12 @@ const initialNodes: Node[] = tables.map((t) => ({
 // ============================================================================
 
 export default function LeoHydraSchema() {
-	const [nodes, , onNodesChange] = useNodesState(initialNodes);
-	const [edgesState, , onEdgesChange] = useEdgesState(edges);
+	const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+	const [edgesState, setEdges, onEdgesChange] = useEdgesState(edges);
 	const containerRef = useRef<HTMLDivElement>(null);
+	const rfInstanceRef = useRef<ReactFlowInstance | null>(null);
 	const [isFullscreen, setIsFullscreen] = useState(false);
+	const [justReset, setJustReset] = useState(false);
 
 	const toggleFullscreen = useCallback(() => {
 		if (!containerRef.current) return;
@@ -340,6 +343,19 @@ export default function LeoHydraSchema() {
 			document.exitFullscreen?.().catch(() => {});
 		}
 	}, []);
+
+	const handleReset = useCallback(() => {
+		// Clone so React detects a fresh array reference and re-renders nodes,
+		// otherwise dragging the same node twice after reset can stale-cache.
+		setNodes(initialNodes.map((n) => ({ ...n, position: { ...n.position } })));
+		setEdges(edges.map((e) => ({ ...e })));
+		// After nodes are in place, recenter the viewport.
+		setTimeout(() => {
+			rfInstanceRef.current?.fitView({ padding: 0.15, duration: 600 });
+		}, 30);
+		setJustReset(true);
+		setTimeout(() => setJustReset(false), 1200);
+	}, [setNodes, setEdges]);
 
 	useEffect(() => {
 		const handler = () => setIsFullscreen(!!document.fullscreenElement);
@@ -367,12 +383,42 @@ export default function LeoHydraSchema() {
 						}
 			}
 		>
-			<button
-				type="button"
-				onClick={toggleFullscreen}
-				className="absolute top-4 right-4 z-20 bg-zinc-900/90 backdrop-blur border border-zinc-700 hover:bg-zinc-800 hover:border-zinc-500 text-zinc-300 hover:text-zinc-100 rounded-md px-3 py-1.5 text-xs flex items-center gap-1.5 transition-colors shadow-lg"
-				aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-			>
+			<div className="absolute top-4 right-4 z-20 flex items-center gap-2">
+				<button
+					type="button"
+					onClick={handleReset}
+					className={`backdrop-blur border rounded-md px-3 py-1.5 text-xs flex items-center gap-1.5 transition-colors shadow-lg ${
+						justReset
+							? "bg-emerald-900/80 border-emerald-700 text-emerald-200"
+							: "bg-zinc-900/90 border-zinc-700 hover:bg-zinc-800 hover:border-zinc-500 text-zinc-300 hover:text-zinc-100"
+					}`}
+					aria-label="Reset table positions"
+					title="Reset table positions and zoom"
+				>
+					<svg
+						width="12"
+						height="12"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="2"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						aria-hidden
+						className={justReset ? "" : "transition-transform"}
+						style={justReset ? { transform: "rotate(-360deg)", transition: "transform 0.6s ease-out" } : undefined}
+					>
+						<path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+						<path d="M3 3v5h5" />
+					</svg>
+					{justReset ? "Reset" : "Reset layout"}
+				</button>
+				<button
+					type="button"
+					onClick={toggleFullscreen}
+					className="bg-zinc-900/90 backdrop-blur border border-zinc-700 hover:bg-zinc-800 hover:border-zinc-500 text-zinc-300 hover:text-zinc-100 rounded-md px-3 py-1.5 text-xs flex items-center gap-1.5 transition-colors shadow-lg"
+					aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+				>
 				{isFullscreen ? (
 					<>
 						<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -394,13 +440,17 @@ export default function LeoHydraSchema() {
 						Fullscreen
 					</>
 				)}
-			</button>
+				</button>
+			</div>
 
 			<ReactFlow
 				nodes={nodes}
 				edges={edgesState}
 				onNodesChange={onNodesChange}
 				onEdgesChange={onEdgesChange}
+				onInit={(instance) => {
+					rfInstanceRef.current = instance;
+				}}
 				nodeTypes={nodeTypes}
 				fitView
 				fitViewOptions={{ padding: 0.15 }}
