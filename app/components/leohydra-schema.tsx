@@ -321,35 +321,6 @@ const initialNodes: Node[] = tables.map((t) => ({
 	data: t.data,
 }));
 
-// Mobile-specific layout: single vertical column, tables ordered to keep
-// related ones near each other. The desktop wide-spread layout shrinks to
-// ~16% on a phone viewport and table names become unreadable. Vertical stack
-// at a fixed zoom (no fitView) keeps each table at a readable size; user pans
-// up/down to traverse the schema.
-const MOBILE_POSITIONS: Record<string, { x: number; y: number }> = {
-	orders: { x: 30, y: 0 },
-	order_items: { x: 30, y: 600 },
-	products: { x: 30, y: 920 },
-	payments: { x: 30, y: 1280 },
-	crypto_payments: { x: 30, y: 1620 },
-	bank_transfer_payments: { x: 30, y: 1940 },
-	order_email_events: { x: 30, y: 2200 },
-	order_scan_throttle: { x: 30, y: 2520 },
-	leads: { x: 30, y: 2700 },
-	newsletter_subscribers: { x: 30, y: 3100 },
-	rate_limit_buckets: { x: 30, y: 3300 },
-	payment_micro_reserved: { x: 30, y: 3480 },
-};
-
-const initialNodesMobile: Node[] = tables.map((t) => ({
-	id: t.id,
-	type: "table",
-	position: MOBILE_POSITIONS[t.id] ?? t.position,
-	data: t.data,
-}));
-
-const MOBILE_VIEWPORT = { x: 20, y: 20, zoom: 0.85 };
-
 // ============================================================================
 // Schema diagram component.
 // ============================================================================
@@ -377,20 +348,6 @@ export default function LeoHydraSchema() {
 		return () => mq.removeEventListener("change", handler);
 	}, []);
 
-	// When isTouch becomes true, swap to the vertical mobile layout and seat
-	// the viewport at MOBILE_VIEWPORT (instead of the fitView the desktop uses).
-	useEffect(() => {
-		if (!isTouch) return;
-		setNodes(
-			initialNodesMobile.map((n) => ({ ...n, position: { ...n.position } })),
-		);
-		// Wait one frame for nodes to land, then set the viewport.
-		const raf = requestAnimationFrame(() => {
-			rfInstanceRef.current?.setViewport(MOBILE_VIEWPORT, { duration: 0 });
-		});
-		return () => cancelAnimationFrame(raf);
-	}, [isTouch, setNodes]);
-
 	const frozen = isTouch && !touchUnlocked && !isFullscreen;
 
 	const toggleFullscreen = useCallback(() => {
@@ -407,22 +364,18 @@ export default function LeoHydraSchema() {
 	const handleReset = useCallback(() => {
 		// Clone so React detects a fresh array reference and re-renders nodes,
 		// otherwise dragging the same node twice after reset can stale-cache.
-		const source = isTouch ? initialNodesMobile : initialNodes;
-		setNodes(source.map((n) => ({ ...n, position: { ...n.position } })));
+		setNodes(initialNodes.map((n) => ({ ...n, position: { ...n.position } })));
 		setEdges(edges.map((e) => ({ ...e })));
-		// After nodes are in place, recenter the viewport. Touch devices use
-		// the fixed mobile viewport (a vertical stack would shrink to
-		// unreadable under fitView); desktop and tablets keep fitView.
+		// After nodes are in place, recenter the viewport. Same layout on every
+		// device; mobile users can pinch-zoom in to read details after tapping
+		// 'Tap to explore'. Connections are the key insight at first glance,
+		// readability is one gesture away.
 		setTimeout(() => {
-			if (isTouch) {
-				rfInstanceRef.current?.setViewport(MOBILE_VIEWPORT, { duration: 600 });
-			} else {
-				rfInstanceRef.current?.fitView({ padding: 0.15, duration: 600 });
-			}
+			rfInstanceRef.current?.fitView({ padding: 0.15, duration: 600 });
 		}, 30);
 		setJustReset(true);
 		setTimeout(() => setJustReset(false), 1200);
-	}, [isTouch, setNodes, setEdges]);
+	}, [setNodes, setEdges]);
 
 	useEffect(() => {
 		const handler = () => setIsFullscreen(!!document.fullscreenElement);
