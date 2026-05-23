@@ -204,7 +204,30 @@ export default function OrderLifecycleStory() {
 								data-paused={!playing}
 								style={{ animationDuration: `${AUTO_MS}ms` }}
 							/>
-							<div className="relative aspect-[16/9] w-full bg-zinc-100">
+							<motion.div
+								className="relative aspect-[16/9] w-full touch-pan-y bg-zinc-100 select-none"
+								drag="x"
+								dragConstraints={{ left: 0, right: 0 }}
+								dragElastic={0.18}
+								dragMomentum={false}
+								onDragEnd={(_, info) => {
+									const swipeThreshold = 50;
+									const velocityThreshold = 350;
+									const distance = info.offset.x;
+									const velocity = info.velocity.x;
+									const isSwipe =
+										Math.abs(distance) > swipeThreshold ||
+										Math.abs(velocity) > velocityThreshold;
+									if (!isSwipe) return;
+									if (distance < 0) {
+										// swipe left, next step
+										jumpTo((active + 1) % STEPS.length);
+									} else {
+										// swipe right, previous step
+										jumpTo((active - 1 + STEPS.length) % STEPS.length);
+									}
+								}}
+							>
 								<AnimatePresence mode="wait">
 									<motion.div
 										key={step.image}
@@ -215,7 +238,7 @@ export default function OrderLifecycleStory() {
 											duration: 0.4,
 											ease: [0.22, 1, 0.36, 1],
 										}}
-										className="absolute inset-0"
+										className="absolute inset-0 pointer-events-none"
 									>
 										<Image
 											src={step.image}
@@ -228,7 +251,7 @@ export default function OrderLifecycleStory() {
 										/>
 									</motion.div>
 								</AnimatePresence>
-							</div>
+							</motion.div>
 						</div>
 
 						{/* caption, separate block */}
@@ -256,21 +279,26 @@ export default function OrderLifecycleStory() {
 							</AnimatePresence>
 						</div>
 
-						{/* mobile dots */}
-						<div className="mt-4 flex justify-center gap-1.5 md:hidden">
-							{STEPS.map((s, i) => (
-								<button
-									key={s.num}
-									type="button"
-									aria-label={`Jump to step ${s.num}`}
-									onClick={() => jumpTo(i)}
-									className={`h-1 rounded-full transition-all ${
-										active === i
-											? "w-6 bg-zinc-100"
-											: "w-1.5 bg-zinc-700 hover:bg-zinc-600"
-									}`}
-								/>
-							))}
+						{/* mobile hint + dots */}
+						<div className="mt-4 flex flex-col items-center gap-3 md:hidden">
+							<p className="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-zinc-500">
+								Swipe to navigate
+							</p>
+							<div className="flex justify-center gap-1.5">
+								{STEPS.map((s, i) => (
+									<button
+										key={s.num}
+										type="button"
+										aria-label={`Jump to step ${s.num}`}
+										onClick={() => jumpTo(i)}
+										className={`h-1.5 rounded-full transition-all ${
+											active === i
+												? "w-7 bg-zinc-100"
+												: "w-1.5 bg-zinc-700 hover:bg-zinc-600"
+										}`}
+									/>
+								))}
+							</div>
 						</div>
 					</div>
 				</div>

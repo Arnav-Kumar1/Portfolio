@@ -192,14 +192,13 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 
 	// --- Standalone cluster (no FK into order graph) ---
-	// Placed to the right with a ~250px gap from the order subsystem
-	// (orders ends near x=1450; leads starts at x=1700). The gap is still the
-	// strongest visual cue that these tables are independent, but tight enough
-	// that fitView's centering puts the order hub near the visible centre on
-	// narrow viewports, rather than centring on an empty horizontal void.
+	// Placed to the right with a ~100px gap from the order subsystem
+	// (orders ends near x=1450; leads starts at x=1550). Still a clear visual
+	// separator for "these are independent subsystems", but tight enough that
+	// fitView centres the order hub close to the viewport centre on phones.
 	{
 		id: "leads",
-		position: { x: 1700, y: 0 },
+		position: { x: 1550, y: 0 },
 		data: {
 			name: "leads",
 			columns: [
@@ -219,7 +218,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "newsletter_subscribers",
-		position: { x: 1700, y: 500 },
+		position: { x: 1550, y: 500 },
 		data: {
 			name: "newsletter_subscribers",
 			columns: [
@@ -232,7 +231,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "rate_limit_buckets",
-		position: { x: 1700, y: 720 },
+		position: { x: 1550, y: 720 },
 		data: {
 			name: "rate_limit_buckets",
 			columns: [
@@ -244,7 +243,7 @@ const tables: Array<{ id: string; position: { x: number; y: number }; data: Tabl
 	},
 	{
 		id: "payment_micro_reserved",
-		position: { x: 1700, y: 880 },
+		position: { x: 1550, y: 880 },
 		data: {
 			name: "payment_micro_reserved",
 			columns: [
