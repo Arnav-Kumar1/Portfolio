@@ -51,7 +51,7 @@ const STEPS: Step[] = [
 		num: "06",
 		title: "Admin",
 		caption:
-			"My custom admin: hero amount, lifecycle stepper (Placed → Paid → Fulfilled), email-log audit table with provider IDs, resend buttons, and atomic confirm/cancel actions.",
+			"Custom admin panel: hero amount, lifecycle stepper (Placed → Paid → Fulfilled), email-log audit table with provider IDs, resend buttons, and atomic confirm/cancel actions.",
 		image: "/screenshots/leohydra-admin-order.webp",
 	},
 	{
@@ -72,7 +72,7 @@ const STEPS: Step[] = [
 		num: "09",
 		title: "Scanner match",
 		caption:
-			"The Vercel-cron-driven scanner walks USDT Transfer events every ~2 minutes, matches the on-chain amount to a pending order by exact micro-amount, and triggers atomic confirmation plus email side-effects. End of lifecycle.",
+			"The Vercel-cron-driven scanner walks USDT Transfer events every ~2 minutes, matches the on-chain amount to a pending order by exact micro-amount, and triggers atomic confirmation plus email side-effects. End of the payment lifecycle; fulfilment picks up from here.",
 		image: "/screenshots/leohydra-vercel-log.webp",
 	},
 ];

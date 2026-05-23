@@ -1,6 +1,6 @@
 ---
 title: Leo Hydra Studio
-description: Production e-commerce platform I hand-coded from scratch and run end-to-end for a Dubai art studio. 40 to 50 orders a day during drop weeks. Every limited-edition drop (six prints, edition of 50 each, 300 units) sells out inside 7 days of going live. Every line of the application is mine. Dual-rail crypto + bank checkout, server-side Meta CAPI, transactional email pipeline, three rounds of self-led adversarial security review. 12 Postgres tables, 30 migrations, 22 API routes, 50 React components.
+description: Production e-commerce platform I built and run end-to-end for a Dubai art studio. Drop weeks clear 40 to 50 orders a day. Each drop is six prints in editions of 50 (300 units) and sells out in 7 days. Dual-rail crypto and bank checkout, server-side Meta CAPI, three rounds of self-led adversarial security review.
 date: "2025-10-01"
 url: https://leohydra.com
 published: true
@@ -18,7 +18,7 @@ No template, no inherited codebase. The artist makes the work in Dubai. I design
 
 <StatBand
   stats={[
-    { value: "40–50", label: "Orders / day in a drop week", hint: "concentrated rush across six active prints" },
+    { value: "40 to 50", label: "Orders / day in a drop week", hint: "rush concentrated across the six new prints" },
     { value: "300", label: "Prints per drop", hint: "6 designs, edition of 50 each, sold out inside 7 days" },
     { value: "6", label: "Originals sold to date", hint: "inquiry funnel, priced individually, about one a month" },
     { value: "1", label: "Engineer / operator", hint: "no team, no agency" },
@@ -27,7 +27,7 @@ No template, no inherited codebase. The artist makes the work in Dubai. I design
 
 <Reveal>
 
-Every drop is six new print designs, edition of 50 each, 300 prints in total. They clear inside 7 days of going live. Originals don't ship through this funnel at all: they're priced on inquiry, handled one at a time, and roughly one moves a month.
+Each drop is six new print designs, edition of 50 each, 300 prints in total. They clear inside 7 days of going live. Originals don't ship through this funnel at all: they're priced on inquiry, handled one at a time, and roughly one moves a month.
 
 </Reveal>
 
@@ -64,7 +64,7 @@ What it actually looks like when someone buys a print. A real $199 Chromatic pri
 
 <Reveal>
 
-The full breakdown: 12 Postgres tables (`orders`, `order_items`, `payments`, `bank_transfer_payments`, `crypto_payments`, `products`, `leads`, `newsletter`, `order_email_events`, `payment_micro_reserved`, `order_scan_throttle`, `rate_limit_buckets`). 30 forward-only migrations applied via Supabase SQL editor, with verified live-DB drift checks against nightly `pg_dump` backups. Three rounds of self-led adversarial code review hardened rate limiting, brute-force lockout, CSRF Origin checks, PII redaction, three isolated HMAC secrets, and CSP + security headers in `next.config.js`.
+The full breakdown: 12 Postgres tables (`orders`, `order_items`, `payments`, `bank_transfer_payments`, `crypto_payments`, `products`, `leads`, `newsletter_subscribers`, `order_email_events`, `payment_micro_reserved`, `order_scan_throttle`, `rate_limit_buckets`). 30 forward-only migrations applied via Supabase SQL editor, with verified live-DB drift checks against nightly `pg_dump` backups. Three rounds of self-led adversarial code review hardened rate limiting, brute-force lockout, CSRF Origin checks, PII redaction, three isolated HMAC secrets, and CSP + security headers in `next.config.js`.
 
 </Reveal>
 
