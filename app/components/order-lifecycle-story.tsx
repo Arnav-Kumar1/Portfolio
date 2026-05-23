@@ -395,42 +395,16 @@ export default function OrderLifecycleStory() {
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
 						transition={{ duration: 0.22 }}
-						className="fixed inset-0 z-[60] flex flex-col bg-black/95 backdrop-blur-md"
+						className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-black/95 backdrop-blur-md cursor-zoom-out"
 						onClick={() => setZoomed(false)}
 					>
-						{/* top bar */}
-						<div className="flex items-center justify-between px-5 py-4 sm:px-8">
-							<div className="flex items-baseline gap-3">
-								<span className="font-mono text-[0.7rem] text-zinc-500">
-									{step.num} / {String(STEPS.length).padStart(2, "0")}
-								</span>
-								<span className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-zinc-300">
-									{step.title}
-								</span>
-							</div>
-							<button
-								type="button"
-								onClick={(e) => {
-									e.stopPropagation();
-									setZoomed(false);
-								}}
-								aria-label="Close zoom"
-								className="inline-flex items-center gap-1.5 rounded-md border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs font-medium text-zinc-300 backdrop-blur transition-colors hover:border-zinc-500 hover:text-white"
-							>
-								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-									<path d="M18 6L6 18M6 6l12 12" />
-								</svg>
-								Close · Esc
-							</button>
-						</div>
-
-						{/* image area */}
+						{/* image area — wraps image + corner close + chevrons */}
 						<div
-							className="relative flex-1 overflow-hidden"
+							className="relative cursor-default"
 							onClick={(e) => e.stopPropagation()}
 						>
 							<motion.div
-								className="absolute inset-0 flex items-center justify-center touch-pan-y"
+								className="relative h-[78vh] w-[92vw] max-w-[1800px] touch-pan-y"
 								drag="x"
 								dragConstraints={{ left: 0, right: 0 }}
 								dragElastic={0.18}
@@ -455,7 +429,7 @@ export default function OrderLifecycleStory() {
 										animate={{ opacity: 1, scale: 1 }}
 										exit={{ opacity: 0, scale: 0.99 }}
 										transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-										className="relative h-[78vh] w-[92vw] max-w-[1800px]"
+										className="absolute inset-0"
 									>
 										<Image
 											src={step.image}
@@ -470,7 +444,22 @@ export default function OrderLifecycleStory() {
 								</AnimatePresence>
 							</motion.div>
 
-							{/* prev / next chevrons */}
+							{/* Close button — overlays the image's top-right corner */}
+							<button
+								type="button"
+								onClick={(e) => {
+									e.stopPropagation();
+									setZoomed(false);
+								}}
+								aria-label="Close zoom"
+								className="absolute -top-3 -right-3 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-zinc-700 bg-zinc-950/95 text-zinc-200 shadow-lg backdrop-blur transition-all hover:scale-105 hover:border-zinc-400 hover:text-white"
+							>
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+									<path d="M18 6L6 18M6 6l12 12" />
+								</svg>
+							</button>
+
+							{/* prev / next chevrons sit just outside the image edges */}
 							<button
 								type="button"
 								onClick={(e) => {
@@ -479,7 +468,7 @@ export default function OrderLifecycleStory() {
 									setCycleKey((k) => k + 1);
 								}}
 								aria-label="Previous step"
-								className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-zinc-700 bg-zinc-900/80 p-2.5 text-zinc-300 backdrop-blur transition-colors hover:border-zinc-500 hover:text-white sm:left-4"
+								className="absolute left-2 top-1/2 z-10 -translate-x-full -translate-y-1/2 rounded-full border border-zinc-700 bg-zinc-900/80 p-2.5 text-zinc-300 backdrop-blur transition-colors hover:border-zinc-500 hover:text-white sm:left-0 sm:-ml-3"
 							>
 								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
 									<path d="M15 18l-6-6 6-6" />
@@ -493,51 +482,61 @@ export default function OrderLifecycleStory() {
 									setCycleKey((k) => k + 1);
 								}}
 								aria-label="Next step"
-								className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-zinc-700 bg-zinc-900/80 p-2.5 text-zinc-300 backdrop-blur transition-colors hover:border-zinc-500 hover:text-white sm:right-4"
+								className="absolute right-2 top-1/2 z-10 translate-x-full -translate-y-1/2 rounded-full border border-zinc-700 bg-zinc-900/80 p-2.5 text-zinc-300 backdrop-blur transition-colors hover:border-zinc-500 hover:text-white sm:right-0 sm:-mr-3"
 							>
 								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
 									<path d="M9 18l6-6-6-6" />
 								</svg>
 							</button>
-						</div>
 
-						{/* caption + dots */}
-						<div
-							className="px-5 py-5 sm:px-8 sm:pb-7"
-							onClick={(e) => e.stopPropagation()}
-						>
-							<AnimatePresence mode="wait">
-								<motion.p
-									key={`caption-${step.num}`}
-									initial={{ opacity: 0, y: 6 }}
-									animate={{ opacity: 1, y: 0 }}
-									exit={{ opacity: 0 }}
-									transition={{ duration: 0.25 }}
-									className="mx-auto max-w-[72ch] text-center text-[0.875rem] leading-relaxed text-zinc-300 sm:text-[0.95rem]"
-								>
-									{step.caption}
-								</motion.p>
-							</AnimatePresence>
-							<div className="mt-4 flex justify-center gap-1.5">
-								{STEPS.map((s, i) => (
-									<button
-										key={s.num}
-										type="button"
-										aria-label={`Jump to step ${s.num}`}
-										onClick={(e) => {
-											e.stopPropagation();
-											setActive(i);
-											setCycleKey((k) => k + 1);
-										}}
-										className={`h-1.5 rounded-full transition-all ${
-											active === i
-												? "w-7 bg-zinc-100"
-												: "w-1.5 bg-zinc-700 hover:bg-zinc-500"
-										}`}
-									/>
-								))}
+							{/* step counter + title above the image */}
+							<div className="absolute -top-9 left-0 flex items-baseline gap-3 font-mono text-[0.7rem] uppercase tracking-[0.16em]">
+								<span className="text-zinc-500">
+									{step.num} / {String(STEPS.length).padStart(2, "0")}
+								</span>
+								<span className="text-zinc-300">{step.title}</span>
+							</div>
+
+							{/* caption + dots below the image */}
+							<div className="absolute -bottom-1 left-0 right-0 translate-y-full pt-4">
+								<AnimatePresence mode="wait">
+									<motion.p
+										key={`caption-${step.num}`}
+										initial={{ opacity: 0, y: 6 }}
+										animate={{ opacity: 1, y: 0 }}
+										exit={{ opacity: 0 }}
+										transition={{ duration: 0.25 }}
+										className="mx-auto max-w-[72ch] text-center text-[0.875rem] leading-relaxed text-zinc-300 sm:text-[0.95rem]"
+									>
+										{step.caption}
+									</motion.p>
+								</AnimatePresence>
+								<div className="mt-3 flex justify-center gap-1.5">
+									{STEPS.map((s, i) => (
+										<button
+											key={s.num}
+											type="button"
+											aria-label={`Jump to step ${s.num}`}
+											onClick={(e) => {
+												e.stopPropagation();
+												setActive(i);
+												setCycleKey((k) => k + 1);
+											}}
+											className={`h-1.5 rounded-full transition-all ${
+												active === i
+													? "w-7 bg-zinc-100"
+													: "w-1.5 bg-zinc-700 hover:bg-zinc-500"
+											}`}
+										/>
+									))}
+								</div>
 							</div>
 						</div>
+
+						{/* tiny corner hint that anywhere-outside closes */}
+						<span className="pointer-events-none absolute bottom-5 right-5 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-zinc-600">
+							Click outside · Esc
+						</span>
 					</motion.div>
 				)}
 			</AnimatePresence>
