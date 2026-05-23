@@ -1,0 +1,52 @@
+---
+title: "Hardening LeoHydra: three rounds of adversarial code review"
+description: "Walking the threat model on a USDT-and-bank-rail commerce stack with real money flowing through. Five migrations (027 to 031) and the load-bearing design nuance behind each."
+date: "2026-05-19"
+published: true
+---
+
+LeoHydra has real money flowing through it. USDT on Polygon, international bank transfers, customer PII, an admin panel that can flip orders to "paid", server-side analytics with shared secrets. Each of those is a separate threat surface. Over two months I ran three rounds of adversarial code review on the codebase, surfaced sixteen findings, and shipped five migrations (027 to 031) as the concrete mitigations. This is what came out of it.
+
+## The setup
+
+For each subsystem I drew up a small threat model. Admin login, payment confirmation, scanner, transactional email, public form endpoints. For each surface I asked the same question: what could a sophisticated attacker do here, what's the worst plausible outcome, and what mitigation closes the gap without breaking the legitimate flow.
+
+The format was a structured back-and-forth. I'd describe the system, walk through the code, and enumerate every realistic attack vector at each entry point. Credential stuffing, IP rotation, timing oracles, replay, session fixation, enumeration, the lot. For each one I'd ask the follow-up: walk through how the exploit plays out in production with the current code. If the code defends, confirm and move on. If not, name exactly where the gap is.
+
+I had Claude Code at hand throughout, mostly for pattern recall. Security writing has thirty years of literature on residential proxies, padding oracles, CSRF subdomain edge cases, and an LLM is good at surfacing the relevant bits when you describe a system. Threat selection and engineering decisions stayed mine.
+
+## Concrete example: brute-force lockout
+
+The original LeoHydra admin login had a per-IP rate limit. Ten attempts per minute. The first finding from the threat-model session called it out:
+
+> Your per-IP rate limit is defeated by IP rotation. Residential proxy services like Bright Data give attackers thousands of fresh IPs. An attacker spending $50 can issue tens of thousands of login attempts per hour from unique IPs without ever tripping your 10/min limit. The rate limit only prevents brute force from a single attacker on a single connection.
+
+Known weakness, well articulated. The follow-up suggested a failure-counter pattern: count *wrong-password attempts* specifically, not just request volume. Add a per-IP counter on a longer window (5 fails per hour), plus a global counter as a second-line defence against truly distributed attacks (30 fails per 15 minutes).
+
+Then the critical detail. **Don't clear the global counter on a successful login.** A lucky correct guess during a distributed brute-force campaign shouldn't reset the credit limit. Otherwise the moment the attacker gets one correct guess, the budget refreshes, and the system would lock out everyone *except* the attacker. That's not a defence. That's an inversion of one.
+
+That last bullet, the one about never clearing the global counter on success, was the load-bearing design decision that made the lockout actually work against distributed campaigns. I would not have arrived at it on my own that night. I might have on day three of agonising over the design.
+
+The migration shipped as `030_admin_login_brute_force_lockout.sql`. The actual SQL is short: two RPCs and two atomic upserts. But the design decision behind "global counter never cleared on success" is the load-bearing nuance.
+
+## What came out of three rounds
+
+Across the three audit passes, five migrations shipped:
+
+- **027** DB-backed rate limiter with sliding-window buckets, replacing the in-memory one (in-memory state doesn't survive cold starts on Vercel serverless, so the limit was effectively unbounded across restarts).
+- **028** Origin-header CSRF check on all state-changing admin routes, with a per-environment allowlist.
+- **029** PII redaction in server logs. Order objects, customer email and address, payer wallet address, transaction hashes. All routed through a single redactor before any structured log call.
+- **030** Brute-force lockout as described above.
+- **031** Atomic payment confirmation under three concurrent mutators: admin manual confirm, auto-expire, cron-driven on-chain match. SELECT FOR UPDATE on the order row at the top of the confirm path, status-guarded UPDATEs, status-change triggers that release reserved stock and the µUSDT discriminator slot in lockstep.
+
+Plus three isolated HMAC secrets across the codebase (admin sessions, order tokens, payment webhooks), CSP and security headers in `next.config.js`, and a few smaller items that didn't warrant their own migration.
+
+## The selection problem
+
+Pattern recall is the easy part. There is a public corpus thirty years deep on this stuff. The hard part, which a structured review process helps with but does not solve, is *selection*. Which attack scenarios are realistic given the threat model of a small-art-business commerce site? Which mitigations make sense given the engineering budget? Which trade-offs am I willing to make? Which findings stay open as accepted risk?
+
+That selection is the work. A junior engineer with a structured review process does not become a senior engineer. They become a faster junior engineer who can occasionally bluff into senior-looking work. The judgement of which suggestions matter for *this* codebase, what's a real threat versus theoretical, and when to accept risk versus mitigate, is not something a process generates for you.
+
+What the process *does* do is collapse the time between "I should think about this" and "I have a structured list of every angle on this." That collapse is significant. I went from "I'll get to a proper security audit eventually" to "I ran three rounds in two months and they produced five concrete migrations" because the friction dropped to near zero.
+
+The full audit notes live in `docs/2026-05-14_payment-flow-launch-audit.md` in the LeoHydra repo. Migrations 027 to 031 are the concrete mitigations. The audit doc itself reads like a senior-engineer artifact, because the conversations that produced it were structured like a senior-engineer review session.
