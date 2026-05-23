@@ -11,7 +11,7 @@ const experiences = [
 		duration: "Oct 2025 to Present",
 		achievements: [
 			"Sole operating team for a Dubai-based art studio. Hand-coded the platform from scratch and run everything else from Mumbai. No template, no inherited codebase.",
-			"Current scale: 20 to 30 orders per day. Every limited-edition print drop sells out within 7 days of going live.",
+			"Current scale: 40 to 50 orders per day during drop weeks. Each drop is 6 new prints in editions of 50 (300 units) and sells out within 7 days. Originals are inquiry-only and move about once a month.",
 			"Architected and wrote the production e-commerce platform at leohydra.com from scratch. Stack: Next.js 14, Supabase Postgres, USDT-on-Polygon checkout with on-chain payment verification, bank transfer with admin manual confirm, 12 tables, 30 migrations, 22 API routes, 50 React components.",
 			"Server-side Meta Pixel + Conversions API across every conversion surface (checkout / forms / newsletter / product pages / PageView), dedup-aware via shared eventID. Transactional email pipeline (Resend, 6 lifecycle kinds, audit-logged with admin resend UI).",
 			"Three rounds of self-led adversarial code review + 5 new migrations (027 to 031): DB-backed rate limiter, admin brute-force lockout, CSRF Origin checks, PII redaction, HMAC-secret isolation, CSP + security headers.",
@@ -181,14 +181,16 @@ export default function AboutPage() {
 							>
 								leohydra.com
 							</a>
-							, a Dubai art studio I run from Mumbai. We do 20 to 30 orders a
-							day, and every limited edition print drop sells out inside a week
-							of going live. I wrote every component of the application: the
-							e-commerce stack, the on-chain payment verifier, the admin panel,
-							the transactional email pipeline, the Meta Pixel and CAPI dedup,
-							and the security audit migrations. I also run the ad campaigns,
-							work with the printers on each drop, and coordinate fulfilment out
-							of the Dubai warehouse.
+							, a Dubai art studio I run from Mumbai. Each drop is six new print
+							designs in editions of 50 (300 units) and clears inside 7 days of
+							going live, at 40 to 50 orders a day across the rush. Originals
+							run through a separate inquiry funnel, about one a month. I wrote
+							every component of the application: the e-commerce stack, the
+							on-chain payment verifier, the admin panel, the transactional
+							email pipeline, the Meta Pixel and CAPI dedup, and the security
+							audit migrations. I also run the ad campaigns, work with the
+							printers on each drop, and coordinate fulfilment out of the Dubai
+							warehouse.
 						</p>
 						<p>
 							B.E. in Electronics &amp; Telecommunication from Smt. Kashibai

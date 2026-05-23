@@ -45,7 +45,7 @@ export default function Home() {
           >
             leohydra.com
           </Link>
-          {" "}from scratch and run all of it. 20 to 30 orders a day. Every drop sells out inside a week.
+          {" "}from scratch and run all of it. Drop weeks clear 40 to 50 orders a day. Every drop sells out inside 7 days.
         </h2>
       </div>
     </div>

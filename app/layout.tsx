@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     template: "%s | Arnav Kumar",
   },
   description:
-    "Full-stack engineer based in Mumbai. I built leohydra.com from scratch and run all of it, from the code to the ad campaigns. The studio does 20 to 30 orders a day. Every limited edition drop sells out inside a week. Looking for senior IC or early-team engineering roles.",
+    "Full-stack engineer based in Mumbai. I built leohydra.com from scratch and run all of it, from the code to the ad campaigns. Drop weeks clear 40 to 50 orders a day. Every limited edition drop (six prints, edition of 50, 300 units) sells out inside 7 days. Looking for senior IC or early-team engineering roles.",
   openGraph: {
     title: "Arnav Kumar, Full-stack engineer",
     description:
-      "Full-stack engineer based in Mumbai. I built leohydra.com from scratch and run all of it, from the code to the ad campaigns. The studio does 20 to 30 orders a day. Every limited edition drop sells out inside a week. Looking for senior IC or early-team engineering roles.",
+      "Full-stack engineer based in Mumbai. I built leohydra.com from scratch and run all of it, from the code to the ad campaigns. Drop weeks clear 40 to 50 orders a day. Every limited edition drop (six prints, edition of 50, 300 units) sells out inside 7 days. Looking for senior IC or early-team engineering roles.",
     url: "https://portfolio-arnav-kumar.vercel.app",
     siteName: "Arnav Kumar",
     locale: "en-US",
