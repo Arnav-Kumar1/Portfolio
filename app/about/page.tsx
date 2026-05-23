@@ -165,14 +165,14 @@ export default function AboutPage() {
 							About
 						</h2>
 						<p className="mt-4 text-zinc-400">
-							Full-stack engineer. Ships and runs production systems alone.
+							Founding engineer. Ships and runs production systems end to end.
 						</p>
 					</div>
 					<div className="w-full h-px bg-zinc-800 mt-8" />
 					<div className="mt-8 space-y-6 text-zinc-300 leading-relaxed">
 						<p>
-							I build full-stack production systems and run them. The current
-							one is{" "}
+							I'm a founding engineer. I build production systems end to end
+							and run them in production. The current one is{" "}
 							<a
 								href="https://leohydra.com"
 								target="_blank"
@@ -204,8 +204,9 @@ export default function AboutPage() {
 						<p>
 							I&apos;m strongest at production e-commerce engineering, growth
 							instrumentation (server side Pixel and CAPI, dedup aware), and
-							security hardening. I&apos;m comfortable owning the full stack
-							solo, or being the first or second engineer on a small team.
+							security hardening. I&apos;m looking for founding-engineer or
+							early-team engineering roles at remote-first startups
+							internationally, with Dubai an option for relocation.
 						</p>
 					</div>
 				</section>
