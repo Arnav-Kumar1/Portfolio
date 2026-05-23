@@ -330,9 +330,15 @@ export default function OrderLifecycleStory() {
 					position: absolute;
 					top: 0;
 					left: 0;
-					height: 2px;
+					height: 3px;
 					width: 0;
-					background: rgba(24, 24, 27, 0.7);
+					background: linear-gradient(
+						90deg,
+						rgba(165, 180, 252, 0.95) 0%,
+						rgba(244, 244, 245, 0.9) 60%,
+						rgba(244, 244, 245, 0.7) 100%
+					);
+					box-shadow: 0 0 12px rgba(165, 180, 252, 0.35);
 					z-index: 10;
 					animation-name: lh-progress-fill;
 					animation-timing-function: linear;
