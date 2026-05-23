@@ -9,9 +9,58 @@ const navigation = [
   { name: "Contact", href: "/contact" },
 ];
 
+// JSON-LD Person schema. Tells Google this site is the authoritative source
+// for the entity "Arnav Kumar, Founding engineer". Critical for ranking on
+// the name itself plus name + role combinations.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Arnav Kumar",
+  alternateName: "Arnav",
+  url: "https://arnavkumar.in",
+  image: "https://arnavkumar.in/og.png",
+  jobTitle: "Founding Engineer",
+  description:
+    "Founding engineer based in Mumbai. Built and runs leohydra.com end to end, a Dubai art studio doing 40 to 50 orders a day during drop weeks.",
+  worksFor: {
+    "@type": "Organization",
+    name: "Leo Hydra Studio",
+    url: "https://leohydra.com",
+    location: {
+      "@type": "Place",
+      address: { "@type": "PostalAddress", addressLocality: "Dubai" },
+    },
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Mumbai",
+    addressCountry: "IN",
+  },
+  knowsAbout: [
+    "Next.js",
+    "TypeScript",
+    "PostgreSQL",
+    "Supabase",
+    "Web3 payments",
+    "USDT on Polygon",
+    "Meta Conversions API",
+    "Production e-commerce engineering",
+    "Security hardening",
+  ],
+  sameAs: [
+    "https://www.linkedin.com/in/arnav-kumar1/",
+    "https://github.com/Arnav-Kumar1",
+  ],
+};
+
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black">
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
       <nav className="my-16 animate-fade-in">
         <ul className="flex items-center justify-center gap-4">
           {navigation.map((item) => (

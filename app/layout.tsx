@@ -5,17 +5,21 @@ import { Metadata } from "next";
 import { Analytics } from "./components/analytics";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://arnavkumar.in"),
   title: {
     default: "Arnav Kumar, Founding engineer",
     template: "%s | Arnav Kumar",
   },
   description:
     "Founding engineer based in Mumbai. I built leohydra.com from scratch and run all of it, from the code to the ad campaigns. Drop weeks clear 40 to 50 orders a day. Every limited edition drop (six prints, edition of 50, 300 units) sells out inside 7 days. Open to remote roles internationally, including Dubai.",
+  alternates: {
+    canonical: "https://arnavkumar.in",
+  },
   openGraph: {
     title: "Arnav Kumar, Founding engineer",
     description:
       "Founding engineer based in Mumbai. I built leohydra.com from scratch and run all of it, from the code to the ad campaigns. Drop weeks clear 40 to 50 orders a day. Every limited edition drop (six prints, edition of 50, 300 units) sells out inside 7 days. Open to remote roles internationally, including Dubai.",
-    url: "https://portfolio-arnav-kumar.vercel.app",
+    url: "https://arnavkumar.in",
     siteName: "Arnav Kumar",
     locale: "en-US",
     type: "website",
@@ -32,9 +36,23 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: "Arnav Kumar",
+    title: "Arnav Kumar, Founding engineer",
     card: "summary_large_image",
   },
+  keywords: [
+    "Arnav Kumar",
+    "Arnav Kumar engineer",
+    "Arnav Kumar Mumbai",
+    "Arnav Kumar LeoHydra",
+    "Arnav Kumar founding engineer",
+    "founding engineer remote",
+    "founding engineer Dubai",
+    "Next.js engineer Mumbai",
+    "Postgres engineer remote",
+    "Web3 payments engineer",
+  ],
+  authors: [{ name: "Arnav Kumar", url: "https://arnavkumar.in" }],
+  creator: "Arnav Kumar",
 };
 const inter = Inter({
   subsets: ["latin"],
