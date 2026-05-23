@@ -84,7 +84,22 @@ export default function OrderLifecycleStory() {
 	const [paused, setPaused] = useState(false);
 	const [cycleKey, setCycleKey] = useState(0);
 	const rootRef = useRef<HTMLDivElement>(null);
+	const navRef = useRef<HTMLDivElement>(null);
+	const stepRefs = useRef<Array<HTMLButtonElement | null>>([]);
 	const inView = useInView(rootRef);
+
+	// Auto-centre the active step button in the horizontal stepper on mobile,
+	// so the user always sees which step is current without manually scrolling
+	// the indicator strip. No-op on desktop where the nav is vertical
+	// (md:overflow-visible removes the scroll container).
+	useEffect(() => {
+		const nav = navRef.current;
+		const btn = stepRefs.current[active];
+		if (!nav || !btn) return;
+		if (nav.scrollWidth <= nav.clientWidth) return; // not scrollable
+		const target = btn.offsetLeft - nav.clientWidth / 2 + btn.offsetWidth / 2;
+		nav.scrollTo({ left: target, behavior: "smooth" });
+	}, [active]);
 
 	// Single source of truth: when the CSS progress animation ENDS, advance.
 	// Pausing is done via animation-play-state, which preserves position.
@@ -143,13 +158,19 @@ export default function OrderLifecycleStory() {
 					className="grid grid-cols-1 gap-6 md:grid-cols-[220px_1fr] md:gap-10"
 				>
 					{/* LEFT: stepper */}
-					<nav className="flex shrink-0 gap-1 overflow-x-auto pb-2 md:flex-col md:gap-0.5 md:overflow-visible md:pb-0">
+					<nav
+						ref={navRef}
+						className="flex shrink-0 gap-1 overflow-x-auto pb-2 md:flex-col md:gap-0.5 md:overflow-visible md:pb-0"
+					>
 						{STEPS.map((s, i) => {
 							const isActive = active === i;
 							const isDone = i < active;
 							return (
 								<button
 									key={s.num}
+									ref={(el) => {
+										stepRefs.current[i] = el;
+									}}
 									type="button"
 									onClick={() => jumpTo(i)}
 									className="group relative flex shrink-0 items-center gap-3 whitespace-nowrap px-1 py-2 text-left md:py-2.5"
