@@ -216,7 +216,7 @@ export default function OrderLifecycleStory() {
 
 					{/* RIGHT: image + caption */}
 					<div className="min-w-0">
-						<div className="relative overflow-hidden rounded-xl border border-zinc-800/70 bg-zinc-100 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.7)]">
+						<div className="relative overflow-hidden border border-zinc-800/70 bg-zinc-950 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.7)]">
 							{/* progress bar, pure CSS, the only timer */}
 							<div
 								key={cycleKey}
@@ -226,7 +226,7 @@ export default function OrderLifecycleStory() {
 								style={{ animationDuration: `${AUTO_MS}ms` }}
 							/>
 							<motion.div
-								className="relative aspect-[16/9] w-full touch-pan-y bg-zinc-100 select-none"
+								className="relative aspect-[192/100] w-full touch-pan-y bg-zinc-950 select-none"
 								drag="x"
 								dragConstraints={{ left: 0, right: 0 }}
 								dragElastic={0.18}
