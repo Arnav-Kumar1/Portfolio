@@ -83,6 +83,7 @@ export default function OrderLifecycleStory() {
 	const [active, setActive] = useState(0);
 	const [paused, setPaused] = useState(false);
 	const [cycleKey, setCycleKey] = useState(0);
+	const [zoomed, setZoomed] = useState(false);
 	const rootRef = useRef<HTMLDivElement>(null);
 	const navRef = useRef<HTMLDivElement>(null);
 	const stepRefs = useRef<Array<HTMLButtonElement | null>>([]);
@@ -114,8 +115,33 @@ export default function OrderLifecycleStory() {
 	}, []);
 
 	const step = STEPS[active];
-	// Only auto-play when in view AND not paused. Saves cycles when off-screen.
-	const playing = !paused && inView;
+	// Only auto-play when in view AND not paused AND not zoomed. Saves cycles
+	// when off-screen, and freezes the timer while the reader is inspecting a
+	// frame in the lightbox.
+	const playing = !paused && inView && !zoomed;
+
+	// Lock body scroll while the lightbox is open, and handle Esc + arrow keys.
+	useEffect(() => {
+		if (!zoomed) return;
+		const prevOverflow = document.body.style.overflow;
+		document.body.style.overflow = "hidden";
+		const onKey = (e: KeyboardEvent) => {
+			if (e.key === "Escape") setZoomed(false);
+			if (e.key === "ArrowLeft") {
+				setActive((a) => (a - 1 + STEPS.length) % STEPS.length);
+				setCycleKey((k) => k + 1);
+			}
+			if (e.key === "ArrowRight") {
+				setActive((a) => (a + 1) % STEPS.length);
+				setCycleKey((k) => k + 1);
+			}
+		};
+		document.addEventListener("keydown", onKey);
+		return () => {
+			document.body.style.overflow = prevOverflow;
+			document.removeEventListener("keydown", onKey);
+		};
+	}, [zoomed]);
 
 	return (
 		<div
@@ -226,11 +252,12 @@ export default function OrderLifecycleStory() {
 								style={{ animationDuration: `${AUTO_MS}ms` }}
 							/>
 							<motion.div
-								className="relative aspect-[192/100] w-full touch-pan-y bg-zinc-950 select-none"
+								className="group relative aspect-[192/100] w-full touch-pan-y bg-zinc-950 select-none"
 								drag="x"
 								dragConstraints={{ left: 0, right: 0 }}
 								dragElastic={0.18}
 								dragMomentum={false}
+								onTap={() => setZoomed(true)}
 								onDragEnd={(_, info) => {
 									const swipeThreshold = 50;
 									const velocityThreshold = 350;
@@ -241,14 +268,39 @@ export default function OrderLifecycleStory() {
 										Math.abs(velocity) > velocityThreshold;
 									if (!isSwipe) return;
 									if (distance < 0) {
-										// swipe left, next step
 										jumpTo((active + 1) % STEPS.length);
 									} else {
-										// swipe right, previous step
 										jumpTo((active - 1 + STEPS.length) % STEPS.length);
 									}
 								}}
 							>
+								<button
+									type="button"
+									onClick={(e) => {
+										e.stopPropagation();
+										setZoomed(true);
+									}}
+									className="absolute top-3 right-3 z-20 inline-flex items-center gap-1.5 rounded-md border border-zinc-700 bg-zinc-950/85 px-2.5 py-1.5 text-[0.7rem] font-medium text-zinc-200 backdrop-blur transition-all hover:border-zinc-500 hover:text-white md:opacity-0 md:group-hover:opacity-100"
+									aria-label="Zoom screenshot"
+								>
+									<svg
+										width="12"
+										height="12"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										aria-hidden
+									>
+										<path d="M3 7V3h4" />
+										<path d="M21 7V3h-4" />
+										<path d="M3 17v4h4" />
+										<path d="M21 17v4h-4" />
+									</svg>
+									Zoom
+								</button>
 								<AnimatePresence mode="wait">
 									<motion.div
 										key={step.image}
@@ -324,6 +376,161 @@ export default function OrderLifecycleStory() {
 					</div>
 				</div>
 			</div>
+
+			{/* Fullscreen lightbox */}
+			<AnimatePresence>
+				{zoomed && (
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.22 }}
+						className="fixed inset-0 z-[60] flex flex-col bg-black/95 backdrop-blur-md"
+						onClick={() => setZoomed(false)}
+					>
+						{/* top bar */}
+						<div className="flex items-center justify-between px-5 py-4 sm:px-8">
+							<div className="flex items-baseline gap-3">
+								<span className="font-mono text-[0.7rem] text-zinc-500">
+									{step.num} / {String(STEPS.length).padStart(2, "0")}
+								</span>
+								<span className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-zinc-300">
+									{step.title}
+								</span>
+							</div>
+							<button
+								type="button"
+								onClick={(e) => {
+									e.stopPropagation();
+									setZoomed(false);
+								}}
+								aria-label="Close zoom"
+								className="inline-flex items-center gap-1.5 rounded-md border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs font-medium text-zinc-300 backdrop-blur transition-colors hover:border-zinc-500 hover:text-white"
+							>
+								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+									<path d="M18 6L6 18M6 6l12 12" />
+								</svg>
+								Close · Esc
+							</button>
+						</div>
+
+						{/* image area */}
+						<div
+							className="relative flex-1 overflow-hidden"
+							onClick={(e) => e.stopPropagation()}
+						>
+							<motion.div
+								className="absolute inset-0 flex items-center justify-center touch-pan-y"
+								drag="x"
+								dragConstraints={{ left: 0, right: 0 }}
+								dragElastic={0.18}
+								dragMomentum={false}
+								onDragEnd={(_, info) => {
+									const isSwipe =
+										Math.abs(info.offset.x) > 60 ||
+										Math.abs(info.velocity.x) > 350;
+									if (!isSwipe) return;
+									if (info.offset.x < 0) {
+										setActive((a) => (a + 1) % STEPS.length);
+									} else {
+										setActive((a) => (a - 1 + STEPS.length) % STEPS.length);
+									}
+									setCycleKey((k) => k + 1);
+								}}
+							>
+								<AnimatePresence mode="wait">
+									<motion.div
+										key={`zoom-${step.image}`}
+										initial={{ opacity: 0, scale: 0.98 }}
+										animate={{ opacity: 1, scale: 1 }}
+										exit={{ opacity: 0, scale: 0.99 }}
+										transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+										className="relative h-[78vh] w-[92vw] max-w-[1800px]"
+									>
+										<Image
+											src={step.image}
+											alt={step.title}
+											fill
+											unoptimized
+											sizes="92vw"
+											className="object-contain"
+											priority
+										/>
+									</motion.div>
+								</AnimatePresence>
+							</motion.div>
+
+							{/* prev / next chevrons */}
+							<button
+								type="button"
+								onClick={(e) => {
+									e.stopPropagation();
+									setActive((a) => (a - 1 + STEPS.length) % STEPS.length);
+									setCycleKey((k) => k + 1);
+								}}
+								aria-label="Previous step"
+								className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-zinc-700 bg-zinc-900/80 p-2.5 text-zinc-300 backdrop-blur transition-colors hover:border-zinc-500 hover:text-white sm:left-4"
+							>
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+									<path d="M15 18l-6-6 6-6" />
+								</svg>
+							</button>
+							<button
+								type="button"
+								onClick={(e) => {
+									e.stopPropagation();
+									setActive((a) => (a + 1) % STEPS.length);
+									setCycleKey((k) => k + 1);
+								}}
+								aria-label="Next step"
+								className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-zinc-700 bg-zinc-900/80 p-2.5 text-zinc-300 backdrop-blur transition-colors hover:border-zinc-500 hover:text-white sm:right-4"
+							>
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+									<path d="M9 18l6-6-6-6" />
+								</svg>
+							</button>
+						</div>
+
+						{/* caption + dots */}
+						<div
+							className="px-5 py-5 sm:px-8 sm:pb-7"
+							onClick={(e) => e.stopPropagation()}
+						>
+							<AnimatePresence mode="wait">
+								<motion.p
+									key={`caption-${step.num}`}
+									initial={{ opacity: 0, y: 6 }}
+									animate={{ opacity: 1, y: 0 }}
+									exit={{ opacity: 0 }}
+									transition={{ duration: 0.25 }}
+									className="mx-auto max-w-[72ch] text-center text-[0.875rem] leading-relaxed text-zinc-300 sm:text-[0.95rem]"
+								>
+									{step.caption}
+								</motion.p>
+							</AnimatePresence>
+							<div className="mt-4 flex justify-center gap-1.5">
+								{STEPS.map((s, i) => (
+									<button
+										key={s.num}
+										type="button"
+										aria-label={`Jump to step ${s.num}`}
+										onClick={(e) => {
+											e.stopPropagation();
+											setActive(i);
+											setCycleKey((k) => k + 1);
+										}}
+										className={`h-1.5 rounded-full transition-all ${
+											active === i
+												? "w-7 bg-zinc-100"
+												: "w-1.5 bg-zinc-700 hover:bg-zinc-500"
+										}`}
+									/>
+								))}
+							</div>
+						</div>
+					</motion.div>
+				)}
+			</AnimatePresence>
 
 			<style jsx>{`
 				.lh-progress {
