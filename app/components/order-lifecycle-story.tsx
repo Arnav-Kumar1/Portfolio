@@ -276,7 +276,7 @@ export default function OrderLifecycleStory() {
 							>
 								{/* Desktop: large centered zoom affordance, only on hover.
 								    The whole image is already clickable (onTap on the parent
-								    motion.div) — this just shows the affordance clearly. */}
+								    motion.div). This just shows the affordance clearly. */}
 								<div
 									aria-hidden
 									className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center bg-zinc-950/0 opacity-0 transition-all duration-200 md:group-hover:bg-zinc-950/25 md:group-hover:opacity-100"
@@ -398,7 +398,7 @@ export default function OrderLifecycleStory() {
 						className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-black/95 backdrop-blur-md cursor-zoom-out"
 						onClick={() => setZoomed(false)}
 					>
-						{/* image area — wraps image + corner close + chevrons */}
+						{/* image area, wraps image + corner close + chevrons */}
 						<div
 							className="relative cursor-default"
 							onClick={(e) => e.stopPropagation()}
@@ -444,7 +444,7 @@ export default function OrderLifecycleStory() {
 								</AnimatePresence>
 							</motion.div>
 
-							{/* Close button — overlays the image's top-right corner */}
+							{/* Close button overlays the image's top-right corner */}
 							<button
 								type="button"
 								onClick={(e) => {

@@ -10,12 +10,12 @@ const experiences = [
 		type: "Freelance",
 		duration: "Oct 2025 to Present",
 		achievements: [
-			"Sole operating team for a one-principal art business based in Dubai. Hand-coded the platform from scratch and run everything else from Mumbai. No template, no inherited codebase.",
-			"Current scale: 20 to 30 orders per day. Every limited-edition print drop sells out within 7 days of going live. Repeat-buyer rate among collectors who own at least one print.",
-			"Architected and wrote the production e-commerce platform at leohydra.com from scratch. Stack: Next.js 14, Supabase Postgres, USDT-on-Polygon checkout with on-chain payment verification, bank transfer with admin manual confirm, ~12 tables, ~30 migrations, ~22 API routes, ~50 React components.",
+			"Sole operating team for a Dubai-based art studio. Hand-coded the platform from scratch and run everything else from Mumbai. No template, no inherited codebase.",
+			"Current scale: 20 to 30 orders per day. Every limited-edition print drop sells out within 7 days of going live.",
+			"Architected and wrote the production e-commerce platform at leohydra.com from scratch. Stack: Next.js 14, Supabase Postgres, USDT-on-Polygon checkout with on-chain payment verification, bank transfer with admin manual confirm, 12 tables, 30 migrations, 22 API routes, 50 React components.",
 			"Server-side Meta Pixel + Conversions API across every conversion surface (checkout / forms / newsletter / product pages / PageView), dedup-aware via shared eventID. Transactional email pipeline (Resend, 6 lifecycle kinds, audit-logged with admin resend UI).",
-			"Three documented security audit rounds + 5 new migrations (027 to 031): DB-backed rate limiter, admin brute-force lockout, CSRF Origin checks, PII redaction, HMAC-secret isolation, CSP + security headers.",
-			"Operations: run Meta ad campaigns, manage limited-edition print production with printing houses, coordinate Dubai-warehouse fulfillment, hire and direct video editors, sound design + multi-platform posting.",
+			"Three rounds of self-led adversarial code review + 5 new migrations (027 to 031): DB-backed rate limiter, admin brute-force lockout, CSRF Origin checks, PII redaction, HMAC-secret isolation, CSP + security headers.",
+			"Operations: run Meta ad campaigns, work with printing houses on limited-edition production runs, coordinate Dubai-warehouse fulfilment, hire and direct video editors, sound design + multi-platform posting.",
 		],
 	},
 	{
@@ -27,11 +27,10 @@ const experiences = [
 		duration: "Nov 2024 to Jan 2025",
 		achievements: [
 			"Full-time on Canopy's data ops team (private-wealth SaaS, Singapore), staffed through Recro India as the legal employer.",
-			"Built automated SQL + Python pipelines for ~3,000 daily/monthly financial transactions across the portfolio system, ensuring 100% reconciliation.",
+			"Built automated SQL + Python pipelines for ~3,000 daily and monthly financial transactions across the portfolio system, ensuring 100% reconciliation.",
 			"Automated data validation and error-fixing in Python; raised report accuracy ~15%.",
 			"Resolved portfolio discrepancies during corporate-action events with 100% accuracy.",
 			"Partnered with business teams on transactions-per-user, retention anomalies, and portfolio-performance KPIs.",
-			"Role concluded due to contract ramp-down.",
 		],
 	},
 	{
@@ -42,11 +41,10 @@ const experiences = [
 		type: "Full-time",
 		duration: "May 2024 to Aug 2024",
 		achievements: [
-			"Built automated multi-stage financial-reconciliation workflows for client Gameskraft's fraud-detection pipeline; saved ~100 analyst-hours/month.",
+			"Built automated multi-stage financial-reconciliation workflows for client Gameskraft's fraud-detection pipeline; saved ~100 analyst hours per month.",
 			"Configured in-house tooling using Python and SQL to automate reconciliation logic for financial audits.",
 			"Analyzed customer transaction flows to detect anomalies, improving fraud-detection accuracy.",
 			"Designed BI reports on churn cohorts and transaction-volume trends with marketing and sales.",
-			"Role ended in a company-wide layoff (Aug 2024).",
 		],
 	},
 	{
@@ -60,7 +58,6 @@ const experiences = [
 			"Built CNN-based object-detection models (YOLO, Faster R-CNN) reaching 98% inference accuracy by aggregating multi-source data.",
 			"Led large-scale image annotation (100,000+ images) with rigorous QA pipelines.",
 			"Deployed real-time detection systems on 50+ concurrent video streams achieving <200 ms latency with 95%+ inference accuracy.",
-			"The data-science department was shut down before conversion to full-time.",
 		],
 	},
 	{
@@ -142,17 +139,17 @@ const skillGroups = [
 const education = [
 	{
 		id: 1,
-		degree: "Diploma in Data Science (Foundational + Diploma levels of the IIT Madras Online Degree program)",
+		degree: "Online Diploma in Data Science (Foundational + Diploma levels)",
 		institution: "Indian Institute of Technology (IIT), Madras",
 		duration: "2021 to 2022",
-		cgpa: "8.2",
+		cgpa: "8.2 / 10",
 	},
 	{
 		id: 2,
 		degree: "B.E. in Electronics & Telecommunication",
 		institution: "Smt. Kashibai Navale College of Engineering, Pune",
 		duration: "2016 to 2020",
-		cgpa: "7.0",
+		cgpa: "7.0 / 10",
 	},
 ];
 
@@ -186,28 +183,27 @@ export default function AboutPage() {
 							</a>
 							, a Dubai art studio I run from Mumbai. We do 20 to 30 orders a
 							day, and every limited edition print drop sells out inside a week
-							of going live. The whole codebase is mine. So is the on-chain
-							payment verifier, the admin panel, the transactional email
-							pipeline, the Meta Pixel and CAPI dedup, and the security audit
-							migrations. I run the ads too, manage the printers, and ship the
-							parcels.
+							of going live. I wrote every component of the application: the
+							e-commerce stack, the on-chain payment verifier, the admin panel,
+							the transactional email pipeline, the Meta Pixel and CAPI dedup,
+							and the security audit migrations. I also run the ad campaigns,
+							work with the printers on each drop, and coordinate fulfilment out
+							of the Dubai warehouse.
 						</p>
 						<p>
 							B.E. in Electronics &amp; Telecommunication from Smt. Kashibai
-							Navale College of Engineering, Pune. That was the full time
-							campus degree, 2016 to 2020. After that I picked up the IIT
-							Madras Online Diploma in Data Science, 2021 to 2022. Five roles
-							between 2023 and now: a Canopy Singapore data ops contract
-							staffed via Recro, a Cointab data analyst job, two internships,
-							and the current Leo Hydra engagement. I&apos;ve been engineering
-							and running ops on the LeoHydra stack since late 2025.
+							Navale College of Engineering, Pune. Full-time campus degree, 2016
+							to 2020. Followed by the IIT Madras Online Diploma in Data
+							Science, 2021 to 2022. Since October 2025 I&apos;ve been the full
+							operating team at Leo Hydra. Prior work spans data ops at Canopy
+							Singapore (staffed via Recro), a Cointab data analyst role, and
+							two earlier internships.
 						</p>
 						<p>
 							I&apos;m strongest at production e-commerce engineering, growth
-							instrumentation (server side Pixel and CAPI, dedup aware),
-							security hardening, and running ops alone. I&apos;m comfortable
-							being the second or third engineer at a startup that has no
-							infrastructure team yet.
+							instrumentation (server side Pixel and CAPI, dedup aware), and
+							security hardening. I&apos;m comfortable owning the full stack
+							solo, or being the first or second engineer on a small team.
 						</p>
 					</div>
 				</section>

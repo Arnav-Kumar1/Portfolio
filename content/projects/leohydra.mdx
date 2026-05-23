@@ -1,12 +1,12 @@
 ---
 title: Leo Hydra Studio
-description: Production e-commerce platform I hand-coded from scratch and run end-to-end for a Dubai art studio. 20 to 30 orders per day, every limited-edition drop sells out within 7 days of going live, every line of code is mine. Dual-rail crypto + bank checkout, server-side Meta CAPI, transactional email pipeline, security-audited migration history. ~12 Postgres tables, ~30 migrations, ~22 API routes, ~50 React components.
+description: Production e-commerce platform I hand-coded from scratch and run end-to-end for a Dubai art studio. 20 to 30 orders per day, every limited-edition drop sells out within 7 days of going live, every line of the application is mine. Dual-rail crypto + bank checkout, server-side Meta CAPI, transactional email pipeline, three rounds of self-led adversarial security review. 12 Postgres tables, 30 migrations, 22 API routes, 50 React components.
 date: "2025-10-01"
 url: https://leohydra.com
 published: true
 ---
 
-I built the entire site from zero. No template, no inherited codebase, no rebuild of someone else's work. Sole operating team for an art studio based in Dubai. Artist makes the work; I designed, coded, and ship everything else from Mumbai. Live at [leohydra.com](https://leohydra.com).
+No template, no inherited codebase. The artist makes the work in Dubai. I design, code, and ship everything else from Mumbai. Live at [leohydra.com](https://leohydra.com).
 
 <Reveal>
 
@@ -27,7 +27,7 @@ I built the entire site from zero. No template, no inherited codebase, no rebuil
 
 <Reveal>
 
-It's a real business at a real cadence. Every drop sells out inside a week of going live. Originals are priced on inquiry but they move through the same operator, the same calendar, the same warehouse. One pipeline, two SKUs.
+Every drop sells out inside a week of going live. Originals are priced on inquiry but they move through the same operator, the same calendar, the same warehouse.
 
 </Reveal>
 
@@ -51,16 +51,6 @@ What it actually looks like when someone buys a print. A real $199 Chromatic pri
 
 <OrderLifecycleStory />
 
-## Why this depth
-
-<Reveal>
-
-The race locked confirmation, the micro offset discriminator, the cron scanner. These look heavy for a single operator studio. They're not. They exist for the same reason real e-commerce shops use them. Every drop launch is a 7 day rush window where concurrent purchases are realistic. On-chain payments settle through a public mempool, and the order of events is not under your control. A payment confirmation bug at any volume above zero is an unrecoverable customer trust event.
-
-The engineering is sized for the worst case minute of any given launch day, not the average minute. At low traffic these patterns cost nothing. At launch traffic they're the difference between "shipped clean" and "manually reconciling for a week".
-
-</Reveal>
-
 ## Engineering scale
 
 <StatBand
@@ -74,7 +64,7 @@ The engineering is sized for the worst case minute of any given launch day, not 
 
 <Reveal>
 
-The full breakdown: ~12 Postgres tables (`orders`, `order_items`, `payments`, `bank_transfer_payments`, `crypto_payments`, `products`, `leads`, `newsletter`, `order_email_events`, `payment_micro_reserved`, `order_scan_throttle`, `rate_limit_buckets`). ~30 forward-only migrations applied via Supabase SQL editor, with verified live-DB drift checks against nightly `pg_dump` backups. Three documented security audit rounds harden rate limiting, brute-force lockout, CSRF Origin checks, PII redaction, and three isolated HMAC secrets + CSP and security headers in `next.config.js`.
+The full breakdown: 12 Postgres tables (`orders`, `order_items`, `payments`, `bank_transfer_payments`, `crypto_payments`, `products`, `leads`, `newsletter`, `order_email_events`, `payment_micro_reserved`, `order_scan_throttle`, `rate_limit_buckets`). 30 forward-only migrations applied via Supabase SQL editor, with verified live-DB drift checks against nightly `pg_dump` backups. Three rounds of self-led adversarial code review hardened rate limiting, brute-force lockout, CSRF Origin checks, PII redaction, three isolated HMAC secrets, and CSP + security headers in `next.config.js`.
 
 </Reveal>
 
@@ -101,7 +91,7 @@ Originals don't run through the checkout above. Unique pieces are priced on inqu
 */}
 
 <Testimonial
-  quote="Arnav handles everything technical at Leo Hydra. Site, payments, emails, admin panel, the whole damn thing. We've been live and selling since launch and I haven't touched a line of code. I make the work, he ships it."
+  quote="Arnav handles everything technical at Leo Hydra. Site, payments, emails, admin panel, the whole damn thing. We've been live and selling since October 2025 and I haven't touched a line of code. I make the work, he ships it."
   author="Lev"
   role="Principal artist · Leo Hydra Studio"
   location="Dubai"
@@ -113,7 +103,7 @@ Originals don't run through the checkout above. Unique pieces are priced on inqu
 
 <Reveal>
 
-Run Meta ad campaigns end-to-end. Manage limited-edition print production with printing houses. Coordinate fulfillment from the Dubai warehouse. Hire and direct video editors. Sound design and multi-platform posting (Behance / Tumblr / Instagram). Scale Reels generation with modern creative tooling.
+I run the Meta ad campaigns end to end. I work with printing houses on every limited-edition production run, coordinate fulfilment out of the Dubai warehouse, hire and direct video editors, handle sound design, and post across Behance, Tumblr, and Instagram.
 
 </Reveal>
 
