@@ -252,7 +252,7 @@ export default function OrderLifecycleStory() {
 								style={{ animationDuration: `${AUTO_MS}ms` }}
 							/>
 							<motion.div
-								className="group relative aspect-[192/100] w-full touch-pan-y bg-zinc-950 select-none"
+								className="group relative aspect-[192/100] w-full touch-pan-y bg-zinc-950 select-none md:cursor-zoom-in"
 								drag="x"
 								dragConstraints={{ left: 0, right: 0 }}
 								dragElastic={0.18}
@@ -274,33 +274,43 @@ export default function OrderLifecycleStory() {
 									}
 								}}
 							>
-								<button
-									type="button"
-									onClick={(e) => {
-										e.stopPropagation();
-										setZoomed(true);
-									}}
-									className="absolute top-3 right-3 z-20 inline-flex items-center gap-1.5 rounded-md border border-zinc-700 bg-zinc-950/85 px-2.5 py-1.5 text-[0.7rem] font-medium text-zinc-200 backdrop-blur transition-all hover:border-zinc-500 hover:text-white md:opacity-0 md:group-hover:opacity-100"
-									aria-label="Zoom screenshot"
+								{/* Desktop: large centered zoom affordance, only on hover.
+								    The whole image is already clickable (onTap on the parent
+								    motion.div) — this just shows the affordance clearly. */}
+								<div
+									aria-hidden
+									className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center bg-zinc-950/0 opacity-0 transition-all duration-200 md:group-hover:bg-zinc-950/25 md:group-hover:opacity-100"
 								>
-									<svg
-										width="12"
-										height="12"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										strokeWidth="2"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										aria-hidden
-									>
-										<path d="M3 7V3h4" />
-										<path d="M21 7V3h-4" />
-										<path d="M3 17v4h4" />
-										<path d="M21 17v4h-4" />
+									<span className="inline-flex items-center gap-2.5 rounded-full border border-zinc-100/30 bg-zinc-950/85 px-5 py-3 text-sm font-medium text-zinc-50 shadow-2xl backdrop-blur-md transition-transform duration-200 md:group-hover:scale-100 scale-95">
+										<svg
+											width="18"
+											height="18"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											strokeWidth="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+										>
+											<circle cx="11" cy="11" r="7" />
+											<path d="m21 21-4.3-4.3" />
+											<path d="M11 8v6M8 11h6" />
+										</svg>
+										Click to enlarge
+									</span>
+								</div>
+								{/* Mobile: persistent small badge bottom-right (no hover state) */}
+								<span
+									aria-hidden
+									className="absolute bottom-3 right-3 z-20 inline-flex items-center gap-1.5 rounded-md border border-zinc-700 bg-zinc-950/85 px-2.5 py-1.5 text-[0.7rem] font-medium text-zinc-200 backdrop-blur md:hidden"
+								>
+									<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+										<circle cx="11" cy="11" r="7" />
+										<path d="m21 21-4.3-4.3" />
+										<path d="M11 8v6M8 11h6" />
 									</svg>
-									Zoom
-								</button>
+									Tap to enlarge
+								</span>
 								<AnimatePresence mode="wait">
 									<motion.div
 										key={step.image}
